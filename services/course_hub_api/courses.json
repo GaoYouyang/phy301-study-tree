@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "courses": [
+    {
+      "slug": "phy301",
+      "code": "PHY301",
+      "title_zh": "统计物理",
+      "title_en": "Statistical Physics",
+      "enabled": true
+    },
+    {
+      "slug": "phy408",
+      "code": "PHY408",
+      "title_zh": "课程名称待课程资料确认",
+      "title_en": "PHY408",
+      "enabled": true
+    },
+    {
+      "slug": "phy309",
+      "code": "PHY309",
+      "title_zh": "课程名称待课程资料确认",
+      "title_en": "PHY309",
+      "enabled": true
+    },
+    {
+      "slug": "mat107",
+      "code": "MAT107",
+      "title_zh": "课程名称待课程资料确认",
+      "title_en": "MAT107",
+      "enabled": true
+    }
+  ]
+}

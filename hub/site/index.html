@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#153a5b" />
+    <meta
+      name="description"
+      content="PHY301、PHY408、PHY309 与 MAT107 的个人学习总台：统一查看进度、续学位置、笔记和问题。"
+    />
+    <title>我的学习总台</title>
+    <link rel="stylesheet" href="./assets/styles.css" />
+    <script type="module" src="./assets/app.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">跳到主要内容</a>
+
+    <header class="site-header">
+      <div class="shell header-inner">
+        <a class="brand" href="/" aria-label="返回学习总台首页">
+          <span class="brand-mark" aria-hidden="true">学</span>
+          <span>
+            <strong>我的学习总台</strong>
+            <small>四门课，一个连续的学习节奏</small>
+          </span>
+        </a>
+        <div class="header-meta" aria-label="学期信息">
+          <span class="eyebrow">2026 · COURSE HUB</span>
+          <span>个人学习空间</span>
+        </div>
+      </div>
+    </header>
+
+    <main id="main-content" class="shell page-grid">
+      <section class="main-column" aria-labelledby="dashboard-title">
+        <div class="intro-row">
+          <div>
+            <p class="eyebrow">学习控制台</p>
+            <h1 id="dashboard-title">从上次停下的地方，继续。</h1>
+            <p class="lede">
+              课程内容始终可以直接打开；连接云同步后，这里会汇总四门课的进度、笔记与待解决问题。
+            </p>
+          </div>
+          <button class="icon-button" id="refresh-button" type="button" aria-label="刷新学习数据">
+            <svg aria-hidden="true" viewBox="0 0 24 24" width="19" height="19">
+              <path d="M20 11a8 8 0 1 0-2.34 5.66M20 4v7h-7" />
+            </svg>
+            <span>刷新</span>
+          </button>
+        </div>
+
+        <section class="focus-card" aria-labelledby="focus-title">
+          <div class="focus-copy">
+            <span class="section-kicker">下一步</span>
+            <h2 id="focus-title">先进入 PHY301，沿学习树顺序推进</h2>
+            <p id="focus-detail">建议从前置桥梁开始；每完成一个节点，再进入依赖它的下一节点。</p>
+          </div>
+          <a class="primary-button" id="focus-link" href="/phy301/">
+            <span>继续学习</span>
+            <span aria-hidden="true">→</span>
+          </a>
+        </section>
+
+        <section class="metric-grid" aria-label="学习数据概览">
+          <article class="metric-card">
+            <span class="metric-icon metric-icon--blue" aria-hidden="true">✓</span>
+            <div>
+              <strong id="metric-completed">0</strong>
+              <span>已完成节点</span>
+            </div>
+          </article>
+          <article class="metric-card">
+            <span class="metric-icon metric-icon--amber" aria-hidden="true">?</span>
+            <div>
+              <strong id="metric-questions">0</strong>
+              <span>待解决问题</span>
+            </div>
+          </article>
+          <article class="metric-card">
+            <span class="metric-icon metric-icon--green" aria-hidden="true">≡</span>
+            <div>
+              <strong id="metric-notes">0</strong>
+              <span>学习笔记</span>
+            </div>
+          </article>
+        </section>
+
+        <section class="courses-section" aria-labelledby="courses-title">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">COURSES</p>
+              <h2 id="courses-title">我的四门课</h2>
+            </div>
+            <p>进度只按已接入的课程节点统计，不会用虚假的百分比填满页面。</p>
+          </div>
+
+          <div class="course-grid" id="course-grid">
+            <article class="course-card course-card--phy301" data-course="phy301">
+              <div class="course-card__topline">
+                <span class="course-code">PHY301</span>
+                <span class="course-state course-state--ready">内容已上线</span>
+              </div>
+              <h3>热力学与统计物理</h3>
+              <p class="course-en">Thermodynamics and Statistical Physics</p>
+              <div class="progress-copy">
+                <span data-role="progress-label">等待同步进度</span>
+                <strong data-role="progress-value">0%</strong>
+              </div>
+              <div class="progress-track" role="progressbar" aria-label="PHY301 完成度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                <span data-role="progress-bar"></span>
+              </div>
+              <p class="recent-position" data-role="recent">尚无云端续学位置</p>
+              <a class="course-link" data-role="course-link" href="/phy301/">
+                打开课程 <span aria-hidden="true">→</span>
+              </a>
+            </article>
+
+            <article class="course-card course-card--phy408" data-course="phy408">
+              <div class="course-card__topline">
+                <span class="course-code">PHY408</span>
+                <span class="course-state course-state--building">学习站建设中</span>
+              </div>
+              <h3>数据密集型科学</h3>
+              <p class="course-en">Data Intensive Science</p>
+              <div class="progress-copy">
+                <span data-role="progress-label">待课程包接入</span>
+                <strong data-role="progress-value">—</strong>
+              </div>
+              <div class="progress-track" role="progressbar" aria-label="PHY408 完成度尚不可用" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                <span data-role="progress-bar"></span>
+              </div>
+              <p class="recent-position" data-role="recent">课程项目正在整理资料</p>
+              <a class="course-link" data-role="course-link" href="/phy408/">
+                打开课程 <span aria-hidden="true">→</span>
+              </a>
+            </article>
+
+            <article class="course-card course-card--phy309" data-course="phy309">
+              <div class="course-card__topline">
+                <span class="course-code">PHY309</span>
+                <span class="course-state course-state--building">学习站建设中</span>
+              </div>
+              <h3>光子学与光电子学</h3>
+              <p class="course-en">Photonics and Optoelectronics</p>
+              <div class="progress-copy">
+                <span data-role="progress-label">待课程包接入</span>
+                <strong data-role="progress-value">—</strong>
+              </div>
+              <div class="progress-track" role="progressbar" aria-label="PHY309 完成度尚不可用" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                <span data-role="progress-bar"></span>
+              </div>
+              <p class="recent-position" data-role="recent">课程项目正在整理资料</p>
+              <a class="course-link" data-role="course-link" href="/phy309/">
+                打开课程 <span aria-hidden="true">→</span>
+              </a>
+            </article>
+
+            <article class="course-card course-card--mat107" data-course="mat107">
+              <div class="course-card__topline">
+                <span class="course-code">MAT107</span>
+                <span class="course-state course-state--building">学习站建设中</span>
+              </div>
+              <h3>概率论</h3>
+              <p class="course-en">Probability Theory</p>
+              <div class="progress-copy">
+                <span data-role="progress-label">待课程包接入</span>
+                <strong data-role="progress-value">—</strong>
+              </div>
+              <div class="progress-track" role="progressbar" aria-label="MAT107 完成度尚不可用" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                <span data-role="progress-bar"></span>
+              </div>
+              <p class="recent-position" data-role="recent">课程项目正在整理资料</p>
+              <a class="course-link" data-role="course-link" href="/mat107/">
+                打开课程 <span aria-hidden="true">→</span>
+              </a>
+            </article>
+          </div>
+        </section>
+      </section>
+
+      <aside class="side-column" aria-label="云同步与近期学习信息">
+        <section class="panel sync-panel" aria-labelledby="sync-title">
+          <div class="panel-heading">
+            <span class="status-dot status-dot--checking" id="sync-dot" aria-hidden="true"></span>
+            <div>
+              <p class="eyebrow">CLOUD SYNC</p>
+              <h2 id="sync-title">正在检查连接</h2>
+            </div>
+          </div>
+          <p id="sync-description">即使动态服务暂不可用，四门课程入口也不会受影响。</p>
+
+          <div class="sync-actions">
+            <button class="secondary-button" id="show-login-button" type="button">连接云同步</button>
+            <button class="text-button" id="logout-button" type="button" hidden>退出连接</button>
+          </div>
+
+          <form class="login-form" id="login-form" hidden novalidate>
+            <label for="login-token">访问令牌</label>
+            <p id="token-help">仅用于本次登录请求；成功后会立即从输入框清除，不会存进网页或浏览器本地存储。</p>
+            <input
+              id="login-token"
+              name="token"
+              type="password"
+              autocomplete="current-password"
+              aria-describedby="token-help login-error"
+              required
+            />
+            <p class="form-error" id="login-error" role="alert"></p>
+            <div class="form-actions">
+              <button class="primary-button primary-button--small" type="submit">登录并同步</button>
+              <button class="text-button" id="cancel-login-button" type="button">取消</button>
+            </div>
+          </form>
+
+          <p class="privacy-note">
+            <span aria-hidden="true">●</span>
+            登录后使用同源安全会话；令牌不会写入前端文件。
+          </p>
+        </section>
+
+        <section class="panel activity-panel" aria-labelledby="activity-title">
+          <div class="panel-heading panel-heading--split">
+            <div>
+              <p class="eyebrow">RECENT</p>
+              <h2 id="activity-title">最近学习记录</h2>
+            </div>
+            <span id="activity-source" class="source-label">本机缓存</span>
+          </div>
+
+          <div class="activity-block">
+            <h3>笔记</h3>
+            <ul class="activity-list" id="recent-notes">
+              <li class="empty-state">连接云同步后显示最近笔记。</li>
+            </ul>
+          </div>
+
+          <div class="activity-block">
+            <h3>问题</h3>
+            <ul class="activity-list" id="recent-questions">
+              <li class="empty-state">连接云同步后显示待解决问题。</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="panel guidance-panel" aria-labelledby="guidance-title">
+          <p class="eyebrow">学习约定</p>
+          <h2 id="guidance-title">问题不会打乱顺序</h2>
+          <p>遇到不懂的内容，先记在当前知识节点；解决后再沿原路线继续。总台只帮你找回位置，不替你跳过前置知识。</p>
+        </section>
+      </aside>
+    </main>
+
+    <footer class="site-footer">
+      <div class="shell footer-inner">
+        <p>个人课程学习站 · 内容与学习数据分开部署</p>
+        <p id="last-updated">尚未同步</p>
+      </div>
+    </footer>
+
+    <div class="sr-only" id="live-region" role="status" aria-live="polite" aria-atomic="true"></div>
+    <noscript>
+      <div class="noscript-note">JavaScript 未启用。你仍然可以使用上方四个课程入口，但云同步概览不会加载。</div>
+    </noscript>
+  </body>
+</html>

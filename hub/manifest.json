@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "name": "四课程学习总台",
+  "siteRoot": "site",
+  "apiBase": "/api/v1",
+  "routes": {
+    "hub": "/",
+    "phy301": "/phy301/",
+    "phy408": "/phy408/",
+    "phy309": "/phy309/",
+    "mat107": "/mat107/"
+  },
+  "buildCommand": null,
+  "testCommand": "npm test"
+}

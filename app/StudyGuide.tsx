@@ -18,6 +18,9 @@ import {
   type PhaseKey,
   type StudyModule,
 } from "./course-data";
+import MathText from "./MathText";
+import CloudSyncPanel from "./CloudSyncPanel";
+import AssessmentCoverage from "./AssessmentCoverage";
 import {
   blankState,
   enforceMasteryInvariants,
@@ -90,6 +93,9 @@ export default function StudyGuide() {
   const [hydrated, setHydrated] = useState(false);
   const [diagnosticOpen, setDiagnosticOpen] = useState(false);
   const [treeOpen, setTreeOpen] = useState(false);
+  const [pendingScrollTarget, setPendingScrollTarget] = useState<string | null>(
+    null,
+  );
   const [importStatus, setImportStatus] = useState("");
   const [errorDraft, setErrorDraft] = useState({
     source: "",
@@ -113,6 +119,37 @@ export default function StudyGuide() {
     if (!hydrated) return;
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
   }, [state, hydrated]);
+
+  useEffect(() => {
+    if (!pendingScrollTarget) return;
+    const frame = window.requestAnimationFrame(() => {
+      if (pendingScrollTarget === "top") {
+        window.scrollTo({ top: 0, behavior: "auto" });
+      } else {
+        const target = document.getElementById(pendingScrollTarget);
+        target?.scrollIntoView({ behavior: "auto", block: "start" });
+        if (pendingScrollTarget === "course-question") {
+          window.requestAnimationFrame(() => target?.focus({ preventScroll: true }));
+        }
+      }
+      setPendingScrollTarget(null);
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, [activeTab, pendingScrollTarget]);
+
+  useEffect(() => {
+    if (!treeOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setTreeOpen(false);
+    };
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", closeOnEscape);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [treeOpen]);
 
   const selected =
     modules.find((item) => item.id === selectedId) ?? modules[0];
@@ -184,9 +221,23 @@ export default function StudyGuide() {
     );
   }
 
+  function openTab(tab: TabKey, target = "top") {
+    setActiveTab(tab);
+    setTreeOpen(false);
+    setPendingScrollTarget(target);
+  }
+
   function goToModule(id: string) {
-    setActiveTab("roadmap");
-    selectModule(id);
+    setSelectedId(id);
+    setTreeOpen(false);
+    setState((current) => ({ ...current, lastModule: id }));
+    openTab("roadmap", "learning-workspace");
+  }
+
+  function openQuestionBox(id: string) {
+    setSelectedId(id);
+    setState((current) => ({ ...current, lastModule: id }));
+    openTab("schedule", "course-question");
   }
 
   function setMastery(id: string, mastery: Mastery) {
@@ -368,12 +419,7 @@ export default function StudyGuide() {
       firstStep: "",
       rule: "",
     });
-    setActiveTab("schedule");
-    window.requestAnimationFrame(() =>
-      document
-        .getElementById("error-notebook")
-        ?.scrollIntoView({ behavior: "smooth", block: "start" }),
-    );
+    openTab("schedule", "error-notebook");
   }
 
   function exportProgress() {
@@ -436,7 +482,15 @@ export default function StudyGuide() {
   return (
     <main className="site-shell">
       <header className="topbar">
-        <a className="brand" href="#top" aria-label="PHY301 学习树首页">
+        <a
+          className="brand"
+          href="#top"
+          aria-label="PHY301 学习树首页"
+          onClick={(event) => {
+            event.preventDefault();
+            openTab("roadmap");
+          }}
+        >
           <span className="brand-mark">Σ</span>
           <span>
             <strong>PHY301</strong>
@@ -448,8 +502,9 @@ export default function StudyGuide() {
             <button
               className={activeTab === tab.id ? "nav-tab active" : "nav-tab"}
               key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
+              onClick={() => openTab(tab.id)}
               type="button"
+              aria-current={activeTab === tab.id ? "page" : undefined}
             >
               <span>{tab.label}</span>
               <small>{tab.sub}</small>
@@ -460,12 +515,7 @@ export default function StudyGuide() {
           className="progress-pill"
           type="button"
           onClick={() => {
-            setActiveTab("schedule");
-            requestAnimationFrame(() =>
-              document
-                .getElementById("review-queue")
-                ?.scrollIntoView({ behavior: "smooth" }),
-            );
+            openTab("schedule", "review-queue");
           }}
         >
           <span>{confirmed}/{modules.length} 已确认</span>
@@ -496,7 +546,7 @@ export default function StudyGuide() {
                   type="button"
                   onClick={() => goToModule(nextModule.id)}
                 >
-                  继续下一步：{nextModule.title}
+                  继续下一步：<MathText text={nextModule.title} />
                   <span aria-hidden="true">→</span>
                 </button>
                 <button
@@ -588,7 +638,7 @@ export default function StudyGuide() {
                       <div className="diagnostic-number">
                         {String(index + 1).padStart(2, "0")} · {item.skill}
                       </div>
-                      <h3>{item.question}</h3>
+                      <h3><MathText text={item.question} /></h3>
                       <div className="choice-list">
                         {item.choices.map((choice, choiceIndex) => (
                           <label
@@ -614,7 +664,7 @@ export default function StudyGuide() {
                               }
                             />
                             <span>{String.fromCharCode(65 + choiceIndex)}</span>
-                            {choice}
+                            <MathText text={choice} />
                           </label>
                         ))}
                       </div>
@@ -627,7 +677,7 @@ export default function StudyGuide() {
                           }
                         >
                           <strong>{isCorrect ? "通过" : "这里需要补一小块"}</strong>
-                          <p>{item.feedback}</p>
+                          <p><MathText text={item.feedback} /></p>
                           <button
                             type="button"
                             onClick={() => goToModule(item.route)}
@@ -674,13 +724,15 @@ export default function StudyGuide() {
               <div className="today-review">
                 <div>
                   <b>
-                    {
-                      modules.find(
-                        (item) => item.id === dueReviews[0].moduleId,
-                      )?.title
-                    }
+                    <MathText
+                      text={
+                        modules.find(
+                          (item) => item.id === dueReviews[0].moduleId,
+                        )?.title ?? ""
+                      }
+                    />
                   </b>
-                  <span>{dueReviews[0].task}</span>
+                  <span><MathText text={dueReviews[0].task} /></span>
                 </div>
                 <button
                   type="button"
@@ -692,8 +744,8 @@ export default function StudyGuide() {
             ) : (
               <div className="today-review">
                 <div>
-                  <b>{nextModule.week} · {nextModule.title}</b>
-                  <span>{nextModule.goal}</span>
+                  <b>{nextModule.week} · <MathText text={nextModule.title} /></b>
+                  <span><MathText text={nextModule.goal} /></span>
                 </div>
                 <button type="button" onClick={() => goToModule(nextModule.id)}>
                   进入节点 →
@@ -714,14 +766,34 @@ export default function StudyGuide() {
           </section>
 
           <div className="mobile-tree-control">
-            <button type="button" onClick={() => setTreeOpen((value) => !value)}>
-              {treeOpen ? "收起学习树" : "展开学习树与搜索"}
-              <span>{provisionallyDone}/{modules.length}</span>
+            <button
+              type="button"
+              onClick={() => setTreeOpen((value) => !value)}
+              aria-expanded={treeOpen}
+              aria-controls="knowledge-tree"
+            >
+              <span className="mobile-tree-current">
+                <small>当前 {String(selectedIndex).padStart(2, "0")}</small>
+                <b>{selected.title}</b>
+              </span>
+              <span className="mobile-tree-action">
+                {treeOpen ? "收起" : "学习树"} · {provisionallyDone}/{modules.length}
+              </span>
             </button>
           </div>
 
           <section className="learning-workspace" ref={contentRef}>
-            <aside className={treeOpen ? "tree-sidebar open" : "tree-sidebar"}>
+            <aside
+              className={treeOpen ? "tree-sidebar open" : "tree-sidebar"}
+              id="knowledge-tree"
+              aria-label="学习树与节点搜索"
+            >
+              <div className="mobile-tree-header">
+                <b>学习树与搜索</b>
+                <button type="button" onClick={() => setTreeOpen(false)}>
+                  关闭
+                </button>
+              </div>
               <div className="sidebar-tools">
                 <label>
                   <span className="sr-only">搜索学习节点</span>
@@ -737,6 +809,7 @@ export default function StudyGuide() {
                     type="button"
                     className={mode === "core" ? "active" : ""}
                     onClick={() => setMode("core")}
+                    aria-pressed={mode === "core"}
                   >
                     最短主线
                   </button>
@@ -744,6 +817,7 @@ export default function StudyGuide() {
                     type="button"
                     className={mode === "full" ? "active" : ""}
                     onClick={() => setMode("full")}
+                    aria-pressed={mode === "full"}
                   >
                     完整深读
                   </button>
@@ -810,7 +884,7 @@ export default function StudyGuide() {
                                 {String(index).padStart(2, "0")}
                               </span>
                               <span className="node-copy">
-                                <b>{item.title}</b>
+                                <b><MathText text={item.title} /></b>
                                 <small>
                                   {item.week} · 核心 {item.hoursCore}h
                                   {missingPrerequisites.length > 0
@@ -857,6 +931,7 @@ export default function StudyGuide() {
                 onGateFail={() => recordGateFailure(selected)}
                 onNote={saveNote}
                 onNavigate={goToModule}
+                onAsk={() => openQuestionBox(selected.id)}
               />
               <div className="module-pager">
                 <button
@@ -868,7 +943,11 @@ export default function StudyGuide() {
                 >
                   <span>上一节点</span>
                   <b>
-                    {selectedIndex > 0 ? modules[selectedIndex - 1].title : "已经是起点"}
+                    {selectedIndex > 0 ? (
+                      <MathText text={modules[selectedIndex - 1].title} />
+                    ) : (
+                      "已经是起点"
+                    )}
                   </b>
                 </button>
                 <button
@@ -885,9 +964,11 @@ export default function StudyGuide() {
                 >
                   <span>下一节点</span>
                   <b>
-                    {selectedIndex < modules.length - 1
-                      ? modules[selectedIndex + 1].title
-                      : "主线已闭合"}
+                    {selectedIndex < modules.length - 1 ? (
+                      <MathText text={modules[selectedIndex + 1].title} />
+                    ) : (
+                      "主线已闭合"
+                    )}
                   </b>
                 </button>
               </div>
@@ -904,13 +985,23 @@ export default function StudyGuide() {
             description="公式按作用分组。任何结果都同时检查：控制量、单位、适用条件、极限。不要把这页当成孤立公式表背。"
           />
           <div className="formula-search">
-            <input
-              type="search"
-              placeholder="搜索 Z、涨落、Bose、扩散…"
-              value={formulaQuery}
-              onChange={(event) => setFormulaQuery(event.target.value)}
-            />
-            <span>{formulaMap.length} 条核心关系</span>
+            <label>
+              <span className="sr-only">搜索公式地图</span>
+              <input
+                type="search"
+                placeholder="搜索 Z、涨落、Bose、扩散…"
+                value={formulaQuery}
+                onChange={(event) => setFormulaQuery(event.target.value)}
+              />
+            </label>
+            <span>
+              {formulaMap.filter((item) =>
+                Object.values(item)
+                  .join(" ")
+                  .toLowerCase()
+                  .includes(formulaQuery.trim().toLowerCase()),
+              ).length}/{formulaMap.length} 条关系
+            </span>
           </div>
           <div className="formula-grid">
             {formulaMap
@@ -926,16 +1017,33 @@ export default function StudyGuide() {
                     <span>{item.family}</span>
                     <small>{String(index + 1).padStart(2, "0")}</small>
                   </div>
-                  <h2>{item.name}</h2>
-                  <div className="formula-display">{item.formula}</div>
-                  <p>{item.use}</p>
+                  <h2><MathText text={item.name} /></h2>
+                  <div className="formula-display">
+                    <MathText text={item.formula} display />
+                  </div>
+                  <p><MathText text={item.use} /></p>
                   <div className="formula-warning">
                     <b>先检查</b>
-                    {item.warning}
+                    <MathText text={item.warning} />
                   </div>
                 </article>
               ))}
           </div>
+          {formulaMap.every(
+            (item) =>
+              !Object.values(item)
+                .join(" ")
+                .toLowerCase()
+                .includes(formulaQuery.trim().toLowerCase()),
+          ) && (
+            <div className="empty-state formula-empty">
+              <b>没有找到对应公式</b>
+              <p>试试公式名称、物理量、Bose/Fermi 英文词或用途关键词。</p>
+              <button type="button" onClick={() => setFormulaQuery("")}>
+                清除搜索
+              </button>
+            </div>
+          )}
           <div className="two-column-section">
             <section>
               <div className="minor-heading">
@@ -945,10 +1053,10 @@ export default function StudyGuide() {
               <div className="notation-list">
                 {notationAlerts.map((item) => (
                   <article key={item.symbol}>
-                    <strong>{item.symbol}</strong>
+                    <strong><MathText text={item.symbol} /></strong>
                     <div>
-                      <p><b>本课：</b>{item.teacher}</p>
-                      <p><b>对照：</b>{item.other}</p>
+                      <p><b>本课：</b><MathText text={item.teacher} /></p>
+                      <p><b>对照：</b><MathText text={item.other} /></p>
                     </div>
                   </article>
                 ))}
@@ -962,8 +1070,8 @@ export default function StudyGuide() {
               <div className="glossary-list">
                 {glossary.map(([term, definition]) => (
                   <details key={term}>
-                    <summary>{term}</summary>
-                    <p>{definition}</p>
+                    <summary><MathText text={term} /></summary>
+                    <p><MathText text={definition} /></p>
                   </details>
                 ))}
               </div>
@@ -1024,19 +1132,19 @@ export default function StudyGuide() {
               return (
                 <article className={`assessment-card group-${group}`} key={item.id}>
                   <div className="assessment-id">{item.id}</div>
-                  <h2>{item.title}</h2>
+                  <h2><MathText text={item.title} /></h2>
                   <div className="assessment-block">
                     <span>先修动作</span>
-                    <p>{item.prerequisites}</p>
+                    <p><MathText text={item.prerequisites} /></p>
                   </div>
                   <details>
                     <summary>一级方法提示</summary>
-                    <p>{item.method}</p>
+                    <p><MathText text={item.method} /></p>
                   </details>
                   <div className="assessment-links">
                     {target && (
                       <button type="button" onClick={() => goToModule(target.id)}>
-                        回到：{target.title}
+                        回到：<MathText text={target.title} />
                       </button>
                     )}
                     {sourceMaterial && (
@@ -1063,6 +1171,7 @@ export default function StudyGuide() {
               );
             })}
           </div>
+          <AssessmentCoverage onOpenModule={goToModule} />
           <div className="archive-grade">
             <b>2025 存档评分结构</b>
             <div>
@@ -1090,9 +1199,17 @@ export default function StudyGuide() {
               <b>{IS_HOSTED_BUILD ? "完整课程资料已随学习树发布" : "课程资料可在本机直接打开"}</b>
               <p>
                 {IS_HOSTED_BUILD
-                  ? "依据课程方的公开使用授权，课件、作业、答案、教学计划截图和参考资料均保留入口；核心中文教学内容无需登录即可使用。"
-                  : "课件、作业、答案和本地 PDF 都由本网页统一索引；核心中文教学内容不依赖登录或联网。"}
+                  ? "依据课程方的公开使用授权，课件、作业、答案、教学计划截图和参考资料均保留入口。每份课件同时提供老师的英文原始文件，以及按原页穿插中文翻译和难点解释的逐页精讲版。"
+                  : "课件、作业、答案和本地 PDF 都由本网页统一索引。每份课件同时保留老师的英文原始文件，以及按原页穿插中文翻译和难点解释的逐页精讲版。"}
               </p>
+              <a
+                className="materials-manifest-link"
+                href={localAssetHref("/materials/course-materials-manifest.json")}
+                target="_blank"
+                rel="noreferrer"
+              >
+                查看材料版本说明与完整文件清单 ↗
+              </a>
             </div>
           </div>
           <div className="resource-table-wrap">
@@ -1102,26 +1219,38 @@ export default function StudyGuide() {
                   <th>文件</th>
                   <th>对应课程</th>
                   <th>内容与使用方式</th>
-                  <th>打开</th>
+                  <th>版本与下载</th>
                 </tr>
               </thead>
               <tbody>
                 {materials.map((item) => (
                   <tr key={item.id}>
-                    <td>
-                      <b>{item.label}</b>
+                    <td data-label="文件">
+                      <b><MathText text={item.label} /></b>
                       <small>{item.pages}</small>
                     </td>
-                    <td>{item.maps}</td>
-                    <td>{item.note}</td>
-                    <td>
-                      <a
-                        href={localAssetHref(item.href)}
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        打开文件 ↗
-                      </a>
+                    <td data-label="对应课程"><MathText text={item.maps} /></td>
+                    <td data-label="内容与使用方式"><MathText text={item.note} /></td>
+                    <td data-label="版本与下载">
+                      <div className="resource-actions">
+                        <a
+                          href={localAssetHref(item.href)}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          {"bilingualHref" in item ? "英文原始课件" : "打开文件"} ↗
+                        </a>
+                        {"bilingualHref" in item && item.bilingualHref && (
+                          <a
+                            className="bilingual-resource-link"
+                            href={localAssetHref(item.bilingualHref)}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            中英逐页精讲 ↗
+                          </a>
+                        )}
+                      </div>
                     </td>
                   </tr>
                 ))}
@@ -1132,12 +1261,12 @@ export default function StudyGuide() {
             {readings.map((item) => (
               <article className="reading-card" key={item.title}>
                 <span>{item.level}</span>
-                <h2>{item.title}</h2>
+                <h2><MathText text={item.title} /></h2>
                 <div className="reading-route">
                   <b>只走这条阅读路线</b>
-                  <p>{item.route}</p>
+                  <p><MathText text={item.route} /></p>
                 </div>
-                <p>{item.why}</p>
+                <p><MathText text={item.why} /></p>
                 <a href={localAssetHref(item.href)} target="_blank" rel="noreferrer">
                   打开参考资料 <span>↗</span>
                 </a>
@@ -1170,10 +1299,10 @@ export default function StudyGuide() {
             {studyPlans.map((plan, index) => (
               <article className={index === 0 ? "plan-card featured" : "plan-card"} key={plan.id}>
                 <span>路线 {String(index + 1).padStart(2, "0")}</span>
-                <h2>{plan.title}</h2>
-                <strong>{plan.pace}</strong>
-                <p>{plan.bestFor}</p>
-                <div>{plan.rhythm}</div>
+                <h2><MathText text={plan.title} /></h2>
+                <strong><MathText text={plan.pace} /></strong>
+                <p><MathText text={plan.bestFor} /></p>
+                <div><MathText text={plan.rhythm} /></div>
               </article>
             ))}
           </div>
@@ -1212,8 +1341,10 @@ export default function StudyGuide() {
                       >
                         <time>{formatDate(review.due)}</time>
                         <div>
-                          <b>{review.label} · {reviewModule?.title}</b>
-                          <p>{review.task}</p>
+                          <b>
+                            {review.label} · {reviewModule && <MathText text={reviewModule.title} />}
+                          </b>
+                          <p><MathText text={review.task} /></p>
                         </div>
                         <div className="review-actions">
                           <button
@@ -1329,7 +1460,7 @@ export default function StudyGuide() {
                     placeholder="例如：巨正则指数必须是 −β(E−μN)"
                   />
                 </label>
-                <div className="cause-tip">{causeHelp[errorDraft.cause]}</div>
+                <div className="cause-tip"><MathText text={causeHelp[errorDraft.cause]} /></div>
                 <button
                   className="button primary"
                   type="button"
@@ -1377,17 +1508,27 @@ export default function StudyGuide() {
                 <article key={item.week}>
                   <span>{item.week}</span>
                   <b>{item.chinese}</b>
-                  <p>{item.topic}</p>
+                  <p><MathText text={item.topic} /></p>
                 </article>
               ))}
             </div>
           </section>
 
+          <CloudSyncPanel
+            localState={state}
+            selectedModuleId={selected.id}
+            onApplyCloud={(nextState) => {
+              setState(nextState);
+              setSelectedId(nextState.lastModule);
+            }}
+            onSelectModule={goToModule}
+          />
+
           <section className="data-controls">
             <div>
-              <b>你的记录只在当前浏览器本地</b>
+              <b>本机记录始终是默认安全副本</b>
               <p>
-                包括 gate 证据、节点状态、诊断、笔记、复习队列和错因；不上传服务器。
+                包括 gate 证据、节点状态、诊断、笔记、复习队列和错因；只有在上方明确选择“本机 → 云端”时，支持的字段才会上传。
                 {importStatus && <span className="import-status">{importStatus}</span>}
               </p>
             </div>
@@ -1436,25 +1577,25 @@ export default function StudyGuide() {
                   <b>{item.severity}</b>
                 </div>
                 <div className="errata-content">
-                  <div className="errata-source">{item.source}</div>
+                  <div className="errata-source"><MathText text={item.source} /></div>
                   <h2>老师原资料</h2>
-                  <p>{item.original}</p>
+                  <p><MathText text={item.original} /></p>
                   <div className="errata-grid">
                     <div>
                       <span>问题在哪里</span>
-                      <p>{item.problem}</p>
+                      <p><MathText text={item.problem} /></p>
                     </div>
                     <div className="corrected">
                       <span>网页采用的标准更正</span>
-                      <p>{item.corrected}</p>
+                      <p><MathText text={item.corrected} /></p>
                     </div>
                     <div>
                       <span>30 秒快速验证</span>
-                      <p>{item.verify}</p>
+                      <p><MathText text={item.verify} /></p>
                     </div>
                     <div>
                       <span>考场建议</span>
-                      <p>{item.exam}</p>
+                      <p><MathText text={item.exam} /></p>
                     </div>
                   </div>
                 </div>
@@ -1469,7 +1610,7 @@ export default function StudyGuide() {
           <span className="brand-mark small">Σ</span>
           <p>
             <b>PHY301 重修通关树</b>
-            <small>本地学习版 · 内容可离线阅读 · 进度只保存在浏览器</small>
+            <small>本地优先 · 内容可离线阅读 · 可选同源云同步</small>
           </p>
         </div>
         <p>
@@ -1493,8 +1634,8 @@ function PageHeading({
   return (
     <header className="page-heading">
       <p className="eyebrow">{kicker}</p>
-      <h1>{title}</h1>
-      <p>{description}</p>
+      <h1><MathText text={title} /></h1>
+      <p><MathText text={description} /></p>
     </header>
   );
 }
@@ -1513,6 +1654,7 @@ function ModuleReader({
   onGateFail,
   onNote,
   onNavigate,
+  onAsk,
 }: {
   module: StudyModule;
   index: number;
@@ -1527,6 +1669,7 @@ function ModuleReader({
   onGateFail: () => void;
   onNote: (note: string) => void;
   onNavigate: (id: string) => void;
+  onAsk: () => void;
 }) {
   const phase = phaseOf(module);
   const dependencyModules = (moduleDependencies[module.id] ?? [])
@@ -1556,15 +1699,15 @@ function ModuleReader({
         <div className="module-title-row">
           <span className="module-big-index">{String(index).padStart(2, "0")}</span>
           <div>
-            <h1>{module.title}</h1>
+            <h1><MathText text={module.title} /></h1>
             <p>{module.english}</p>
           </div>
         </div>
         <div className="module-goal">
           <span>本节只解决</span>
-          <p>{module.goal}</p>
+          <p><MathText text={module.goal} /></p>
         </div>
-        <p className="module-why">{module.why}</p>
+        <p className="module-why"><MathText text={module.why} /></p>
       </header>
 
       <section className="readiness-grid">
@@ -1594,7 +1737,7 @@ function ModuleReader({
           </div>
           <ul>
             {module.prerequisites.map((item) => (
-              <li key={item}>{item}</li>
+              <li key={item}><MathText text={item} /></li>
             ))}
           </ul>
           <p>若其中一项完全陌生，先补对应短支线；“看过”不等于会做。</p>
@@ -1604,7 +1747,7 @@ function ModuleReader({
           <h2>你应能独立做到</h2>
           <ul>
             {module.outcomes.map((item) => (
-              <li key={item}>{item}</li>
+              <li key={item}><MathText text={item} /></li>
             ))}
           </ul>
         </article>
@@ -1614,9 +1757,22 @@ function ModuleReader({
         <span>老师材料锚点</span>
         <div>
           {module.sourceRefs.map((source) => (
-            <b key={source}>{source}</b>
+            <b key={source}><MathText text={source} /></b>
           ))}
         </div>
+      </section>
+
+      <section className="module-question-route" aria-labelledby="module-question-title">
+        <div>
+          <span>卡住就问 · 不跳过当前节点</span>
+          <h2 id="module-question-title">把问题绑在这一节，回来时仍从这里继续</h2>
+          <p>
+            记录问题不会改变进度、勾选 gate 或重排学习树；先写下一个具体疑问，再继续当前顺序。
+          </p>
+        </div>
+        <button type="button" onClick={onAsk}>
+          记录本节点问题 →
+        </button>
       </section>
 
       <section className="concept-stack">
@@ -1634,18 +1790,18 @@ function ModuleReader({
                 {String(conceptIndex + 1).padStart(2, "0")}
               </span>
               <div>
-                <small>{concept.label} · 建议 35–60 分钟</small>
-                <h3>{concept.title}</h3>
+                <small><MathText text={concept.label} /> · 建议 35–60 分钟</small>
+                <h3><MathText text={concept.title} /></h3>
               </div>
             </div>
             <div className="intuition-box">
               <span>先抓直觉</span>
-              <p>{concept.intuition}</p>
+              <p><MathText text={concept.intuition} /></p>
             </div>
             {concept.formula && (
               <div className="concept-formula">
-                <code>{concept.formula}</code>
-                {concept.formulaNote && <p>{concept.formulaNote}</p>}
+                <MathText text={concept.formula} display />
+                {concept.formulaNote && <p><MathText text={concept.formulaNote} /></p>}
               </div>
             )}
             <details className="lesson-details" open={mode === "full"}>
@@ -1657,7 +1813,7 @@ function ModuleReader({
                 {concept.explanation.map((paragraph, paragraphIndex) => (
                   <li key={paragraph}>
                     <span>{String(paragraphIndex + 1).padStart(2, "0")}</span>
-                    <p>{paragraph}</p>
+                    <p><MathText text={paragraph} /></p>
                   </li>
                 ))}
               </ol>
@@ -1675,7 +1831,7 @@ function ModuleReader({
                   {concept.steps.map((step, stepIndex) => (
                     <li key={step}>
                       <span>{stepIndex + 1}</span>
-                      <p>{step}</p>
+                      <p><MathText text={step} /></p>
                     </li>
                   ))}
                 </ol>
@@ -1690,12 +1846,12 @@ function ModuleReader({
             {concept.example && (
               <div className="worked-example">
                 <span>完整例题 · 先在纸上写第一步</span>
-                <h4>{concept.example.question}</h4>
+                <h4><MathText text={concept.example.question} /></h4>
                 <details>
                   <summary>我已经尝试过，展开分步解答</summary>
                   <ol>
                     {concept.example.solution.map((step) => (
-                      <li key={step}>{step}</li>
+                      <li key={step}><MathText text={step} /></li>
                     ))}
                   </ol>
                 </details>
@@ -1707,7 +1863,7 @@ function ModuleReader({
                   <summary>常见坑 · 提交答案前检查</summary>
                   <ul>
                     {concept.pitfalls.map((pitfall) => (
-                      <li key={pitfall}>{pitfall}</li>
+                      <li key={pitfall}><MathText text={pitfall} /></li>
                     ))}
                   </ul>
                 </details>
@@ -1715,10 +1871,10 @@ function ModuleReader({
               {concept.check && (
                 <div className="self-check">
                   <span>闭卷自测</span>
-                  <p>{concept.check.question}</p>
+                  <p><MathText text={concept.check.question} /></p>
                   <details>
                     <summary>说出答案后再展开</summary>
-                    <p>{concept.check.answer}</p>
+                    <p><MathText text={concept.check.answer} /></p>
                   </details>
                 </div>
               )}
@@ -1741,17 +1897,17 @@ function ModuleReader({
               <details key={deepDive.title} open={mode === "full"}>
                 <summary>
                   <div>
-                    <b>{deepDive.title}</b>
-                    <p>{deepDive.summary}</p>
+                    <b><MathText text={deepDive.title} /></b>
+                    <p><MathText text={deepDive.summary} /></p>
                   </div>
                   <span>展开支线</span>
                 </summary>
                 <div className="deep-dive-body">
                   {deepDive.paragraphs.map((paragraph) => (
-                    <p key={paragraph}>{paragraph}</p>
+                    <p key={paragraph}><MathText text={paragraph} /></p>
                   ))}
                   {deepDive.formulas?.map((formula) => (
-                    <code key={formula}>{formula}</code>
+                    <MathText key={formula} text={formula} display />
                   ))}
                 </div>
               </details>
@@ -1770,12 +1926,12 @@ function ModuleReader({
           {module.practice.map((practice, practiceIndex) => (
             <article key={practice.title}>
               <span>练习 {String(practiceIndex + 1).padStart(2, "0")}</span>
-              <h3>{practice.title}</h3>
-              <p>{practice.instruction}</p>
-              {practice.source && <small>来源：{practice.source}</small>}
+              <h3><MathText text={practice.title} /></h3>
+              <p><MathText text={practice.instruction} /></p>
+              {practice.source && <small>来源：<MathText text={practice.source} /></small>}
               <details>
                 <summary>完成后核对结构</summary>
-                <p>{practice.answer}</p>
+                <p><MathText text={practice.answer} /></p>
               </details>
             </article>
           ))}
@@ -1786,7 +1942,7 @@ function ModuleReader({
         <div className="gate-flag">MASTERY GATE</div>
         <div className="gate-main">
           <span>只有主动输出才算通过</span>
-          <h2>{module.gate.prompt}</h2>
+          <h2><MathText text={module.gate.prompt} /></h2>
           <div className="gate-criteria">
             {module.gate.criteria.map((criterion, criterionIndex) => (
               <label key={criterion}>
@@ -1797,7 +1953,7 @@ function ModuleReader({
                     onGateCheck(criterionIndex, event.target.checked)
                   }
                 />
-                <span>{criterion}</span>
+                <span><MathText text={criterion} /></span>
               </label>
             ))}
           </div>

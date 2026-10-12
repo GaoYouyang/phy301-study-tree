@@ -28,6 +28,38 @@ test("server-renders the complete PHY301 study guide", async () => {
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton|Building your site/i);
 });
 
+test("mathematical expressions render as accessible KaTeX instead of raw notation", async () => {
+  const [response, packageJson, component] = await Promise.all([
+    render(),
+    readFile(new URL("../package.json", import.meta.url), "utf8"),
+    readFile(new URL("../app/StudyGuide.tsx", import.meta.url), "utf8"),
+  ]);
+  const html = await response.text();
+
+  assert.match(packageJson, /"katex": "0\.19\.0"/);
+  assert.match(packageJson, /"audit:math": "tsx scripts\/audit-math-rendering\.ts"/);
+  assert.match(html, /class="katex"/);
+  assert.match(html, /<math xmlns="http:\/\/www\.w3\.org\/1998\/Math\/MathML"/);
+  assert.match(html, /annotation encoding="application\/x-tex"/);
+  assert.match(html, /class="math-text math-text-display"/);
+  assert.doesNotMatch(html, /class="katex-error"/);
+
+  for (const requiredRenderPath of [
+    "item.question",
+    "item.formula",
+    "definition",
+    "item.method",
+    "item.corrected",
+    "concept.explanation",
+    "concept.example.solution",
+    "concept.check.answer",
+    "practice.answer",
+    "module.gate.criteria",
+  ]) {
+    assert.match(component, new RegExp(requiredRenderPath.replace(".", "\\.")));
+  }
+});
+
 test("course graph covers all modules and every assessment target exists", async () => {
   const source = await readFile(
     new URL("../app/course-data.ts", import.meta.url),
@@ -88,6 +120,63 @@ test("course graph covers all modules and every assessment target exists", async
   }
 });
 
+test("all 65 assessment subparts have unique, inspectable knowledge routes", async () => {
+  const [coverage, courseData, component] = await Promise.all([
+    readFile(new URL("../app/assessment-coverage.ts", import.meta.url), "utf8"),
+    readFile(new URL("../app/course-data.ts", import.meta.url), "utf8"),
+    readFile(new URL("../app/AssessmentCoverage.tsx", import.meta.url), "utf8"),
+  ]);
+
+  const partIds = [
+    ...coverage.matchAll(/^\s{8}id:\s*"((?:PS[123]|MID)-Q[^"]+)"/gm),
+  ].map((match) => match[1]);
+  assert.equal(partIds.length, 65);
+  assert.equal(new Set(partIds).size, 65);
+  assert.deepEqual(
+    Object.fromEntries(
+      ["PS1", "PS2", "PS3", "MID"].map((group) => [
+        group,
+        partIds.filter((id) => id.startsWith(`${group}-`)).length,
+      ]),
+    ),
+    { PS1: 15, PS2: 16, PS3: 19, MID: 15 },
+  );
+
+  const moduleIds = new Set(
+    [...courseData.matchAll(/^\s{4}id:\s*"([a-z][a-z-]+)"/gm)].map(
+      (match) => match[1],
+    ),
+  );
+  const targets = [
+    ...coverage.matchAll(/^\s{8}target:\s*"([a-z][a-z-]+)"/gm),
+  ].map((match) => match[1]);
+  assert.equal(targets.length, 65);
+  for (const target of targets) {
+    assert.ok(moduleIds.has(target), `missing subpart module target: ${target}`);
+  }
+
+  for (const requiredField of ["task", "pass", "questionPage", "solutionPage"]) {
+    assert.equal(
+      [...coverage.matchAll(new RegExp(`^\\s{8}${requiredField}:`, "gm"))].length,
+      65,
+      `every subpart needs ${requiredField}`,
+    );
+  }
+  const coverageLinks = [
+    ...coverage.matchAll(/(?:questionHref|solutionHref):\s*"\/([^"]+)"/g),
+  ].map((match) => match[1]);
+  assert.equal(coverageLinks.length, 8);
+  for (const coverageLink of coverageLinks) {
+    await access(new URL(`../public/${coverageLink}`, import.meta.url));
+  }
+  assert.match(component, /assessmentCoverageGroups\.map/);
+  assert.match(component, /onOpenModule\(target\.id\)/);
+  assert.match(component, /65 个小问逐项覆盖矩阵/);
+  for (const mathRenderPath of ["part.task", "part.pass", "part.caution"]) {
+    assert.match(component, new RegExp(`MathText text=\\{${mathRenderPath}\\}`));
+  }
+});
+
 test("course evidence audit preserves teacher references and known answer corrections", async () => {
   const source = await readFile(
     new URL("../app/course-data.ts", import.meta.url),
@@ -113,6 +202,9 @@ test("course evidence audit preserves teacher references and known answer correc
     "errata-midterm-factorial",
     "errata-gaussian",
     "errata-bose-cv",
+    "errata-ps2-phase-measure",
+    "errata-midterm-number-sign",
+    "errata-ps1-relativistic-h",
   ]) {
     assert.ok(errataIds.includes(requiredId), `missing erratum: ${requiredId}`);
   }
@@ -129,6 +221,12 @@ test("course evidence audit preserves teacher references and known answer correc
   assert.match(source, /Week 1–4/);
   assert.match(source, /Week 5–6/);
   assert.match(source, /Q2 衔接 Week 10/);
+  assert.match(source, /id: "PS1-Q3"[\s\S]{0,280}target: "classical-gases"/);
+  assert.match(source, /id: "MID-Q4"[\s\S]{0,280}target: "interactions-vdw"/);
+  assert.match(source, /课件 9 slides 19–35/);
+  assert.match(source, /课件 7 slides 8–9 经典统计总结与量子区间边界/);
+  assert.match(source, /Slides 16–18：非考核拓展路线/);
+  assert.doesNotMatch(source, /slides 18–35 Fermi|课件 7 slide 19 经典\/量子分界回顾/);
 });
 
 test("all published course links resolve and sensitive runtime files stay ignored", async () => {
@@ -140,7 +238,7 @@ test("all published course links resolve and sensitive runtime files stay ignore
 
   const localLinks = [
     ...source.matchAll(
-      /href:\s*"\/((?:materials|readings|course-plan)\/[^"]+)"/g,
+      /(?:href|bilingualHref):\s*"\/((?:materials|readings|course-plan)\/[^"]+)"/g,
     ),
   ].map((match) => match[1]);
   assert.ok(localLinks.length >= 19);
@@ -153,6 +251,27 @@ test("all published course links resolve and sensitive runtime files stay ignore
       import.meta.url,
     ),
   );
+
+  const bilingualLinks = [
+    ...source.matchAll(
+      /bilingualHref:\s*"\/(materials\/lecture-[^"]+_中英逐页精讲\.pptx)"/g,
+    ),
+  ].map((match) => match[1]);
+  assert.equal(bilingualLinks.length, 10);
+
+  const manifestPath = new URL(
+    "../public/materials/course-materials-manifest.json",
+    import.meta.url,
+  );
+  const manifest = JSON.parse(await readFile(manifestPath, "utf8"));
+  assert.equal(manifest.course, "PHY301");
+  assert.equal(manifest.lectures.length, 10);
+  for (const lecture of manifest.lectures) {
+    assert.match(lecture.original, /^lecture-\d{2}\.pptx$/);
+    assert.match(lecture.bilingual, /^lecture-\d{2}_中英逐页精讲\.pptx$/);
+    await access(new URL(`../public/materials/${lecture.original}`, import.meta.url));
+    await access(new URL(`../public/materials/${lecture.bilingual}`, import.meta.url));
+  }
 
   assert.doesNotMatch(gitignore, /\/public\/materials\//);
   assert.doesNotMatch(gitignore, /\/public\/readings\//);

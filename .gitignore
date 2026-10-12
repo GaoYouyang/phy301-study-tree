@@ -13,6 +13,10 @@
 # testing
 /coverage
 
+# python runtime artifacts
+__pycache__/
+*.py[cod]
+
 # next.js
 /.next/
 /.vinext/
@@ -37,6 +41,11 @@ credentials.json
 *.key
 *.p12
 *.pfx
+# Course Hub secrets are generated only on the server.
+api-token
+site-password
+.course-hub.htpasswd
+.site-password*
 
 # vercel
 .vercel
@@ -50,6 +59,7 @@ next-env.d.ts
 /work/
 /tmp/
 /.codex-build/
+/.codex-local/
 *.db
 *.db-shm
 *.db-wal

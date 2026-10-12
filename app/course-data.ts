@@ -264,9 +264,9 @@ export const formulaMap = [
   {
     family: "NPT",
     name: "Gibbs 正则系综",
-    formula: "Δ(T,P,N) = ∫dV e^(−βPV) Z(T,V,N);  G = −kBT ln Δ",
+    formula: "Δ(T,P,N) = ∫(dV/V0) e^(−βPV) Z(T,V,N);  G = −kBT ln Δ",
     use: "温度、压强、粒子数固定而体积涨落。",
-    warning: "不要把这里的 Δ 与微小变化符号混为一谈。",
+    warning: "连续 V 积分需约定参考体积/测度；它只影响 G 的加法常数。也不要把 Δ 与微小变化符号混为一谈。",
   },
   {
     family: "巨正则",
@@ -280,7 +280,7 @@ export const formulaMap = [
     name: "巨势与粒子数",
     formula: "ΦG = −kBT ln Ξ = −PV;  ⟨N⟩ = (1/β)∂μ ln Ξ",
     use: "从 Ξ 求压强、平均粒子数和粒子涨落。",
-    warning: "巨势不是 Gibbs 自由能，虽然部分课件都写 G。",
+    warning: "ΦG=−PV 假定均匀、广延的 bulk thermodynamic limit；巨势也不是 Gibbs 自由能，虽然部分课件都写 G。",
   },
   {
     family: "量子统计",
@@ -350,16 +350,96 @@ export const glossary = [
 ];
 
 export const materials = [
-  { id: "L1", label: "课件 1", href: "/materials/lecture-01.pptx", pages: "25 slides", maps: "Week 1", note: "课程要求、热力学回顾、动理学与 Maxwell–Boltzmann" },
-  { id: "L2", label: "课件 2", href: "/materials/lecture-02.pptx", pages: "16 slides", maps: "Week 2", note: "相空间、系综、Liouville、时间反演与遍历性" },
-  { id: "L3", label: "课件 3", href: "/materials/lecture-03.pptx", pages: "27 slides", maps: "Week 3–4", note: "微正则、两能级、理想气体、Gibbs paradox" },
-  { id: "L4", label: "课件 4", href: "/materials/lecture-04.pptx", pages: "13 slides", maps: "Week 5", note: "正则系综、两能级、理想气体、equipartition" },
-  { id: "L5", label: "课件 5", href: "/materials/lecture-05.pptx", pages: "13 slides", maps: "Week 5–6", note: "slides 2–7 延续正则；slides 8–13 进入巨正则" },
-  { id: "L6", label: "课件 6", href: "/materials/lecture-06.pptx", pages: "29 slides", maps: "Week 7", note: "van der Waals、Ising、Landau、超导与一维 Ising" },
-  { id: "L7", label: "课件 7", href: "/materials/lecture-07.pptx", pages: "19 slides", maps: "Week 8–9", note: "经典总结、量子形式、密度矩阵、量子系综" },
-  { id: "L8", label: "课件 8", href: "/materials/lecture-08.pptx", pages: "19 slides", maps: "Week 10", note: "全同粒子、BE/FD/MB 统计与占据数" },
-  { id: "L9", label: "课件 9", href: "/materials/lecture-09.pptx", pages: "35 slides", maps: "Week 11–12", note: "BEC、光子、声子、Fermi 气体与 Pauli 顺磁" },
-  { id: "L10", label: "课件 10", href: "/materials/lecture-10.pptx", pages: "18 slides", maps: "Week 13", note: "Brownian、扩散、Langevin、Fokker–Planck" },
+  {
+    id: "L1",
+    label: "课件 1",
+    href: "/materials/lecture-01.pptx",
+    bilingualHref: "/materials/lecture-01_中英逐页精讲.pptx",
+    pages: "25 张原始页",
+    maps: "Week 1",
+    note: "课程要求、热力学回顾、动理学与 Maxwell–Boltzmann",
+  },
+  {
+    id: "L2",
+    label: "课件 2",
+    href: "/materials/lecture-02.pptx",
+    bilingualHref: "/materials/lecture-02_中英逐页精讲.pptx",
+    pages: "16 张原始页",
+    maps: "Week 2",
+    note: "相空间、系综、Liouville、时间反演与遍历性",
+  },
+  {
+    id: "L3",
+    label: "课件 3",
+    href: "/materials/lecture-03.pptx",
+    bilingualHref: "/materials/lecture-03_中英逐页精讲.pptx",
+    pages: "27 张原始页",
+    maps: "Week 3–4",
+    note: "微正则、两能级、理想气体、Gibbs paradox",
+  },
+  {
+    id: "L4",
+    label: "课件 4",
+    href: "/materials/lecture-04.pptx",
+    bilingualHref: "/materials/lecture-04_中英逐页精讲.pptx",
+    pages: "13 张原始页",
+    maps: "Week 5",
+    note: "正则系综、两能级、理想气体、equipartition",
+  },
+  {
+    id: "L5",
+    label: "课件 5",
+    href: "/materials/lecture-05.pptx",
+    bilingualHref: "/materials/lecture-05_中英逐页精讲.pptx",
+    pages: "13 张原始页",
+    maps: "Week 5–6",
+    note: "slides 2–7 延续正则；slides 8–13 进入巨正则",
+  },
+  {
+    id: "L6",
+    label: "课件 6",
+    href: "/materials/lecture-06.pptx",
+    bilingualHref: "/materials/lecture-06_中英逐页精讲.pptx",
+    pages: "29 张原始页",
+    maps: "Week 7",
+    note: "van der Waals、Ising、Landau、超导与一维 Ising",
+  },
+  {
+    id: "L7",
+    label: "课件 7",
+    href: "/materials/lecture-07.pptx",
+    bilingualHref: "/materials/lecture-07_中英逐页精讲.pptx",
+    pages: "19 张原始页",
+    maps: "Week 8–9",
+    note: "经典总结、量子形式、密度矩阵、量子系综",
+  },
+  {
+    id: "L8",
+    label: "课件 8",
+    href: "/materials/lecture-08.pptx",
+    bilingualHref: "/materials/lecture-08_中英逐页精讲.pptx",
+    pages: "19 张原始页",
+    maps: "Week 10",
+    note: "全同粒子、BE/FD/MB 统计与占据数",
+  },
+  {
+    id: "L9",
+    label: "课件 9",
+    href: "/materials/lecture-09.pptx",
+    bilingualHref: "/materials/lecture-09_中英逐页精讲.pptx",
+    pages: "35 张原始页",
+    maps: "Week 11–12",
+    note: "BEC、光子、声子、Fermi 气体与 Pauli 顺磁",
+  },
+  {
+    id: "L10",
+    label: "课件 10",
+    href: "/materials/lecture-10.pptx",
+    bilingualHref: "/materials/lecture-10_中英逐页精讲.pptx",
+    pages: "18 张原始页",
+    maps: "Week 13",
+    note: "Brownian、扩散、Langevin、Fokker–Planck",
+  },
   { id: "PS1", label: "作业 1", href: "/materials/problem-set-01.pdf", pages: "2 pages", maps: "Week 1–4", note: "Q2 直接对应 Week 1 MB；其余覆盖 Liouville、微正则气体与振子" },
   { id: "PS1S", label: "作业 1 答案", href: "/materials/problem-set-01-solution.pdf", pages: "12 pages", maps: "Week 1–4", note: "做完再看；含数处已在勘误区纠正的符号/归一化问题" },
   { id: "PS2", label: "作业 2", href: "/materials/problem-set-02.pdf", pages: "3 pages", maps: "Week 5–7；Q2 衔接 Week 10", note: "正则振子、巨正则吸附、lattice gas/Ising；量子振子按正式计划属 Week 10" },
@@ -461,7 +541,7 @@ export const assessmentMap = [
     id: "PS1-Q3",
     title: "作业 1 · Q3 一维相对论理想气体",
     prerequisites: "微正则态数、Stirling、热力学偏导",
-    target: "microcanonical",
+    target: "classical-gases",
     method: "先声明累计体积 Γ(E) 还是壳密度 ω(E)，并用 hᴺ 无量纲化 → S=kBlnΩ → 从 dS 系数读 T、P、μ → 求热容和边缘分布",
   },
   {
@@ -482,8 +562,8 @@ export const assessmentMap = [
     id: "PS2-Q2",
     title: "作业 2 · Q2 量子谐振子（计划 Week 10；期中已出现同结构）",
     prerequisites: "几何级数、能级、低温/高温极限",
-    target: "canonical",
-    method: "先用 Week 5 的 Z 流水线算代数；学完 Week 9–10 后再用 trace/量子系综解释：单振子几何级数 → N 次方 → −∂β ln Z → C 与 p(n)",
+    target: "quantum-bridge",
+    method: "先完成量子桥，再回用 Week 5 的 Z 流水线：能级谱 → 单振子几何级数 → N 次方 → −∂β ln Z → C 与 p(n)；不要在 ket、能级和 ℏ 尚陌生时硬做",
   },
   {
     id: "PS2-Q3",
@@ -552,7 +632,7 @@ export const assessmentMap = [
     id: "MID-Q4",
     title: "期中 · Q4 mean-field van der Waals 与临界涨落",
     prerequisites: "mean field、excluded volume、F 的体积导数、压缩率",
-    target: "phase-transition",
+    target: "interactions-vdw",
     method: "均匀密度近似相互作用 → 修正有效体积 → F→P → 用巨势导出 Var(N) 与响应函数发散",
   },
 ];
@@ -1192,7 +1272,8 @@ export const modules: StudyModule[] = [
         title: "补课：时间反演与热力学不可逆并不直接矛盾",
         summary: "微观方程常可逆，宏观过程却几乎总朝熵增方向。",
         paragraphs: [
-          "把所有动量反向，许多经典轨迹可倒放；但随机准备一个宏观态时，落在能精确倒放的特殊微观态集合的概率极小。",
+          "把所有动量反向，许多经典 Hamilton 轨迹可倒放；更准确地说，时间反演还要同时反转所有在时间反演下为奇的外场。固定不变的磁场会破坏这种朴素的 t→−t 对称，弱相互作用也可真正违反 T 对称。",
+          "对那些满足时间反演对称的微观方程，随机准备一个宏观态时，落在能精确倒放的特殊微观态集合的概率仍极小。",
           "熵减轨迹不是数学上绝对不存在，而是在 10²³ 粒子系统中不可思议地罕见。",
           "Liouville 细粒度熵守恒与热力学熵增之间还涉及 coarse graining；课程以物理直觉和 ensemble 描述为主。",
         ],
@@ -1324,10 +1405,11 @@ export const modules: StudyModule[] = [
         explanation: [
           "单原子理想气体每粒子有 px²,py²,pz² 三个二次动量项，因此平均动能 3kBT/2。",
           "谐振子每个空间方向还有一个 q² 势能项，因此一维振子平均能量 kBT。",
-          "气体分子碰壁的动量通量给压强；结合 ⟨mv²/2⟩=3kBT/2 得 PV=NkBT。",
+          "取垂直于墙面的 x 方向：单个粒子一次弹性碰撞传给墙 2mvx，往返同一面平均间隔 2L/|vx|，故时间平均力为 mvx²/L。对全部粒子求和并除以墙面积 A，得到 P=(N/V)m⟨vx²⟩。",
+          "各向同性给 ⟨vx²⟩=⟨v²⟩/3；再用 ⟨mv²/2⟩=3kBT/2，便得到 PV=NkBT。这样压强是碰壁动量通量，状态方程不是额外背出的公理。",
           "equipartition 是经典、高温、能谱近连续时的结果；量子低温会“冻结”自由度。",
         ],
-        formula: "each quadratic term → kBT/2；  Uideal monoatomic=3NkBT/2",
+        formula: "P=(N/V)m⟨v_x²⟩=(N/3V)m⟨v²⟩;  U=3NkBT/2;  PV=NkBT",
         example: {
           question: "N 个三维经典谐振子总平均能量是多少？",
           solution: ["每个振子 3 个动量二次项 + 3 个位置二次项，共 6 个", "每项 kBT/2", "每振子 3kBT，总能量 3NkBT"],
@@ -1733,7 +1815,8 @@ export const modules: StudyModule[] = [
           "球体积随 E^{3N/2}，所以 lnΩ 中出现 (3N/2)lnE；这一步决定 equipartition。",
           "总态数含 Vᴺ、球体积、1/(N!h³ᴺ)。对数后分别贡献体积、能量与 indistinguishability 项。",
         ],
-        formula: "Ω(E,V,N) ∝ [Vᴺ/(N!h³ᴺ)] (2mE)^{3N/2}/Γ(3N/2+1)",
+        formula: "Φ(E,V,N)=[Vᴺ/(N!h³ᴺ)](2πmE)^{3N/2}/Γ(3N/2+1)",
+        formulaNote: "这里 Φ 是 H≤E 的累计无量纲态数；π^{3N/2} 来自 3N 维球体积，不能在涉及 N 导数时藏进一个与 N 有关的“常数”。",
         steps: ["位置积分→Vᴺ", "动量约束→高维球", "写球体积", "除 N!h³ᴺ", "再取 ln 与 Stirling"],
         example: {
           question: "为什么理想气体 Ω 对 V 是 Vᴺ？",
@@ -1840,8 +1923,13 @@ export const modules: StudyModule[] = [
         summary: "与理想气体相似，但每个振子同时有 p² 与 q²，所以是 6N 维。",
         paragraphs: [
           "作 canonical scaling P=p/√(mω)、Q=√(mω)q，使 H=(ω/2)Σ(P²+Q²)，且相空间 Jacobian 为 1。",
-          "H≤E 变为半径 √(2E/ω) 的 6N 维球；由球体积得到 Ω∝(2πE/ω)^{3N}/(3N)!。",
-          "S=kBlnΩ 后求 E=3NkBT、C=3NkB；单振子边缘由剩余 N−1 个振子态数比得到 canonical Gaussian。",
+          "H≤E 变为半径 √(2E/ω) 的 6N 维球；由球体积得到老师题目中的几何相空间体积 Ωphase=(2πE/ω)^{3N}/(3N)!，它的单位是 action^{3N}。",
+          "真正放入对数的无量纲计数应写 Γ=Ωphase/h^{3N}。这些振子固定在各自位置、彼此可区分，所以这里不再除 N!；h 只改变熵的加法常数，不改变 E=3NkBT 与 C=3NkB。",
+          "单振子边缘由剩余 N−1 个振子的态数比得到 canonical Gaussian。",
+        ],
+        formulas: [
+          "Ωphase(E)=(2πE/ω)^{3N}/(3N)!",
+          "Γ(E)=Ωphase(E)/h^{3N};  S=kB lnΓ",
         ],
       },
       {
@@ -1901,7 +1989,7 @@ export const modules: StudyModule[] = [
       "能从 system+bath 推出 pi=e^{-βEi}/Z",
       "能写离散、量子与经典连续三种 Z",
       "能从 lnZ 的一阶/二阶导数求平均与涨落",
-      "能完成两能级、经典/量子谐振子、理想气体",
+      "能完成两能级、经典谐振子与理想气体；学完 Week 9 量子桥后再回访量子谐振子",
       "能解释 ensemble equivalence 的大 N 条件",
     ],
     sourceRefs: ["课件 4 slides 1–13", "作业 2 Q1–Q2", "David Tong Ch. 1.3", "MIT OCW L13"],
@@ -1999,10 +2087,11 @@ export const modules: StudyModule[] = [
       },
       {
         title: "经典与量子谐振子：最重要的对照",
-        label: "作业 2",
-        core: true,
+        label: "回访支线 · 学完 Week 9 后",
+        core: false,
         intuition: "高温时能级间隔看不清，量子结果回到经典 equipartition；低温时能隙冻结热容。",
         explanation: [
+          "顺序提醒：第一次学习 Week 5 时，只需掌握经典谐振子的 Gaussian 与 Z 流水线。若 ket、能级、ℏ 仍陌生，请先跳过本卡；完成“量子语言与密度矩阵”后再回来做作业 2 Q2。",
           "经典三维振子每个振子 6 个二次项，Z1∝(kBT/ℏω)³，U1=3kBT。",
           "一维量子振子 En=ℏω(n+1/2)，Z1=e^{-βℏω/2}/(1−e^{-βℏω})。",
           "U1=ℏω/2+ℏω/[e^{βℏω}−1]；高温趋 kBT，低温趋零点能。",
@@ -2026,7 +2115,7 @@ export const modules: StudyModule[] = [
         summary: "课件 4 slide 13 把 equipartition 推广到非纯理想气体形式。",
         paragraphs: [
           "canonical integration by parts 可得到 ⟨xi ∂H/∂xj⟩=kBTδij（边界项消失时）。",
-          "对 H=p²/2m 取 x=p，得到每个动量二次项 kBT；对 harmonic q² 同样成立。",
+          "对 H=p_i²/(2m) 取 x=p_i，得到 ⟨p_i∂H/∂p_i⟩=⟨p_i²/m⟩=kBT，因此该能量项本身是 ⟨p_i²/(2m)⟩=kBT/2；harmonic 的 q_i² 项同理。",
           "应用前必须检查积分边界与分布衰减，不能对任意坐标机械套。",
         ],
       },
@@ -2111,11 +2200,12 @@ export const modules: StudyModule[] = [
         intuition: "外界活塞保持压强 P，系统采用体积 V 要付出 PV 的“体积能量成本”。",
         explanation: [
           "给定 V 的 canonical 权重由 Z(T,V,N) 描述；再让 V 可变并乘 e^{-βPV}。",
-          "NPT partition Δ=∫dV e^{-βPV}Z(T,V,N)。",
+          "取一个固定 reference volume V0 后，严格的无量纲 NPT partition 可写 Δ=∫(dV/V0)e^{-βPV}Z(T,V,N)。课件常把不影响宏观结果的 V0 省略。",
           "G=−kBTlnΔ；平均体积 ⟨V⟩=−(1/β)∂P lnΔ。",
+          "只要 V0 与 P、T、N 无关，更换它只给 G 增加常数，不改变常用的 ⟨V⟩ 导数；若另选含 P 的归一化 convention，则必须把相应有限尺寸导数项一并保留。",
           "体积方差与 isothermal compressibility 关联，结构和 canonical 能量涨落相同。",
         ],
-        formula: "Δ=∫₀∞dV e^{-βPV}Z;  G=−kBTlnΔ;  ⟨V⟩=−β^{-1}∂PlnΔ",
+        formula: "Δ=∫₀∞(dV/V0)e^{-βPV}Z;  G=−kBTlnΔ;  ⟨V⟩=−β^{-1}∂PlnΔ",
         example: {
           question: "为什么权重里是 H+PV 而不是 H−PV？",
           solution: ["系统占据体积 V 要排开外界、付出 PV", "总有效指数为 e^{-β(H+PV)}", "相应 thermodynamic potential 是 G=U−TS+PV"],
@@ -2155,7 +2245,7 @@ export const modules: StudyModule[] = [
         core: true,
         intuition: "μ 出现在 βμN 中，对 μ 求导就把 N 拉下来。",
         explanation: [
-          "巨势 ΦG=−kBTlnΞ；均匀系统 ΦG=−PV。",
+          "巨势 ΦG=−kBTlnΞ；对热力学极限中的均匀、广延 bulk system，Euler relation 给 ΦG=−PV。有限、受限或有显著表面项的系统可有边界修正。",
           "⟨N⟩=(1/β)∂μlnΞ；Var(N)=(1/β²)∂²μlnΞ=(1/β)∂μ⟨N⟩。",
           "粒子数涨落与 isothermal compressibility 相连：Var(N)/⟨N⟩=n kBTκT。",
           "临界点 κT 发散，粒子数/密度涨落也变大。",
@@ -2563,16 +2653,23 @@ export const modules: StudyModule[] = [
         title: "Ginzburg–Landau 与超导只读到哪",
         summary: "课件 slides 22–24 是相变语言的应用，不是先修主干。",
         paragraphs: [
-          "把序参量推广为空间变化的复场 ψ(r)，free energy 加 gradient term 与 electromagnetic coupling。",
-          "Meissner effect、type-II vortex/Abrikosov lattice 是最小化该 free energy 的结果。",
-          "本课主线只需识别 order parameter、symmetry、gradient cost；不需先学完整 gauge field theory。",
+          "超导序参量 ψ(r) 是空间变化的复场：|ψ|² 表示凝聚强度，复相位承载超流/超导电流的信息。Landau 的局域多项式因此还要补上 spatial gradient cost。",
+          "课件采用的 GL free-energy density 可写成普通态 f_n、α|ψ|²、β|ψ|⁴/2、gauge-covariant gradient 与磁场能 B²/(8π) 之和；对 ψ* 与 vector potential 变分可得到序参量和电磁响应方程。",
+          "式中的 m* 与 e* 是 Cooper pair 的有效质量与电荷；星号属于符号名称，不是乘号。课件使用 B²/(8π) 的 Gaussian-unit convention，换 SI 时电磁项写法会改变。",
+          "均匀低场下系统排斥内部磁场，对应 Meissner effect；type-II 超导体允许量子化磁通以 vortex 穿入，多涡旋可排成 Abrikosov lattice。",
+          "本课主线只需识别 complex order parameter、symmetry、gradient cost、Meissner/vortex 这条因果链；不需先学完整 gauge field theory。",
+        ],
+        formulas: [
+          "f_s=f_n+α(T)|ψ|²+[β(T)/2]|ψ|⁴+[1/(2m*)]|(−iℏ∇−e*A/c)ψ|²+B²/(8π)",
+          "ψ(r)=|ψ(r)|e^{iθ(r)}",
         ],
       },
       {
         title: "mean field 何时不可靠",
         summary: "越低维、越靠近 Tc、涨落越强，mean field 越可能失败。",
         paragraphs: [
-          "mean field 忽略 spatial correlations；临界 correlation length 发散，正好违反假设。",
+          "mean field 忽略 spatial correlations；临界点 correlation length 发散、系统失去有限 characteristic length，许多分布转为 power law，正好违反平均场的独立局部涨落假设。",
+          "临界指数不仅取决于平均场代数，还可能随空间维数、序参量对称性和相互作用范围改变；这就是 universality/RG 的入口。",
           "1D Ising 是鲜明反例：mean field 预测有限 Tc，精确 transfer matrix 给 Tc=0。",
           "考试若问课件 mean-field 结果按其框架作答，同时注明 approximation。",
         ],
@@ -2763,7 +2860,7 @@ export const modules: StudyModule[] = [
       {
         title: "Q2 限时",
         instruction: "25 分钟只做 6N 球→Ω→S→E/C，不看 marginal 答案。",
-        answer: "Ω=(2πE/ω)^{3N}/(3N)!（按题目 phase-volume 定义）；E=3NkBT，C=3NkB。",
+        answer: "按题目定义先得几何体积 Ωphase=(2πE/ω)^{3N}/(3N)!；写 entropy 前改用无量纲 Γ=Ωphase/h^{3N}。这些固定位置振子可区分，无 N!；E=3NkBT，C=3NkB。",
         source: "midterm-2025-solution.pdf pp.5–7",
       },
       {
@@ -2785,12 +2882,17 @@ export const modules: StudyModule[] = [
     week: "Week 9 · 先修桥",
     title: "量子语言与密度矩阵从零补齐",
     english: "Quantum formalism and density matrices",
-    hoursCore: 6,
-    hoursFull: 11,
+    hoursCore: 7,
+    hoursFull: 12,
     goal: "只补统计物理真正需要的量子力学：态、基、算符、trace、density matrix 与量子系综。",
     why: "老师的量子部分在几页内跨过一学期量子语言。这里采用 just-in-time 路线，不让无关量子细节拖慢你。",
-    prerequisites: ["canonical 的概率混合", "math-toolbox 的线性代数/多维 Gaussian 入口", "知道复数共轭的基本含义"],
+    prerequisites: [
+      "canonical：会把一组状态按概率加权求平均",
+      "math-toolbox：会读求和、指数和普通二维坐标",
+      "复数共轭、矩阵、eigenvalue、trace 若陌生，先完成本节第 1 卡；不必先重学整门线性代数",
+    ],
     outcomes: [
+      "能手算 2×2 矩阵乘向量、Hermitian conjugate、eigenvalue 与 trace",
       "能读 ket/bra、inner product、eigenstate、completeness",
       "能用 Born rule 与 trace 计算 expectation",
       "能区分 pure state 与 mixed state",
@@ -2800,6 +2902,45 @@ export const modules: StudyModule[] = [
     ],
     sourceRefs: ["课件 7 slides 9–19", "课件 8 slides 15–18", "作业 3 Q1", "MIT OCW L20–22"],
     concepts: [
+      {
+        title: "先补一张 2×2 线性代数地图",
+        label: "零基础入口",
+        core: true,
+        intuition: "量子记号看起来新，但本课大部分操作只是：把状态写成一列数，让矩阵作用在它上面，再把对角线相加。先用 2×2 例子练会动作，再换成 ket 名字。",
+        explanation: [
+          "复数 z=a+ib 的共轭是 z*=a−ib，绝对值平方 |z|²=z*z≥0。对列向量先转成行向量再逐项共轭，得到 Hermitian conjugate，记作 †。",
+          "矩阵乘向量时，每一行分别与列向量做乘加。若 A|a⟩=a|a⟩，作用后方向不变，|a⟩ 是 eigenvector、a 是 eigenvalue。",
+          "Hermitian 矩阵满足 A†=A；它的 eigenvalues 为实数，正适合代表可观测量。对角化就是选用它的 eigenvectors 作为新坐标轴。",
+          "trace 是对角元之和 TrA=Σi Aii，也可写成 Σi⟨i|A|i⟩。换正交基后 trace 不变，所以可挑最容易算的基。",
+          "inner product ⟨φ|ψ⟩ 是复数版点积；orthonormal 表示 ⟨i|j⟩=δij。Σi|i⟩⟨i|=I 就是把任意向量按完整正交基拆开再拼回去。",
+        ],
+        formula: "A†=(A*)ᵀ;  A|a⟩=a|a⟩;  Tr(A)=Σi A_{ii}=Σi⟨i|A|i⟩",
+        formulaNote: "这里的 i 在 Aii 中是索引，在 a+ib 中才是虚数单位；看到同一字母时先看语境。",
+        steps: [
+          "把 ket 暂时写成列向量",
+          "按行乘列计算矩阵作用",
+          "做 † 时先逐项共轭，再转置",
+          "求 trace 只加对角元",
+          "最后再把列向量语言翻回 bra–ket",
+        ],
+        example: {
+          question: "A=diag(2,5)，|ψ⟩=(1,i)ᵀ/√2。求 A|ψ⟩、⟨ψ| 与 TrA。",
+          solution: [
+            "按行乘列：A|ψ⟩=(2,5i)ᵀ/√2",
+            "转置并复共轭：⟨ψ|=(1,−i)/√2",
+            "trace 只加对角元：TrA=2+5=7",
+          ],
+        },
+        pitfalls: [
+          "做 bra 时只转置却忘了复共轭",
+          "把 trace 误当所有矩阵元素之和",
+          "把 eigenvalue equation 误读成普通数乘，不检查向量方向是否保持",
+        ],
+        check: {
+          question: "ρ=diag(3/4,1/4) 为什么已经满足归一化？它的两个 eigenvalues 是什么？",
+          answer: "Trρ=3/4+1/4=1；对角矩阵的 eigenvalues 就是对角元 3/4 与 1/4，且都非负。",
+        },
+      },
       {
         title: "Hilbert space：量子态是向量，不是粒子轨迹",
         label: "最小语言",
@@ -2914,6 +3055,21 @@ export const modules: StudyModule[] = [
     ],
     deepDives: [
       {
+        title: "回访作业 2 Q2：现在再做量子谐振子",
+        summary: "这题虽然放在作业 2，但正式教学计划属于量子部分；完成本节 core 后，才是高效回访时点。",
+        paragraphs: [
+          "一维量子谐振子的能级为 En=ℏω(n+1/2)。在 energy basis 取 trace，单振子 Z1 是等比级数；N 个独立可区分振子给 ZN=Z1^N。",
+          "沿用 Week 5 的同一台导数机器：U=−∂βlnZN，随后 C=(∂U/∂T)。零点能保留在 U 中，但因不随 T 变化而不贡献 C。",
+          "若问 level probability，先写 p(n)=e^{-βEn}/Z1，再化成 normalized geometric form。最后检查 T→0 时 U/N→ℏω/2、C→0，高温时 U/N→kBT、C→kB。",
+          "完成这里后，如需把经典 Gaussian 与量子能级逐项对照，再切回 Week 5 的“完整深读”查看那张回访卡。",
+        ],
+        formulas: [
+          "Z1=e^{-βℏω/2}/(1−e^{-βℏω}),  ZN=Z1^N",
+          "U/N=ℏω/2+ℏω/(e^{βℏω}−1)",
+          "p(n)=(1−e^{-βℏω})e^{-nβℏω}",
+        ],
+      },
+      {
         title: "作业 3 Q1 主线：先懂结构，再攻积分",
         summary: "这题数学体积最大，优先掌握 7 个逻辑节点。",
         paragraphs: [
@@ -2956,7 +3112,13 @@ export const modules: StudyModule[] = [
     ],
     gate: {
       prompt: "闭卷写 density matrix 四性质、purity、trace expectation、quantum Liouville 与三种 ρ。",
-      criteria: ["Schrödinger/Liouville 符号正确", "ρ² 与 Trρ² 不混", "平衡 off-diagonal 条件说清", "作业 3 Q1 七步能复述"],
+      criteria: [
+        "能手算一个 2×2 矩阵的 †、eigenvalues 与 trace",
+        "Schrödinger/Liouville 符号正确",
+        "ρ² 与 Trρ² 不混",
+        "平衡 off-diagonal 条件说清",
+        "作业 2 Q2 的高低温极限与作业 3 Q1 七步都能复述",
+      ],
     },
   },
   {
@@ -3366,7 +3528,7 @@ export const modules: StudyModule[] = [
       "能识别作业 3 Q4 的二维 DOS 为常数，并处理二维结果",
     ],
     sourceRefs: [
-      "课件 9 slides 18–35",
+      "课件 9 slides 19–35",
       "作业 3 Q4 与答案 pp. 15–19",
       "David Tong Ch. 3.6",
     ],
@@ -3452,9 +3614,9 @@ export const modules: StudyModule[] = [
           "当 T≪TF 时，Fermi–Dirac 阶跃只在 εF 附近被抹平。低能态几乎仍满，高能态几乎仍空。",
           "固定 N 很重要：升温时 μ 会略微下降，以补偿阶跃两侧 DOS 不对称造成的粒子数变化。",
           "Sommerfeld 展开把 ∫φ(ε)fFD(ε)dε 写成 0→μ 的零温积分加上与 (kBT)² 成正比的边界修正。",
-          "三维非相对论气体 μ≈εF[1−(π²/12)(T/TF)²]；能量修正∝T²，所以 CV∝T。",
+          "三维非相对论气体 μ≈εF[1−(π²/12)(T/TF)²]；能量修正∝T²，所以 CV=(π²/2)NkB(T/TF)，线性于 T。",
         ],
-        formula: "∫₀∞φ(ε)fFD dε ≈ ∫₀^μ φ(ε)dε + (π²/6)(kBT)²φ′(μ)",
+        formula: "∫₀∞φ(ε)fFD dε ≈ ∫₀^μ φ(ε)dε + (π²/6)(kBT)²φ′(μ);  CV=(π²/2)NkB(T/TF)",
         formulaNote: "适用条件：φ 在 μ 附近平滑、kBT≪μ；固定 N 时必须先由 number equation 解 μ(T)。",
         steps: [
           "明确积分算 N 还是 U，并写 φ(ε)",
@@ -3533,11 +3695,30 @@ export const modules: StudyModule[] = [
         ],
       },
       {
+        title: "金属电子低温热容：怎样从实验图上分开电子与声子",
+        summary: "课件 slide 31 把 Fermi 线性项与 Debye 三次项放到同一条可测公式里。",
+        paragraphs: [
+          "理想三维电子气给 Ce=(π²/2)NkB(kBT/εF)=γT；晶格的 Debye 声子给 Cph=δT³。因此足够低温的金属常写 Ctotal=γT+δT³。",
+          "两边除以 T 得 C/T=γ+δT²。以 C/T 对 T² 作图，纵截距是电子系数 γ，斜率是 phonon 系数 δ；这比直接在 C(T) 曲线上凭眼睛分离更稳。",
+          "真实晶体的 band structure 和相互作用会把裸电子质量换成 effective mass m*，因此测得 γ 与自由电子估计的差可反映 quasiparticle renormalization。",
+        ],
+        formulas: [
+          "Ce=(π²/2)NkB(kBT/εF)=γT",
+          "Ctotal=γT+δT³;  Ctotal/T=γ+δT²",
+        ],
+      },
+      {
         title: "Pauli 顺磁：磁场移动两种自旋的 Fermi 面",
         summary: "课件后段应用；主线先掌握两套自旋人口的线性响应。",
         paragraphs: [
-          "弱磁场使两种自旋的单粒子能量相差约 2μBB。靠近 εF 的少量电子重新分配，产生净磁化。",
-          "只有 Fermi 面附近能改变占据，因此 susceptibility 与 D(εF) 成正比，而不是所有电子都按经典 Curie law 响应。",
+          "按课件记号，弱磁场使两种自旋的能量成为 εp,±=p²/(2m)∓μ*B，相差 2μ*B；这里 μ* 是电子的磁矩（可含有效修正），不是 chemical potential μ。",
+          "两种自旋人口略微不等，总磁矩 Mtot=μ*(N+−N−)，磁化强度为 𝓜=Mtot/V。按课件采用的 χ=∂𝓜/∂B convention，T=0 的三维自由电子结果是 χ0=(3/2)n(μ*)²/εF；若改用 SI 的 χH=∂𝓜/∂H，还要按单位制处理 μ0。",
+          "低温展开给 χ(T)≈χ0[1−(π²/12)(kBT/εF)²]。只有 Fermi 面附近的薄壳能改变占据，因此不是所有电子都按经典 Curie law 响应。",
+        ],
+        formulas: [
+          "ε_{p,±}=p²/(2m)∓μ*B;  Mtot=μ*(N_+−N_-);  Mmag=Mtot/V",
+          "χ0=(3/2)n(μ*)²/εF",
+          "χ(T)≈χ0[1−(π²/12)(kBT/εF)²]",
         ],
       },
       {
@@ -3584,14 +3765,14 @@ export const modules: StudyModule[] = [
     week: "Week 13",
     title: "非平衡三连桥：扩散、Langevin 与 Fokker–Planck",
     english: "Diffusion, Langevin theory and Fokker–Planck equation",
-    hoursCore: 6,
+    hoursCore: 6.5,
     hoursFull: 10,
     goal: "在“单条随机轨迹”和“概率分布的确定性演化”之间来回翻译，完整走通老师 Week 13 的三个闭环。",
     why: "这章看似突然换课，其实仍在问同一个问题：微观随机规则如何产生可预测的宏观方程。把三种描述层次分清，公式就不会混成一团。",
     prerequisites: [
       "probability-counting：平均、方差、独立增量",
       "math-toolbox：Taylor、普通微分方程、偏导",
-      "JIT 向量微积分：gradient、divergence、Laplacian 和 continuity equation",
+      "gradient、divergence、Laplacian 若陌生，随机游走后先完成本节第 2 卡，再读 Fick 定律",
     ],
     outcomes: [
       "能从离散 random walk 推出 ⟨x⟩ 与 ⟨x²⟩=2Dt",
@@ -3638,6 +3819,45 @@ export const modules: StudyModule[] = [
         check: {
           question: "若步长加倍、时间步不变，D 变多少倍？",
           answer: "D=a²/(2τ)，所以变 4 倍。",
+        },
+      },
+      {
+        title: "读 Fick 方程前：四个空间微分动作",
+        label: "零基础必经桥",
+        core: true,
+        intuition: "不要先背 ∇ 符号。把空间切成许多小格：gradient 问哪边更浓，divergence 问一个小格净流出多少，Laplacian 问中心比邻居高还是低，continuity 把净流出翻译成库存减少。",
+        explanation: [
+          "一维先学即可：gradient 退化为 ∂xn，表示密度曲线的斜率；三维 ∇n 是一个向量，指向 n 增长最快的方向。",
+          "divergence 在一维是 ∂xJ。若某点右侧流量大于左侧流量，∂xJ>0，说明这个小区间净流出，库存 n 应下降。",
+          "Laplacian ∇²n=∇·(∇n)，一维就是 ∂x²n。局部峰顶通常 ∂x²n<0，所以扩散方程会让峰顶随时间降低；谷底则相反。",
+          "continuity equation ∂tn+∇·J=0 只表达守恒。负号说：净流出为正时，本地密度随时间减少。它本身还没有指定流 J 的成因。",
+          "对全空间积分后，Gauss theorem 把体积内的 divergence 变成边界流；封闭边界 J·n̂=0 时总粒子数保持不变。",
+        ],
+        formula: "1D: ∂xn → slope,  ∂xJ → net outflow,  ∂x²n → curvature;  ∂tn+∂xJ=0",
+        formulaNote: "第一次只在一维画图和判断正负；能做到后，再把 ∂x 换成 ∇、∇·、∇²。",
+        steps: [
+          "画 n(x) 曲线并选一个位置",
+          "由斜率判断 ∂xn 的正负",
+          "由左右边界流量判断 ∂xJ 的正负",
+          "用 ∂tn=−∂xJ 判断局部密度增减",
+          "最后才推广到三维符号",
+        ],
+        example: {
+          question: "某小区间左边每秒流入 5 个粒子，右边每秒流出 8 个粒子；区间内粒子数怎样变？",
+          solution: [
+            "净流出率是 8−5=3 个/秒",
+            "continuity 的负号把净流出变成库存下降",
+            "所以区间内粒子数每秒减少 3 个；这就是 ∂tn+∂xJ=0 的离散版本",
+          ],
+        },
+        pitfalls: [
+          "把 gradient、divergence、Laplacian 当成同一个导数",
+          "只背 continuity 负号，不用流入/流出检查方向",
+          "D 随位置变化时把 ∇·(D∇n) 擅自写成 D∇²n",
+        ],
+        check: {
+          question: "扩散中的密度峰顶为何会降低？",
+          answer: "峰顶曲率 ∂x²n<0；扩散方程 ∂tn=D∂x²n 且 D>0，因此峰顶 ∂tn<0。",
         },
       },
       {
@@ -3776,15 +3996,6 @@ export const modules: StudyModule[] = [
     ],
     deepDives: [
       {
-        title: "JIT 向量微积分：只补 Week 13 需要的四件事",
-        summary: "若 ∇、∇·、∇² 让你停顿，先在这里用 20–30 分钟补洞，再回到 Fick 定律。",
-        paragraphs: [
-          "gradient ∇n 指向 n 增长最快方向；divergence ∇·J 衡量一个小体积内净流出；Laplacian ∇²n=∇·∇n 衡量局部相对周围是峰还是谷。",
-          "continuity equation 是守恒的局部写法。对空间积分并用 Gauss theorem，可把体积内变化变成边界净流。",
-          "一维时它们分别退化成 ∂xn、∂xJ、∂x²n，可先在一维学会再推广。",
-        ],
-      },
-      {
         title: "从 underdamped 到 overdamped",
         summary: "当 t≫m/γ 时速度已快速松弛，可消去惯性；需要比较两种 Fokker–Planck 时再看。",
         paragraphs: [
@@ -3799,6 +4010,15 @@ export const modules: StudyModule[] = [
         paragraphs: [
           "速度 obey dv=−(γ/m)vdt+(noise)。对应 Gaussian 分布的均值指数衰减，方差趋向 kBT/m。",
           "平衡速度自相关 ⟨v(t)v(0)⟩=(kBT/m)e^{−|t|/τv}；对时间积分可恢复长时间 D。",
+        ],
+      },
+      {
+        title: "Slides 16–18：非考核拓展路线",
+        summary: "这三页只负责告诉你后续可以往哪里走，不属于 Week 13 的核心 gate，也不应挤占扩散、Langevin 与 Fokker–Planck 的练习时间。",
+        paragraphs: [
+          "slide 16 把 classical cluster expansion、quantum second quantization/field theory、critical phenomena/RG 列为进一步方向；slide 17 列 Boltzmann equation、Lindbladian 与 Keldysh path integral；slide 18 列 statistics、stochastic calculus、Monte Carlo 与 molecular dynamics。",
+          "高效顺序是先通过本节 slides 6–15 的核心闭环；只有后续课程、科研或个人兴趣明确需要时，再沿其中一条路线展开，当前不要求推导或背诵。",
+          "其中书封与术语是路线索引，不是本课已讲授内容，也不能据此推断考试范围。",
         ],
       },
     ],
@@ -3823,6 +4043,7 @@ export const modules: StudyModule[] = [
       prompt: "闭卷画出三层翻译：random walk→diffusion、Langevin trajectory→Fokker–Planck distribution、零概率流→Boltzmann equilibrium；每条箭头写假设。",
       criteria: [
         "能区分 mean displacement 与 MSD",
+        "能用一维小区间的流入/流出解释 continuity equation 的负号，再推广到 ∇·J",
         "Fick 负号、continuity 守恒和边界项正确",
         "能说明白噪声相关与 Einstein relation",
         "能识别 Fokker–Planck 的 drift A 与二阶强度 B",
@@ -3853,9 +4074,9 @@ export const modules: StudyModule[] = [
       "形成 1/3/7/14/30 天累计复习队列和可执行错因回退路径",
     ],
     sourceRefs: [
-      "课件 7 slide 19 经典/量子分界回顾",
+      "课件 7 slides 8–9 经典统计总结与量子区间边界",
       "课件 8 slide 19 量子统计总结",
-      "课件 9 slide 17 Bose 回顾及 slides 18–35 Fermi",
+      "课件 9 slide 17 Bose 回顾及 slides 19–35 Fermi",
       "作业 3 全套；2025 期中答案作为评分表达模板",
     ],
     concepts: [
@@ -4479,6 +4700,36 @@ export const materialErrata = [
     corrected: "网页只固定结构 V→V−Nb，并要求 b 由题目所采用的 pair excluded volume convention 明确定义。",
     verify: "先从两球中心最小距离画几何，再分清 pair excluded volume 与分摊到每粒子的 b。",
     exam: "若题目指定 b 就沿用；若只给半径，先声明推导采用的几何 convention，不盲抄旧系数。",
+  },
+  {
+    id: "errata-ps2-phase-measure",
+    severity: "明确错误",
+    source: "作业 2 Q1(a) 题面，经典 N 振子正则配分函数",
+    original: "相空间积分写成 d^{3N}q d^{3N}p / h^3。",
+    problem: "积分包含 3N 对共轭坐标与动量；只除 h^3 会让 N>1 时 Z 仍带有 action^{3N-3} 的量纲。",
+    corrected: "每一对三维粒子的相空间单元贡献 h^3，因此应写 Z=(1/h^{3N})∫d^{3N}q d^{3N}p e^{−βH}。若题目实际把每个 oscillator 当一维，则相应写 (1/h^N)∫d^Nq d^Np；关键是 h 的幂必须与相空间维数配对。",
+    verify: "d^{3N}q d^{3N}p 的单位是 action^{3N}；除 h^{3N} 后 Z 才无量纲。",
+    exam: "先根据 Hamiltonian 中 q_i,p_i 的维数声明采用一维还是三维 convention，再让 h 的幂与之严格匹配。",
+  },
+  {
+    id: "errata-midterm-number-sign",
+    severity: "明确错误",
+    source: "2025 期中 Q3(b) 答案，巨正则平均粒子数",
+    original: "答案一处写成 ⟨N⟩=−β^{-1}∂_μ lnQ。",
+    problem: "巨配分函数的权重是 e^{−β(E−μN)}=e^{−βE+βμN}；对 μ 求导会带出 +βN，不应有负号。",
+    corrected: "⟨N⟩=(1/β)(∂lnQ/∂μ)_{T,V}；相应 Var(N)=(1/β²)(∂²lnQ/∂μ²)_{T,V}。",
+    verify: "直接对单项 e^{−βE+βμN} 求 μ 导数得到 +βN 乘原权重。",
+    exam: "若改为对能级 ε 求导才出现负号；先看导数变量，再决定符号。",
+  },
+  {
+    id: "errata-ps1-relativistic-h",
+    severity: "明确遗漏",
+    source: "作业 1 Q3 solution，相对论一维理想气体微正则态数",
+    original: "答案先写含 δ(H−E) 的能量壳积分，后续却改算 H≤E 的累计体积，并把该有量纲体积直接作为 Ω 取对数，未除以 h^N。",
+    problem: "δ shell density 与 cumulative volume 相差一次 E 导数，不能无声明互换；同时 N 个一维粒子的 d^Nq d^Np 具有 action^N 的单位，有量纲的 phase volume 不能直接放入 S=kBlnΩ。",
+    corrected: "若采用累计态数，应写 Γ(E)=1/(N!h^N)∫_{H≤E}d^Nq d^Np；壳密度再由 ω(E)=∂Γ/∂E 得到。题面已给的 1/N! 与 h^N 分别处理全同粒子重复计数和相空间单元。",
+    verify: "d^Nq d^Np/h^N 无量纲，故 lnΓ 有定义；一维 N 粒子需要 h^N，而不是三维问题的 h^{3N}。",
+    exam: "第一行先声明使用 Γ(E) 还是 ω(E)，并显式写出 1/(N!h^N)；不要把 δ(H−E) 与 H≤E 的积分当成同一个量。",
   },
   {
     id: "errata-relaxation-tau",

@@ -5,8 +5,17 @@ import { join, resolve } from "node:path";
 const root = resolve(import.meta.dirname, "..");
 const out = join(root, "out");
 const docs = join(root, "docs");
+const lectureFiles = Array.from({ length: 10 }, (_, index) => {
+  const lecture = String(index + 1).padStart(2, "0");
+  return [
+    `materials/lecture-${lecture}.pptx`,
+    `materials/lecture-${lecture}_中英逐页精讲.pptx`,
+  ];
+}).flat();
 const requiredCourseFiles = [
-  "materials/lecture-01.pptx",
+  ...lectureFiles,
+  "materials/course-materials-manifest.json",
+  "materials/course-materials-validation.md",
   "materials/midterm-2025-solution.pdf",
   "readings/david-tong-statistical-physics.pdf",
   "course-plan/teacher-course-plan-2025.png",

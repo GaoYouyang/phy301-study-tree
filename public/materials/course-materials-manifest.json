@@ -1,0 +1,455 @@
+{
+  "schemaVersion": "phy301-course-materials.v2",
+  "course": "PHY301",
+  "title": "PHY301 课程课件版本与交付验证清单",
+  "updated": "2026-10-13",
+  "audit": {
+    "status": "pass",
+    "scope": "10 original PPTX and 10 bilingual annotated PPTX",
+    "methods": [
+      "SHA-256 public/docs copy comparison",
+      "PPTX package-integrity validation",
+      "source-slide coverage and sequence validation",
+      "translation insertion-order and text matching",
+      "byte-level preservation of unchanged source OOXML parts",
+      "placeholder scan",
+      "layout-receipt binding and translation contact-sheet review"
+    ],
+    "limitation": "Native PowerPoint animation, audio, video, and interactive playback were not executed."
+  },
+  "versionPolicy": {
+    "original": "老师提供的英文原始 PPTX，作为原始依据保留。",
+    "bilingual": "学习版 PPTX：每张英文原始页后穿插一张或多张中文翻译、术语说明与难点解释页；原始页仍保留在文件中。",
+    "recommendedUse": "先读中英逐页精讲版建立理解；需要核对老师原话、原图层或原动画时，再打开英文原始课件。"
+  },
+  "totals": {
+    "lectures": 10,
+    "originalPages": 214,
+    "translationPages": 604,
+    "totalPages": 818,
+    "originalBytes": 105207800,
+    "bilingualBytes": 102895448
+  },
+  "lectures": [
+    {
+      "id": "L1",
+      "weeks": "Week 1",
+      "originalPages": 25,
+      "translationPages": 64,
+      "totalPages": 89,
+      "original": "lecture-01.pptx",
+      "bilingual": "lecture-01_中英逐页精讲.pptx",
+      "bytes": {
+        "original": 17604973,
+        "bilingual": 17673696
+      },
+      "sha256": {
+        "original": "48f76c5dd8157a3eb5a8bb573b86802cbfecddf93ed955f3d8e60f71fc9eec74",
+        "bilingual": "072b345a302723bd7b26f1a5004e721ade91bb5f97eb43ba5341db58db8c1c85"
+      },
+      "copies": {
+        "publicDocsOriginalByteIdentical": true,
+        "publicDocsBilingualByteIdentical": true
+      },
+      "preservation": {
+        "status": "pass",
+        "originalPartsByteIdentical": true,
+        "preservedSourcePartsCompared": 216,
+        "receiptMatchedCurrentHashes": true
+      },
+      "qa": {
+        "status": "pass",
+        "sourcePackageIntegrity": "pass",
+        "bilingualPackageIntegrity": "pass",
+        "originalSlideCoverage": "pass",
+        "originalSlideSequence": "pass",
+        "translationInsertionOrder": "pass",
+        "translationContentMatch": "pass",
+        "placeholderScan": "pass",
+        "layoutFindings": 0,
+        "layoutWarnings": 25,
+        "layoutWarningsConfinedToPreservedOriginalSlides": true,
+        "visualTranslationContactSheet": "reviewed-no-obvious-overflow-or-clipping",
+        "nativePowerPointPlayback": "not-executed"
+      }
+    },
+    {
+      "id": "L2",
+      "weeks": "Week 2",
+      "originalPages": 16,
+      "translationPages": 44,
+      "totalPages": 60,
+      "original": "lecture-02.pptx",
+      "bilingual": "lecture-02_中英逐页精讲.pptx",
+      "bytes": {
+        "original": 5796093,
+        "bilingual": 5789141
+      },
+      "sha256": {
+        "original": "767ab2d5dfc23ed9c2e71554acd1b079f1b8668dd024f6fe73bc90eaea517ee9",
+        "bilingual": "72d5189e375119ec6c42c71b77058e71393dc07d60d3ac9e5c2394b7713c61db"
+      },
+      "copies": {
+        "publicDocsOriginalByteIdentical": true,
+        "publicDocsBilingualByteIdentical": true
+      },
+      "preservation": {
+        "status": "pass",
+        "originalPartsByteIdentical": true,
+        "preservedSourcePartsCompared": 145,
+        "receiptMatchedCurrentHashes": true
+      },
+      "qa": {
+        "status": "pass",
+        "sourcePackageIntegrity": "pass",
+        "bilingualPackageIntegrity": "pass",
+        "originalSlideCoverage": "pass",
+        "originalSlideSequence": "pass",
+        "translationInsertionOrder": "pass",
+        "translationContentMatch": "pass",
+        "placeholderScan": "pass",
+        "layoutFindings": 0,
+        "layoutWarnings": 16,
+        "layoutWarningsConfinedToPreservedOriginalSlides": true,
+        "visualTranslationContactSheet": "reviewed-no-obvious-overflow-or-clipping",
+        "nativePowerPointPlayback": "not-executed"
+      }
+    },
+    {
+      "id": "L3",
+      "weeks": "Week 3–4",
+      "originalPages": 27,
+      "translationPages": 78,
+      "totalPages": 105,
+      "original": "lecture-03.pptx",
+      "bilingual": "lecture-03_中英逐页精讲.pptx",
+      "bytes": {
+        "original": 12448548,
+        "bilingual": 12371073
+      },
+      "sha256": {
+        "original": "aed04b1c37cb6e93ea2be5ed1a2776f821c6909a1e2f305023f24467e5bd8cbe",
+        "bilingual": "251d6d6cc77fc93a32b2b81805bd71dcf52568f60cb79ab468c97490d33a112e"
+      },
+      "copies": {
+        "publicDocsOriginalByteIdentical": true,
+        "publicDocsBilingualByteIdentical": true
+      },
+      "preservation": {
+        "status": "pass",
+        "originalPartsByteIdentical": true,
+        "preservedSourcePartsCompared": 290,
+        "receiptMatchedCurrentHashes": true
+      },
+      "qa": {
+        "status": "pass",
+        "sourcePackageIntegrity": "pass",
+        "bilingualPackageIntegrity": "pass",
+        "originalSlideCoverage": "pass",
+        "originalSlideSequence": "pass",
+        "translationInsertionOrder": "pass",
+        "translationContentMatch": "pass",
+        "placeholderScan": "pass",
+        "layoutFindings": 0,
+        "layoutWarnings": 30,
+        "layoutWarningsConfinedToPreservedOriginalSlides": true,
+        "visualTranslationContactSheet": "reviewed-no-obvious-overflow-or-clipping",
+        "nativePowerPointPlayback": "not-executed"
+      }
+    },
+    {
+      "id": "L4",
+      "weeks": "Week 5",
+      "originalPages": 13,
+      "translationPages": 37,
+      "totalPages": 50,
+      "original": "lecture-04.pptx",
+      "bilingual": "lecture-04_中英逐页精讲.pptx",
+      "bytes": {
+        "original": 15536651,
+        "bilingual": 15489791
+      },
+      "sha256": {
+        "original": "a979667e28995ce5c5b75cfc7cd068ec5d676f90465584fdb93947611c3b209b",
+        "bilingual": "d272cf655c159e01c093db77f6ccd5f6042bfd3b28f20425360abe1f8fb057b0"
+      },
+      "copies": {
+        "publicDocsOriginalByteIdentical": true,
+        "publicDocsBilingualByteIdentical": true
+      },
+      "preservation": {
+        "status": "pass",
+        "originalPartsByteIdentical": true,
+        "preservedSourcePartsCompared": 151,
+        "receiptMatchedCurrentHashes": true
+      },
+      "qa": {
+        "status": "pass",
+        "sourcePackageIntegrity": "pass",
+        "bilingualPackageIntegrity": "pass",
+        "originalSlideCoverage": "pass",
+        "originalSlideSequence": "pass",
+        "translationInsertionOrder": "pass",
+        "translationContentMatch": "pass",
+        "placeholderScan": "pass",
+        "layoutFindings": 0,
+        "layoutWarnings": 14,
+        "layoutWarningsConfinedToPreservedOriginalSlides": true,
+        "visualTranslationContactSheet": "reviewed-no-obvious-overflow-or-clipping",
+        "nativePowerPointPlayback": "not-executed"
+      }
+    },
+    {
+      "id": "L5",
+      "weeks": "Week 5–6",
+      "originalPages": 13,
+      "translationPages": 38,
+      "totalPages": 51,
+      "original": "lecture-05.pptx",
+      "bilingual": "lecture-05_中英逐页精讲.pptx",
+      "bytes": {
+        "original": 18550700,
+        "bilingual": 18587193
+      },
+      "sha256": {
+        "original": "e9f8092ee44ac72d7fb6672cc5922a5650e96a7df3041f81e9454b05f7907c70",
+        "bilingual": "32a4e5429e88a8ffd7b684f6487779123937d96019d15ecfc28c347514717751"
+      },
+      "copies": {
+        "publicDocsOriginalByteIdentical": true,
+        "publicDocsBilingualByteIdentical": true
+      },
+      "preservation": {
+        "status": "pass",
+        "originalPartsByteIdentical": true,
+        "preservedSourcePartsCompared": 130,
+        "receiptMatchedCurrentHashes": true
+      },
+      "qa": {
+        "status": "pass",
+        "sourcePackageIntegrity": "pass",
+        "bilingualPackageIntegrity": "pass",
+        "originalSlideCoverage": "pass",
+        "originalSlideSequence": "pass",
+        "translationInsertionOrder": "pass",
+        "translationContentMatch": "pass",
+        "placeholderScan": "pass",
+        "layoutFindings": 0,
+        "layoutWarnings": 13,
+        "layoutWarningsConfinedToPreservedOriginalSlides": true,
+        "visualTranslationContactSheet": "reviewed-no-obvious-overflow-or-clipping",
+        "nativePowerPointPlayback": "not-executed"
+      }
+    },
+    {
+      "id": "L6",
+      "weeks": "Week 7",
+      "originalPages": 29,
+      "translationPages": 84,
+      "totalPages": 113,
+      "original": "lecture-06.pptx",
+      "bilingual": "lecture-06_中英逐页精讲.pptx",
+      "bytes": {
+        "original": 11085219,
+        "bilingual": 10646213
+      },
+      "sha256": {
+        "original": "490e9cbc19822557688bb321b253000f719efb43e62cde6320e81cbc3e75f451",
+        "bilingual": "28d2e66b9dd9a3b9c29d5758471cd74181efba828a84bcfaad0696ee7607da53"
+      },
+      "copies": {
+        "publicDocsOriginalByteIdentical": true,
+        "publicDocsBilingualByteIdentical": true
+      },
+      "preservation": {
+        "status": "pass",
+        "originalPartsByteIdentical": true,
+        "preservedSourcePartsCompared": 306,
+        "receiptMatchedCurrentHashes": true
+      },
+      "qa": {
+        "status": "pass",
+        "sourcePackageIntegrity": "pass",
+        "bilingualPackageIntegrity": "pass",
+        "originalSlideCoverage": "pass",
+        "originalSlideSequence": "pass",
+        "translationInsertionOrder": "pass",
+        "translationContentMatch": "pass",
+        "placeholderScan": "pass",
+        "layoutFindings": 0,
+        "layoutWarnings": 35,
+        "layoutWarningsConfinedToPreservedOriginalSlides": true,
+        "visualTranslationContactSheet": "reviewed-no-obvious-overflow-or-clipping",
+        "nativePowerPointPlayback": "not-executed"
+      }
+    },
+    {
+      "id": "L7",
+      "weeks": "Week 8–9",
+      "originalPages": 19,
+      "translationPages": 54,
+      "totalPages": 73,
+      "original": "lecture-07.pptx",
+      "bilingual": "lecture-07_中英逐页精讲.pptx",
+      "bytes": {
+        "original": 10814359,
+        "bilingual": 10386824
+      },
+      "sha256": {
+        "original": "d8704cb3a52e09a9788bedd9250e26fbab4393f8dd7402724c66fbed578ef2f1",
+        "bilingual": "2f0c7024e5c860ba1061f8d80e38afeeca0f56b07c60fe01b2108551f6be6a18"
+      },
+      "copies": {
+        "publicDocsOriginalByteIdentical": true,
+        "publicDocsBilingualByteIdentical": true
+      },
+      "preservation": {
+        "status": "pass",
+        "originalPartsByteIdentical": true,
+        "preservedSourcePartsCompared": 298,
+        "receiptMatchedCurrentHashes": true
+      },
+      "qa": {
+        "status": "pass",
+        "sourcePackageIntegrity": "pass",
+        "bilingualPackageIntegrity": "pass",
+        "originalSlideCoverage": "pass",
+        "originalSlideSequence": "pass",
+        "translationInsertionOrder": "pass",
+        "translationContentMatch": "pass",
+        "placeholderScan": "pass",
+        "layoutFindings": 0,
+        "layoutWarnings": 23,
+        "layoutWarningsConfinedToPreservedOriginalSlides": true,
+        "visualTranslationContactSheet": "reviewed-no-obvious-overflow-or-clipping",
+        "nativePowerPointPlayback": "not-executed"
+      }
+    },
+    {
+      "id": "L8",
+      "weeks": "Week 10",
+      "originalPages": 19,
+      "translationPages": 56,
+      "totalPages": 75,
+      "original": "lecture-08.pptx",
+      "bilingual": "lecture-08_中英逐页精讲.pptx",
+      "bytes": {
+        "original": 2729771,
+        "bilingual": 2051297
+      },
+      "sha256": {
+        "original": "1143a2d7b6470d3a2d7729fee7bcaa6fc575388b5cff4040cb09e787adb12a88",
+        "bilingual": "d4794a43f3e6fa779a22b911fd3cb9ff0c9b58d3c26095a0cbe1270fcba2639b"
+      },
+      "copies": {
+        "publicDocsOriginalByteIdentical": true,
+        "publicDocsBilingualByteIdentical": true
+      },
+      "preservation": {
+        "status": "pass",
+        "originalPartsByteIdentical": true,
+        "preservedSourcePartsCompared": 308,
+        "receiptMatchedCurrentHashes": true
+      },
+      "qa": {
+        "status": "pass",
+        "sourcePackageIntegrity": "pass",
+        "bilingualPackageIntegrity": "pass",
+        "originalSlideCoverage": "pass",
+        "originalSlideSequence": "pass",
+        "translationInsertionOrder": "pass",
+        "translationContentMatch": "pass",
+        "placeholderScan": "pass",
+        "layoutFindings": 0,
+        "layoutWarnings": 33,
+        "layoutWarningsConfinedToPreservedOriginalSlides": true,
+        "visualTranslationContactSheet": "reviewed-no-obvious-overflow-or-clipping",
+        "nativePowerPointPlayback": "not-executed"
+      }
+    },
+    {
+      "id": "L9",
+      "weeks": "Week 11–12",
+      "originalPages": 35,
+      "translationPages": 102,
+      "totalPages": 137,
+      "original": "lecture-09.pptx",
+      "bilingual": "lecture-09_中英逐页精讲.pptx",
+      "bytes": {
+        "original": 5208155,
+        "bilingual": 4807265
+      },
+      "sha256": {
+        "original": "e0c34e32da69fd932d4104dd8edd99c105bd77dbae50ead2f0f4c1de05043cf6",
+        "bilingual": "19451a95e0abd1f9a5f6fd7d1e0b4c1e6d26cf591a7fcb332c4b587692e3d12d"
+      },
+      "copies": {
+        "publicDocsOriginalByteIdentical": true,
+        "publicDocsBilingualByteIdentical": true
+      },
+      "preservation": {
+        "status": "pass",
+        "originalPartsByteIdentical": true,
+        "preservedSourcePartsCompared": 362,
+        "receiptMatchedCurrentHashes": true
+      },
+      "qa": {
+        "status": "pass",
+        "sourcePackageIntegrity": "pass",
+        "bilingualPackageIntegrity": "pass",
+        "originalSlideCoverage": "pass",
+        "originalSlideSequence": "pass",
+        "translationInsertionOrder": "pass",
+        "translationContentMatch": "pass",
+        "placeholderScan": "pass",
+        "layoutFindings": 0,
+        "layoutWarnings": 39,
+        "layoutWarningsConfinedToPreservedOriginalSlides": true,
+        "visualTranslationContactSheet": "reviewed-no-obvious-overflow-or-clipping",
+        "nativePowerPointPlayback": "not-executed"
+      }
+    },
+    {
+      "id": "L10",
+      "weeks": "Week 13",
+      "originalPages": 18,
+      "translationPages": 47,
+      "totalPages": 65,
+      "original": "lecture-10.pptx",
+      "bilingual": "lecture-10_中英逐页精讲.pptx",
+      "bytes": {
+        "original": 5433331,
+        "bilingual": 5092955
+      },
+      "sha256": {
+        "original": "8bb2aefd12a43bcc4ed31119995c9f615abe88fb254579a82d4c34efc45c64cb",
+        "bilingual": "ceccc337001447b23653f539494251c3905b8cdeb5aa014bc4348a1fc754bb25"
+      },
+      "copies": {
+        "publicDocsOriginalByteIdentical": true,
+        "publicDocsBilingualByteIdentical": true
+      },
+      "preservation": {
+        "status": "pass",
+        "originalPartsByteIdentical": true,
+        "preservedSourcePartsCompared": 239,
+        "receiptMatchedCurrentHashes": true
+      },
+      "qa": {
+        "status": "pass",
+        "sourcePackageIntegrity": "pass",
+        "bilingualPackageIntegrity": "pass",
+        "originalSlideCoverage": "pass",
+        "originalSlideSequence": "pass",
+        "translationInsertionOrder": "pass",
+        "translationContentMatch": "pass",
+        "placeholderScan": "pass",
+        "layoutFindings": 0,
+        "layoutWarnings": 25,
+        "layoutWarningsConfinedToPreservedOriginalSlides": true,
+        "visualTranslationContactSheet": "reviewed-no-obvious-overflow-or-clipping",
+        "nativePowerPointPlayback": "not-executed"
+      }
+    }
+  ]
+}

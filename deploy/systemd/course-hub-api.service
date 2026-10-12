@@ -1,0 +1,52 @@
+[Unit]
+Description=Course Hub single-user learning state API
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+User=coursehub
+Group=coursehub
+WorkingDirectory=/opt/course-hub-api
+LoadCredential=api_token:/etc/course-hub/api-token
+LoadCredential=site_password:/etc/course-hub/site-password
+ExecStartPre=/usr/bin/test -r %d/api_token
+ExecStartPre=/usr/bin/test -r %d/site_password
+ExecStart=/usr/bin/python3 /opt/course-hub-api/course_hub_api.py --host 127.0.0.1 --port 8787 --database /var/lib/course-hub/course-hub.sqlite3 --courses /opt/course-hub-api/courses.json --token-file %d/api_token --site-password-file %d/site_password
+Restart=on-failure
+RestartSec=3s
+TimeoutStopSec=10s
+UMask=0077
+
+StateDirectory=course-hub
+StateDirectoryMode=0700
+NoNewPrivileges=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectSystem=strict
+ProtectHome=true
+ProtectClock=true
+ProtectHostname=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectKernelLogs=true
+ProtectControlGroups=true
+ProtectProc=invisible
+ProcSubset=pid
+RestrictSUIDSGID=true
+RestrictRealtime=true
+RestrictNamespaces=true
+LockPersonality=true
+MemoryDenyWriteExecute=true
+CapabilityBoundingSet=
+AmbientCapabilities=
+RestrictAddressFamilies=AF_UNIX AF_INET
+ReadWritePaths=/var/lib/course-hub
+LimitNOFILE=1024
+TasksMax=64
+MemoryMax=384M
+LimitCORE=0
+KeyringMode=private
+
+[Install]
+WantedBy=multi-user.target
