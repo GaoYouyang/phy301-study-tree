@@ -17,11 +17,11 @@
 /.next/
 /.vinext/
 /out/
-/docs/
 
 # misc
 .DS_Store
 *.pem
+~$*.pptx
 
 # debug
 npm-debug.log*
@@ -73,5 +73,5 @@ next-env.d.ts
 /logs/
 /.phy301-site.pid
 
-# GitHub Pages output is generated locally and published to the gh-pages branch.
-# Build artifacts stay ignored; course files under public/ are tracked deliberately.
+# GitHub Pages output is generated locally in docs/ and published from main.
+# Course files under public/ are tracked deliberately.

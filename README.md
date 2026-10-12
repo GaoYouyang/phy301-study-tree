@@ -22,8 +22,8 @@ npm run typecheck
 ```
 
 `npm run build:pages` 会生成带仓库子路径的静态站点，并检查课件、作业、
-答案、参考 PDF 与教学计划截图是否完整进入产物。生成结果发布到独立的
-`gh-pages` 分支，源码保留在 `main`。
+答案、参考 PDF 与教学计划截图是否完整进入产物。生成结果写入 `docs/`，
+GitHub Pages 直接从 `main` 分支的这个目录发布。
 
 ## GitHub 可见性
 
