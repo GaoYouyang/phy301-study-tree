@@ -744,7 +744,7 @@ footer {
   font-size: 13px;
 }
 
-.today-review span {
+.today-review > div > span {
   overflow: hidden;
   color: rgba(255, 255, 255, 0.67);
   font-size: 11px;
@@ -1119,7 +1119,7 @@ footer {
   border-bottom: 1px solid var(--line);
 }
 
-.module-goal span {
+.module-goal > span {
   color: var(--phase);
   font-size: 11px;
   font-weight: 800;
@@ -1389,7 +1389,7 @@ footer {
   background: var(--phase-soft);
 }
 
-.intuition-box span {
+.intuition-box > span {
   color: var(--phase);
   font-size: 10px;
   font-weight: 800;
@@ -1473,7 +1473,7 @@ details > summary::-webkit-details-marker {
   content: "−";
 }
 
-.lesson-details > summary span {
+.lesson-details > summary > span {
   font-size: 12px;
   font-weight: 750;
 }
@@ -1498,7 +1498,7 @@ details > summary::-webkit-details-marker {
   border-top: 1px dashed var(--line);
 }
 
-.explanation-list span {
+.explanation-list > li > span {
   color: var(--phase);
   font: 700 9px/1.7 var(--font-mono);
 }
@@ -1534,7 +1534,7 @@ details > summary::-webkit-details-marker {
   content: "";
 }
 
-.derivation-steps span {
+.derivation-steps > li > span {
   position: relative;
   z-index: 1;
   display: grid;
@@ -1564,7 +1564,7 @@ details > summary::-webkit-details-marker {
 }
 
 .triple-check b,
-.triple-check span {
+.triple-check > span {
   font-size: 9px;
 }
 
@@ -2009,7 +2009,7 @@ details > summary::-webkit-details-marker {
   cursor: not-allowed;
 }
 
-.module-pager span {
+.module-pager button > span {
   color: var(--muted);
   font-size: 8px;
 }
@@ -2313,7 +2313,7 @@ details > summary::-webkit-details-marker {
   border-bottom: 1px dashed var(--line);
 }
 
-.assessment-block span {
+.assessment-block > span {
   color: var(--muted);
   font-size: 9px;
   font-weight: 700;
@@ -3122,7 +3122,7 @@ details > summary::-webkit-details-marker {
   background: var(--panel);
 }
 
-.syllabus-grid span {
+.syllabus-grid article > span {
   color: var(--blue);
   font: 700 9px/1 var(--font-mono);
 }
@@ -3594,13 +3594,13 @@ details > summary::-webkit-details-marker {
   background: rgba(74, 125, 90, 0.06);
 }
 
-.errata-grid span {
+.errata-grid > div > span {
   color: var(--muted);
   font-size: 8px;
   font-weight: 750;
 }
 
-.errata-grid .corrected span {
+.errata-grid > .corrected > span {
   color: var(--green);
 }
 
@@ -3962,7 +3962,7 @@ footer > p:last-child {
     flex-direction: column;
   }
 
-  .today-review span {
+  .today-review > div > span {
     white-space: normal;
   }
 
