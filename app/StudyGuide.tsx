@@ -19,8 +19,20 @@ import {
   type StudyModule,
 } from "./course-data";
 import MathText from "./MathText";
+import FormulaWalkthrough from "./FormulaWalkthrough";
+import TeacherFormulaSupplements from "./TeacherFormulaSupplements";
+import TeacherFormulaAtlas, {
+  teacherFormulaSourceManifest,
+} from "./TeacherFormulaAtlas";
 import CloudSyncPanel from "./CloudSyncPanel";
 import AssessmentCoverage from "./AssessmentCoverage";
+import { teacherFormulaLessons } from "./teacher-formula-lessons";
+import {
+  formulaDerivations,
+  formulaMapTargets,
+  getConceptFormulaDerivation,
+  getDeepDiveFormulaDerivation,
+} from "./formula-derivations";
 import {
   blankState,
   enforceMasteryInvariants,
@@ -63,6 +75,108 @@ const statusMeta: Record<Mastery, { label: string; short: string }> = {
   provisional: { label: "核心通过，待延迟复测", short: "暂时掌握" },
   confirmed: { label: "延迟复测通过", short: "已确认" },
 };
+
+const formulaModuleById = new Map<string, string>([
+  ...Object.entries(formulaDerivations).map(
+    ([occurrence, derivation]): [string, string] => [
+      derivation.id,
+      occurrence.split(":")[1],
+    ],
+  ),
+  ...teacherFormulaLessons.map(
+    (lesson): [string, string] => [lesson.derivation.id, lesson.moduleId],
+  ),
+]);
+
+const fullOnlyFormulaIds = new Set(
+  modules.flatMap((courseModule) =>
+    courseModule.concepts.flatMap((concept) => {
+      if (concept.core !== false || !concept.formula) return [];
+      const derivation = getConceptFormulaDerivation(
+        courseModule.id,
+        concept.title,
+      );
+      return derivation ? [derivation.id] : [];
+    }),
+  ),
+);
+
+const formulaSearchIndex = [
+  ...Object.entries(formulaDerivations).flatMap(([occurrence, derivation]) => {
+    const moduleId = occurrence.split(":")[1];
+    const courseModule = modules.find((item) => item.id === moduleId);
+    if (!courseModule) return [];
+    return [
+      {
+        moduleId,
+        moduleTitle: courseModule.title,
+        derivation,
+        searchable: [
+          courseModule.title,
+          courseModule.english,
+          derivation.title,
+          derivation.kind,
+          derivation.origin,
+          derivation.conclusion,
+          ...(derivation.aliases ?? []),
+        ]
+          .join(" ")
+          .toLowerCase(),
+      },
+    ];
+  }),
+  ...teacherFormulaLessons.flatMap((lesson) => {
+    const courseModule = modules.find((item) => item.id === lesson.moduleId);
+    if (!courseModule) return [];
+    return [
+      {
+        moduleId: lesson.moduleId,
+        moduleTitle: courseModule.title,
+        derivation: lesson.derivation,
+        searchable: [
+          courseModule.title,
+          courseModule.english,
+          lesson.sourceTitle,
+          ...lesson.sourceFormulas,
+          lesson.derivation.title,
+          lesson.derivation.kind,
+          lesson.derivation.origin,
+          lesson.derivation.conclusion,
+          ...(lesson.derivation.aliases ?? []),
+        ]
+          .join(" ")
+          .toLowerCase(),
+      },
+    ];
+  }),
+];
+
+const formulaDerivationStepCount = [
+  ...Object.values(formulaDerivations),
+  ...teacherFormulaLessons.map((lesson) => lesson.derivation),
+].reduce((sum, derivation) => sum + derivation.steps.length, 0);
+
+function formulaIdFromHash(hash: string) {
+  const prefix = "#derivation-";
+  if (!hash.startsWith(prefix)) return null;
+  try {
+    return decodeURIComponent(hash.slice(prefix.length));
+  } catch {
+    return null;
+  }
+}
+
+function formulaRouteFromHash(hash: string) {
+  const formulaId = formulaIdFromHash(hash);
+  const moduleId = formulaId ? formulaModuleById.get(formulaId) : undefined;
+  return formulaId && moduleId
+    ? {
+        formulaId,
+        moduleId,
+        requiresFullMode: fullOnlyFormulaIds.has(formulaId),
+      }
+    : null;
+}
 
 const causeHelp: Record<ErrorEntry["cause"], string> = {
   概念: "回到对象、控制量和定义卡；用自己的话重新说一遍。",
@@ -107,12 +221,32 @@ export default function StudyGuide() {
 
   useEffect(() => {
     const saved = safeParseState(window.localStorage.getItem(STORAGE_KEY));
+    const formulaRoute = formulaRouteFromHash(window.location.hash);
     const frame = window.requestAnimationFrame(() => {
       setState(saved);
-      setSelectedId(saved.lastModule);
+      setSelectedId(formulaRoute?.moduleId ?? saved.lastModule);
+      if (formulaRoute) {
+        if (formulaRoute.requiresFullMode) setMode("full");
+        setActiveTab("roadmap");
+        setPendingScrollTarget(`derivation-${formulaRoute.formulaId}`);
+      }
       setHydrated(true);
     });
     return () => window.cancelAnimationFrame(frame);
+  }, []);
+
+  useEffect(() => {
+    const routeFormulaHash = () => {
+      const formulaRoute = formulaRouteFromHash(window.location.hash);
+      if (!formulaRoute) return;
+      setSelectedId(formulaRoute.moduleId);
+      if (formulaRoute.requiresFullMode) setMode("full");
+      setActiveTab("roadmap");
+      setTreeOpen(false);
+      setPendingScrollTarget(`derivation-${formulaRoute.formulaId}`);
+    };
+    window.addEventListener("hashchange", routeFormulaHash);
+    return () => window.removeEventListener("hashchange", routeFormulaHash);
   }, []);
 
   useEffect(() => {
@@ -122,20 +256,73 @@ export default function StudyGuide() {
 
   useEffect(() => {
     if (!pendingScrollTarget) return;
-    const frame = window.requestAnimationFrame(() => {
+    let frame = 0;
+    let attempts = 0;
+    const settleTimers: number[] = [];
+
+    const scrollToSettledTarget = () => {
+      const settledTarget = document.getElementById(pendingScrollTarget);
+      settledTarget?.scrollIntoView({ behavior: "auto", block: "start" });
+      if (
+        pendingScrollTarget === "course-question" ||
+        settledTarget instanceof HTMLDetailsElement
+      ) {
+        const focusTarget =
+          settledTarget instanceof HTMLDetailsElement
+            ? settledTarget.querySelector<HTMLElement>("summary")
+            : settledTarget;
+        focusTarget?.focus({ preventScroll: true });
+      }
+    };
+
+    const revealAndScroll = () => {
       if (pendingScrollTarget === "top") {
         window.scrollTo({ top: 0, behavior: "auto" });
-      } else {
-        const target = document.getElementById(pendingScrollTarget);
-        target?.scrollIntoView({ behavior: "auto", block: "start" });
-        if (pendingScrollTarget === "course-question") {
-          window.requestAnimationFrame(() => target?.focus({ preventScroll: true }));
-        }
+        setPendingScrollTarget(null);
+        return;
       }
-      setPendingScrollTarget(null);
-    });
-    return () => window.cancelAnimationFrame(frame);
-  }, [activeTab, pendingScrollTarget]);
+
+      const target = document.getElementById(pendingScrollTarget);
+      if (!target) {
+        if (attempts < 120) {
+          attempts += 1;
+          frame = window.requestAnimationFrame(revealAndScroll);
+        } else {
+          setPendingScrollTarget(null);
+        }
+        return;
+      }
+
+      let collapsedAncestor = target?.parentElement?.closest("details") ?? null;
+      while (collapsedAncestor) {
+        collapsedAncestor.open = true;
+        collapsedAncestor =
+          collapsedAncestor.parentElement?.closest("details") ?? null;
+      }
+      if (target instanceof HTMLDetailsElement) target.open = true;
+
+      frame = window.requestAnimationFrame(() => {
+        frame = window.requestAnimationFrame(() => {
+          scrollToSettledTarget();
+          // Mobile layouts and web fonts can finish reflowing after hydration.
+          // Re-anchor twice so a deep formula does not drift thousands of pixels.
+          settleTimers.push(window.setTimeout(scrollToSettledTarget, 150));
+          settleTimers.push(
+            window.setTimeout(() => {
+              scrollToSettledTarget();
+              setPendingScrollTarget(null);
+            }, 700),
+          );
+        });
+      });
+    };
+
+    frame = window.requestAnimationFrame(revealAndScroll);
+    return () => {
+      window.cancelAnimationFrame(frame);
+      settleTimers.forEach((timer) => window.clearTimeout(timer));
+    };
+  }, [activeTab, mode, pendingScrollTarget, selectedId]);
 
   useEffect(() => {
     if (!treeOpen) return;
@@ -180,6 +367,28 @@ export default function StudyGuide() {
     (sum, item) => sum + item.concepts.length,
     0,
   );
+  const formulaOccurrenceCount = modules.reduce(
+    (sum, item) =>
+      sum +
+      item.concepts.filter((concept) => Boolean(concept.formula)).length +
+      item.deepDives.reduce(
+        (deepSum, deepDive) => deepSum + (deepDive.formulas?.length ?? 0),
+        0,
+      ),
+    0,
+  );
+  const normalizedFormulaQuery = formulaQuery.trim().toLowerCase();
+  const matchingFormulaRelations = formulaMap.filter((item) =>
+    Object.values(item)
+      .join(" ")
+      .toLowerCase()
+      .includes(normalizedFormulaQuery),
+  );
+  const matchingFormulaDerivations = normalizedFormulaQuery
+    ? formulaSearchIndex.filter((item) =>
+        item.searchable.includes(normalizedFormulaQuery),
+      )
+    : [];
 
   const filteredModules = useMemo(() => {
     const normalized = query.trim().toLowerCase();
@@ -212,7 +421,17 @@ export default function StudyGuide() {
       new Date(review.due) <= new Date(),
   );
 
+  function clearFormulaHash() {
+    if (!formulaIdFromHash(window.location.hash)) return;
+    window.history.replaceState(
+      window.history.state,
+      "",
+      `${window.location.pathname}${window.location.search}`,
+    );
+  }
+
   function selectModule(id: string) {
+    clearFormulaHash();
     setSelectedId(id);
     setTreeOpen(false);
     setState((current) => ({ ...current, lastModule: id }));
@@ -222,6 +441,7 @@ export default function StudyGuide() {
   }
 
   function openTab(tab: TabKey, target = "top") {
+    if (!target.startsWith("derivation-")) clearFormulaHash();
     setActiveTab(tab);
     setTreeOpen(false);
     setPendingScrollTarget(target);
@@ -232,6 +452,19 @@ export default function StudyGuide() {
     setTreeOpen(false);
     setState((current) => ({ ...current, lastModule: id }));
     openTab("roadmap", "learning-workspace");
+  }
+
+  function goToFormula(moduleId: string, derivationId: string) {
+    window.history.replaceState(
+      window.history.state,
+      "",
+      `#derivation-${encodeURIComponent(derivationId)}`,
+    );
+    setSelectedId(moduleId);
+    if (fullOnlyFormulaIds.has(derivationId)) setMode("full");
+    setTreeOpen(false);
+    setState((current) => ({ ...current, lastModule: moduleId }));
+    openTab("roadmap", `derivation-${derivationId}`);
   }
 
   function openQuestionBox(id: string) {
@@ -982,8 +1215,35 @@ export default function StudyGuide() {
           <PageHeading
             kicker="FORMULA MAP"
             title="公式地图：先找它从哪里来"
-            description="公式按作用分组。任何结果都同时检查：控制量、单位、适用条件、极限。不要把这页当成孤立公式表背。"
+            description="公式地图只负责检索；点击推导入口会回到它第一次被系统讲清的学习节点。每条都会区分定义、公设、模型、近似与可推导结果。"
           />
+          <div className="formula-coverage-note">
+            <div className="formula-coverage-stats">
+              <strong>
+                <span>{Object.keys(formulaDerivations).length}/{formulaOccurrenceCount}</span>
+                <small>结构化公式</small>
+              </strong>
+              <strong>
+                <span>629/629</span>
+                <small>教师原式条目</small>
+              </strong>
+              <strong>
+                <span>{teacherFormulaLessons.length}</span>
+                <small>漏步补课</small>
+              </strong>
+              <strong>
+                <span>{teacherFormulaSourceManifest.derivationChainCount}</span>
+                <small>详细推导链</small>
+              </strong>
+              <strong>
+                <span>{formulaDerivationStepCount}</span>
+                <small>连续步骤</small>
+              </strong>
+            </div>
+            <p>
+              126 条结构化主公式与深潜公式，加上 53 组专为老师课件跳步补写的推导，共形成 179 条详细推导链。629 是 10 讲、214 页课件中的原式出现次数，不代表 629 条互不相同的定理；每个条目都能追溯原页，并连接到相关推导或解释。定义、公设和经验定律说明物理来源，不伪装成数学证明。
+            </p>
+          </div>
           <div className="formula-search">
             <label>
               <span className="sr-only">搜索公式地图</span>
@@ -995,55 +1255,111 @@ export default function StudyGuide() {
               />
             </label>
             <span>
-              {formulaMap.filter((item) =>
-                Object.values(item)
-                  .join(" ")
-                  .toLowerCase()
-                  .includes(formulaQuery.trim().toLowerCase()),
-              ).length}/{formulaMap.length} 条关系
+              {matchingFormulaRelations.length}/{formulaMap.length} 条关系
+              {normalizedFormulaQuery
+                ? ` · ${matchingFormulaDerivations.length}/${formulaSearchIndex.length} 条完整推导`
+                : ` · 可搜索 ${formulaSearchIndex.length} 条完整推导`}
             </span>
           </div>
           <div className="formula-grid">
-            {formulaMap
-              .filter((item) =>
-                Object.values(item)
-                  .join(" ")
-                  .toLowerCase()
-                  .includes(formulaQuery.toLowerCase()),
-              )
-              .map((item, index) => (
-                <article className="formula-card" key={item.name}>
-                  <div className="formula-topline">
-                    <span>{item.family}</span>
-                    <small>{String(index + 1).padStart(2, "0")}</small>
-                  </div>
-                  <h2><MathText text={item.name} /></h2>
-                  <div className="formula-display">
-                    <MathText text={item.formula} display />
-                  </div>
-                  <p><MathText text={item.use} /></p>
-                  <div className="formula-warning">
-                    <b>先检查</b>
-                    <MathText text={item.warning} />
-                  </div>
-                </article>
-              ))}
+            {matchingFormulaRelations.map((item, index) => {
+                const targets = (formulaMapTargets[item.name] ?? []).flatMap(
+                  (target) => {
+                    const derivation = getConceptFormulaDerivation(
+                      target.moduleId,
+                      target.conceptTitle,
+                    );
+                    return derivation ? [{ ...target, derivation }] : [];
+                  },
+                );
+                return (
+                  <article className="formula-card" key={item.name}>
+                    <div className="formula-topline">
+                      <span>{item.family}</span>
+                      <small>{String(index + 1).padStart(2, "0")}</small>
+                    </div>
+                    <h2><MathText text={item.name} /></h2>
+                    <div className="formula-display">
+                      <MathText text={item.formula} display />
+                    </div>
+                    <p><MathText text={item.use} /></p>
+                    <div className="formula-warning">
+                      <b>先检查</b>
+                      <MathText text={item.warning} />
+                    </div>
+                    <div className="formula-route-list">
+                      <span>完整推导入口</span>
+                      {targets.map((target) => (
+                        <a
+                          href={`#derivation-${target.derivation.id}`}
+                          key={target.derivation.id}
+                          onClick={(event) => {
+                            if (
+                              event.metaKey ||
+                              event.ctrlKey ||
+                              event.shiftKey ||
+                              event.altKey
+                            )
+                              return;
+                            event.preventDefault();
+                            goToFormula(target.moduleId, target.derivation.id);
+                          }}
+                        >
+                          {target.derivation.title} →
+                        </a>
+                      ))}
+                    </div>
+                  </article>
+                );
+              })}
           </div>
-          {formulaMap.every(
-            (item) =>
-              !Object.values(item)
-                .join(" ")
-                .toLowerCase()
-                .includes(formulaQuery.trim().toLowerCase()),
-          ) && (
+          {normalizedFormulaQuery && matchingFormulaDerivations.length > 0 && (
+            <section className="formula-index-results" aria-live="polite">
+              <div>
+                <span>ALL DERIVATIONS</span>
+                <h2>完整推导搜索结果</h2>
+                <p>
+                  找到 {matchingFormulaDerivations.length} 条；点击后会回到课程中的正确位置并自动展开。
+                </p>
+              </div>
+              <div className="formula-index-list">
+                {matchingFormulaDerivations.map((item) => (
+                  <a
+                    href={`#derivation-${item.derivation.id}`}
+                    key={item.derivation.id}
+                    onClick={(event) => {
+                      if (
+                        event.metaKey ||
+                        event.ctrlKey ||
+                        event.shiftKey ||
+                        event.altKey
+                      )
+                        return;
+                      event.preventDefault();
+                      goToFormula(item.moduleId, item.derivation.id);
+                    }}
+                  >
+                    <small>
+                      {item.derivation.kind} · {item.moduleTitle}
+                    </small>
+                    <b>{item.derivation.title}</b>
+                    <MathText text={item.derivation.conclusion} />
+                  </a>
+                ))}
+              </div>
+            </section>
+          )}
+          {normalizedFormulaQuery &&
+            matchingFormulaRelations.length === 0 &&
+            matchingFormulaDerivations.length === 0 && (
             <div className="empty-state formula-empty">
               <b>没有找到对应公式</b>
-              <p>试试公式名称、物理量、Bose/Fermi 英文词或用途关键词。</p>
+              <p>试试公式名称、物理量、节点名、Bose/Fermi 英文词或用途关键词。</p>
               <button type="button" onClick={() => setFormulaQuery("")}>
                 清除搜索
               </button>
             </div>
-          )}
+            )}
           <div className="two-column-section">
             <section>
               <div className="minor-heading">
@@ -1077,6 +1393,7 @@ export default function StudyGuide() {
               </div>
             </section>
           </div>
+          <TeacherFormulaAtlas onOpenDerivation={goToFormula} />
         </section>
       )}
 
@@ -1783,8 +2100,16 @@ function ModuleReader({
             每张卡先读直觉并在纸上预测，再展开解释。答案默认折叠，避免“看懂答案”的错觉。
           </p>
         </div>
-        {concepts.map((concept, conceptIndex) => (
-          <article className="concept-card" key={`${module.id}-${concept.title}`}>
+        {concepts.map((concept, conceptIndex) => {
+          const formulaDerivation = concept.formula
+            ? getConceptFormulaDerivation(module.id, concept.title)
+            : undefined;
+          return (
+          <article
+            className="concept-card"
+            id={formulaDerivation ? `formula-${formulaDerivation.id}` : undefined}
+            key={`${module.id}-${concept.title}`}
+          >
             <div className="concept-heading">
               <span className="concept-index">
                 {String(conceptIndex + 1).padStart(2, "0")}
@@ -1803,6 +2128,13 @@ function ModuleReader({
                 <MathText text={concept.formula} display />
                 {concept.formulaNote && <p><MathText text={concept.formulaNote} /></p>}
               </div>
+            )}
+            {formulaDerivation && (
+              <FormulaWalkthrough
+                id={`derivation-${formulaDerivation.id}`}
+                derivation={formulaDerivation}
+                exampleAvailable={Boolean(concept.example)}
+              />
             )}
             <details className="lesson-details" open={mode === "full"}>
               <summary>
@@ -1824,7 +2156,7 @@ function ModuleReader({
                 open={mode === "full"}
               >
                 <summary>
-                  <span>展开逐步推导 / 解题动作</span>
+                  <span>展开解题动作清单（先做什么）</span>
                   <small>每次只做一步</small>
                 </summary>
                 <ol className="derivation-steps">
@@ -1880,7 +2212,8 @@ function ModuleReader({
               )}
             </div>
           </article>
-        ))}
+          );
+        })}
       </section>
 
       {module.deepDives.length > 0 && (
@@ -1906,15 +2239,33 @@ function ModuleReader({
                   {deepDive.paragraphs.map((paragraph) => (
                     <p key={paragraph}><MathText text={paragraph} /></p>
                   ))}
-                  {deepDive.formulas?.map((formula) => (
-                    <MathText key={formula} text={formula} display />
-                  ))}
+                  {deepDive.formulas?.map((formula) => {
+                    const formulaDerivation = getDeepDiveFormulaDerivation(
+                      module.id,
+                      deepDive.title,
+                      formula,
+                    );
+                    return (
+                      <div className="deep-formula-group" key={formula}>
+                        <MathText text={formula} display />
+                        {formulaDerivation && (
+                          <FormulaWalkthrough
+                            id={`derivation-${formulaDerivation.id}`}
+                            derivation={formulaDerivation}
+                            compact
+                          />
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
               </details>
             ))}
           </div>
         </section>
       )}
+
+      <TeacherFormulaSupplements moduleId={module.id} />
 
       <section className="practice-section">
         <div className="reader-section-heading">

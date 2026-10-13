@@ -80,18 +80,21 @@ const subscriptCharacters: Record<string, string> = {
   "₉": "9",
   "₊": "+",
   "₋": "-",
+  "₌": "=",
   "ₐ": "a",
   "ᵇ": "b",
+  "ᵢ": "i",
+  "ⱼ": "j",
 };
 
 const strongMathMarker =
-  /[=+*/^<>≤≥≪≫≈≃∼∝±∓∂∫∇ΣΠ√∞⟨⟩→↔⇌⇒⇔−·×÷∈∉∪∩⊂⊃|½′″†Ĥū-]|[₀₁₂₃₄₅₆₇₈₉⁰¹²³⁴⁵⁶⁷⁸⁹ᴱᵝⁿ]/u;
+  /[=+*/^<>≤≥≪≫≈≃∼∝±∓∂∫∇ΣΠ∑∏√∞⟨⟩→↔⇌⇒⇔−·×÷∈∉∪∩⊂⊃|½′″†ĤūŪ¯⃗-]|[₀₁₂₃₄₅₆₇₈₉₌ᵢⱼ⁰¹²³⁴⁵⁶⁷⁸⁹ᴱᵝⁿ]/u;
 const substantiveMathMarker =
-  /[=+*^<>≤≥≪≫≈≃∼∝±∓∂∫∇ΣΠ√∞⟨⟩⇌⇒⇔−×÷∈∉∪∩⊂⊃½′″†Ĥū]|[₀₁₂₃₄₅₆₇₈₉⁰¹²³⁴⁵⁶⁷⁸⁹ᴱᵝⁿ]/u;
+  /[=+*^<>≤≥≪≫≈≃∼∝±∓∂∫∇ΣΠ∑∏√∞⟨⟩⇌⇒⇔−×÷∈∉∪∩⊂⊃½′″†ĤūŪ¯⃗]|[₀₁₂₃₄₅₆₇₈₉₌ᵢⱼ⁰¹²³⁴⁵⁶⁷⁸⁹ᴱᵝⁿ]/u;
 const standaloneMathToken =
   /^(?:[A-Za-z]|[A-Za-z]_[A-Za-z0-9{}]+|[α-ωΑ-Ωℏ]|d[A-Za-z]|kB(?:T)?|C[PV]|T[cD]|kF|εF|λT|ΦG|ΩG|Var|Cov|Tr|det|exp|ln|tanh|cosh|sinh|erf)$/u;
 const legacyMathRun =
-  /[A-Za-z0-9_α-ωΑ-Ωℏ∞∂∫∇ΣΠ√⟨⟩≤≥≪≫≈≃∼∝±∓→↔⇌⇒⇔−·×÷∈∉∪∩⊂⊃½†ṽĤū₀-₉ₐᵇ⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻ᵀᴺᴱᵝⁿ̄̇′″'{}()[\],.;:!%|/+*^=<>\\\s-]+/gu;
+  /[A-Za-z0-9_α-ωΑ-Ωℏ∞∂∫∇ΣΠ∑∏√⟨⟩≤≥≪≫≈≃∼∝±∓→↔⇌⇒⇔−·×÷∈∉∪∩⊂⊃½†ṽĤūŪ¯⃗₀-₉₊₋₌ₐᵇᵢⱼ⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻ᵀᴺᴱᵝⁿ̄̇′″'{}()[\],.;:!%|/+*^=<>\\\s-]+/gu;
 
 function convertCaretGroups(source: string) {
   let output = "";
@@ -140,7 +143,7 @@ function convertUnicodeScripts(value: string) {
         .join("");
       return `^{${converted}}`;
     })
-    .replace(/[₀₁₂₃₄₅₆₇₈₉₊₋ₐᵇ]+/gu, (run) => {
+    .replace(/[₀₁₂₃₄₅₆₇₈₉₊₋₌ₐᵇᵢⱼ]+/gu, (run) => {
       const converted = [...run]
         .map((character) => subscriptCharacters[character] ?? character)
         .join("");
@@ -151,16 +154,16 @@ function convertUnicodeScripts(value: string) {
 function wrapPlainLanguage(value: string) {
   return value
     .replace(/[\u3400-\u9fff]+/gu, (run) => `\\text{${escapeTexText(run)}}`)
-    .replace(/(?<!\\)\b[A-Za-z]{3,}\b/g, (word) => {
+    .replace(/(?<!\\)\b[A-Za-z]{3,}(?:-[A-Za-z]{3,})*\b/g, (word) => {
       if (
-        /^(?:exp|ln|log|lim|max|min|det|Var|Cov|Tr|erf|tanh|sinh|cosh|sech)$/i.test(
+        /^(?:exp|ln|log|lim|max|min|det|Var|Cov|Tr|erf|tanh|coth|sinh|cosh|sech)$/i.test(
           word,
         )
       ) {
         return word;
       }
       if (
-        /^[a-z]{3,}$/.test(word) ||
+        /^[a-z]{3,}(?:-[a-z]{3,})*$/.test(word) ||
         /^(?:Carnot|Debye|Boson|Fermion|Fourier|Gaussian|Ising|Landau|Laplace|Maxwell|Boltzmann|Stirling|Waals)$/.test(
           word,
         )
@@ -168,7 +171,8 @@ function wrapPlainLanguage(value: string) {
         return `\\text{${escapeTexText(word)}}`;
       }
       return word;
-    });
+    })
+    .replace(/}\s+(?=\\text\{)/g, "}\\ ");
 }
 
 /**
@@ -177,6 +181,16 @@ function wrapPlainLanguage(value: string) {
  */
 export function legacyMathToLatex(source: string) {
   let value = convertCaretGroups(source.trim())
+    .replace(/~/gu, "\\sim ")
+    .replace(/([A-Za-zα-ωΑ-Ω])⃗([0-9iNj])/gu, "\\vec{$1}_{$2}")
+    .replace(/([A-Za-zα-ωΑ-Ω])⃗/gu, "\\vec{$1}")
+    .replace(/Ū/gu, "\\bar{U}")
+    .replace(/([A-Za-zα-ωΑ-Ω])([⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻ᵀᴺᴱᵝⁿ]+)¯/gu, "\\overline{$1$2}")
+    .replace(/([∑∏])ᵢ₌₁ᴺ/gu, "$1_{i=1}^{N}")
+    .replace(/∑ᴺ₌₀∞/gu, "\\sum_{N=0}^{\\infty}")
+    .replace(/Σα₌₁³ᴺ/gu, "\\sum_{α=1}^{3N}")
+    .replace(/([∑∏])ᵢ([<≠])ⱼ/gu, "$1_{i$2j}")
+    .replace(/∂μ₀/gu, "\\partial_{μ_0}")
     .replace(/lnpi\b/g, "\\ln p_i")
     .replace(/ln([A-ZΩΞΔ])\b/gu, "\\ln $1")
     .replace(/Σεini/gu, "\\sum_i ε_i n_i")
@@ -257,6 +271,8 @@ export function legacyMathToLatex(source: string) {
     .replace(/\b([pE])N,i\b/gu, "$1_{N,i}")
     .replace(/\bP12(?=Ψ)/gu, "P_{12}")
     .replace(/\bD2D\b/gu, "D_{2\\mathrm D}")
+    .replace(/\bD0\b/gu, "D_0")
+    .replace(/\bTF\b/gu, "T_F")
     .replace(/\bfFD\b/gu, "f_{\\mathrm{FD}}")
     .replace(/\bg([35])\/2(?=\()/gu, "g_{$1/2}")
     .replace(/Pcoex/gu, "P_{\\mathrm{coex}}")
@@ -278,6 +294,8 @@ export function legacyMathToLatex(source: string) {
     .replace(/([A-Za-zα-ωΑ-Ω])\u0307/gu, "\\dot{$1}")
     .replace(/ℏ/gu, "\\hbar ")
     .replace(/∞/gu, "\\infty ")
+    .replace(/∑/gu, "\\sum ")
+    .replace(/∏/gu, "\\prod ")
     .replace(/∂/gu, "\\partial ")
     .replace(/∫/gu, "\\int ")
     .replace(/∇/gu, "\\nabla ")
@@ -339,6 +357,7 @@ export function legacyMathToLatex(source: string) {
     .replace(/(?<!\\)\bln\b/g, "\\ln")
     .replace(/(?<!\\)\blog\b/g, "\\log")
     .replace(/(?<!\\)\btanh\b/g, "\\tanh")
+    .replace(/(?<!\\)\bcoth\b/g, "\\coth")
     .replace(/(?<!\\)\bsinh\b/g, "\\sinh")
     .replace(/(?<!\\)\bcosh\b/g, "\\cosh")
     .replace(/(?<!\\)\berf\b/g, "\\operatorname{erf}")
@@ -434,6 +453,20 @@ export function splitMathText(value: string): Segment[] {
   return segments;
 }
 
+export function unwrapWholeLiteralMath(value: string) {
+  const trimmed = value.trim();
+  const delimiter = trimmed.startsWith("$$") ? "$$" : trimmed.startsWith("$") ? "$" : null;
+  if (
+    !delimiter ||
+    trimmed.length <= delimiter.length * 2 ||
+    !trimmed.endsWith(delimiter)
+  ) {
+    return null;
+  }
+
+  return trimmed.slice(delimiter.length, -delimiter.length).trim();
+}
+
 function KatexFragment({
   source,
   display = false,
@@ -463,9 +496,14 @@ function KatexFragment({
 
 export default function MathText({ text, display = false, className }: MathTextProps) {
   if (display) {
+    const literalLatex = unwrapWholeLiteralMath(text);
     return (
       <span className={["math-text", "math-text-display", className].filter(Boolean).join(" ")}>
-        <KatexFragment source={text.replace(/^\$\$?|\$\$?$/g, "")} display />
+        <KatexFragment
+          source={literalLatex ?? text.replace(/^\$\$?|\$\$?$/g, "")}
+          display
+          literalLatex={literalLatex !== null}
+        />
       </span>
     );
   }

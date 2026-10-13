@@ -12,7 +12,10 @@ async function render(path = "/") {
 }
 
 test("server-renders the complete PHY301 study guide", async () => {
-  const response = await render();
+  const [response, component] = await Promise.all([
+    render(),
+    readFile(new URL("../app/StudyGuide.tsx", import.meta.url), "utf8"),
+  ]);
   assert.equal(response.status, 200);
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
 
@@ -25,14 +28,18 @@ test("server-renders the complete PHY301 study guide", async () => {
   assert.match(html, /作业与考试/);
   assert.match(html, /资料勘误/);
   assert.match(html, /从零到统计物理/);
+  assert.match(html, /这条式子从哪里来/);
+  assert.match(html, /先认清每个符号/);
+  assert.match(component, /完整推导入口/);
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton|Building your site/i);
 });
 
 test("mathematical expressions render as accessible KaTeX instead of raw notation", async () => {
-  const [response, packageJson, component] = await Promise.all([
+  const [response, packageJson, component, walkthrough] = await Promise.all([
     render(),
     readFile(new URL("../package.json", import.meta.url), "utf8"),
     readFile(new URL("../app/StudyGuide.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/FormulaWalkthrough.tsx", import.meta.url), "utf8"),
   ]);
   const html = await response.text();
 
@@ -43,6 +50,9 @@ test("mathematical expressions render as accessible KaTeX instead of raw notatio
   assert.match(html, /annotation encoding="application\/x-tex"/);
   assert.match(html, /class="math-text math-text-display"/);
   assert.doesNotMatch(html, /class="katex-error"/);
+  assert.match(walkthrough, /derivation\.steps\.map/);
+  assert.match(walkthrough, /step\.formula/);
+  assert.match(walkthrough, /step\.explanation/);
 
   for (const requiredRenderPath of [
     "item.question",
@@ -58,6 +68,81 @@ test("mathematical expressions render as accessible KaTeX instead of raw notatio
   ]) {
     assert.match(component, new RegExp(requiredRenderPath.replace(".", "\\.")));
   }
+});
+
+test("teacher formula inventory keeps all source rows and derivation routes inspectable", async () => {
+  const [
+    manifestRaw,
+    lesson0103,
+    lesson0406,
+    lesson0710,
+    studyGuide,
+    atlas,
+    supplements,
+    packageJson,
+  ] = await Promise.all([
+    readFile(
+      new URL("../app/teacher-slide-formulas.generated.json", import.meta.url),
+      "utf8",
+    ),
+    readFile(
+      new URL("../app/teacher-formula-lessons-01-03.ts", import.meta.url),
+      "utf8",
+    ),
+    readFile(
+      new URL("../app/teacher-formula-lessons-04-06.ts", import.meta.url),
+      "utf8",
+    ),
+    readFile(
+      new URL("../app/teacher-formula-lessons-07-10.ts", import.meta.url),
+      "utf8",
+    ),
+    readFile(new URL("../app/StudyGuide.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/TeacherFormulaAtlas.tsx", import.meta.url), "utf8"),
+    readFile(
+      new URL("../app/TeacherFormulaSupplements.tsx", import.meta.url),
+      "utf8",
+    ),
+    readFile(new URL("../package.json", import.meta.url), "utf8"),
+  ]);
+
+  const manifest = JSON.parse(manifestRaw);
+  assert.equal(manifest.course, "PHY301");
+  assert.equal(manifest.sourceLectureCount, 10);
+  assert.equal(manifest.sourceSlideCount, 214);
+  assert.equal(manifest.totalFormulaOccurrences, 629);
+  assert.equal(manifest.dedicatedTeacherSupplementCount, 53);
+  assert.equal(manifest.derivationChainCount, 179);
+  assert.equal(manifest.lectures.length, 10);
+  assert.equal(
+    manifest.lectures.reduce((sum, lecture) => sum + lecture.slideCount, 0),
+    214,
+  );
+
+  const sourceFormulas = manifest.lectures.flatMap((lecture) =>
+    lecture.slides.flatMap((slide) => slide.formulas),
+  );
+  assert.equal(sourceFormulas.length, 629);
+  assert.equal(new Set(sourceFormulas.map((formula) => formula.id)).size, 629);
+  for (const formula of sourceFormulas) {
+    assert.ok(formula.formula.trim(), `${formula.id} needs its source formula`);
+    assert.ok(formula.note.trim(), `${formula.id} needs a teaching note`);
+    assert.ok(formula.routeIds.length > 0, `${formula.id} needs a derivation route`);
+  }
+
+  const lessonSource = `${lesson0103}\n${lesson0406}\n${lesson0710}`;
+  const supplementIds = [
+    ...lessonSource.matchAll(/id:\s*"(teacher-[^"]+)"/g),
+  ].map((match) => match[1]);
+  assert.equal(supplementIds.length, 53);
+  assert.equal(new Set(supplementIds).size, 53);
+
+  assert.match(packageJson, /"generate:teacher-formulas":\s*"tsx scripts\/generate-teacher-formula-source\.ts"/);
+  assert.match(studyGuide, /TeacherFormulaSupplements/);
+  assert.match(studyGuide, /TeacherFormulaAtlas/);
+  assert.match(supplements, /老师课件漏步补丁/);
+  assert.match(atlas, /totalFormulaOccurrences\}\/629/);
+  assert.match(atlas, /定义、公设与数量级会解释物理来源，不会伪造成可由代数证明的结论/);
 });
 
 test("course graph covers all modules and every assessment target exists", async () => {
@@ -304,6 +389,10 @@ test("interactive learning safeguards are implemented", async () => {
   assert.match(component, /导入 JSON 恢复/);
   assert.match(component, /window\.confirm/);
   assert.match(component, /答案默认折叠/);
+  assert.match(component, /fullOnlyFormulaIds\.has\(derivationId\)/);
+  assert.match(component, /addEventListener\("hashchange", routeFormulaHash\)/);
+  assert.match(component, /decodeURIComponent[\s\S]*?catch/);
   assert.match(css, /@media \(max-width: 700px\)/);
+  assert.match(css, /\.formula-symbols dl > div[\s\S]*?grid-template-columns: 1fr/);
   assert.match(css, /prefers-reduced-motion/);
 });

@@ -9,9 +9,11 @@
     "dev": "next dev",
     "build": "next build",
     "build:pages": "GITHUB_PAGES=true next build && node scripts/prepare-pages-output.mjs",
+    "generate:teacher-formulas": "tsx scripts/generate-teacher-formula-source.ts",
     "audit:math": "tsx scripts/audit-math-rendering.ts",
+    "audit:derivations": "tsx scripts/audit-formula-derivations.ts",
     "start": "next start",
-    "test": "npm run audit:math && npm run build:pages && node --test tests/*.test.mjs",
+    "test": "npm run audit:derivations && npm run audit:math && npm run build:pages && node --test tests/*.test.mjs",
     "lint": "eslint . --ignore-pattern dist --ignore-pattern .next --ignore-pattern out --ignore-pattern docs",
     "typecheck": "tsc --noEmit"
   },

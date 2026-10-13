@@ -1,9 +1,5 @@
 export type PhaseKey =
-  | "foundation"
-  | "classical"
-  | "quantum"
-  | "nonequilibrium"
-  | "review";
+  "foundation" | "classical" | "quantum" | "nonequilibrium" | "review";
 
 export type ConceptCard = {
   title: string;
@@ -70,7 +66,8 @@ export const phaseMeta: Record<
     label: "第 0 阶段 · 前置桥梁",
     short: "前置",
     color: "amber",
-    description: "把后面会反复用到的数学、概率、热力学和力学语言先变成熟悉工具。",
+    description:
+      "把后面会反复用到的数学、概率、热力学和力学语言先变成熟悉工具。",
   },
   classical: {
     label: "第一阶段 · 经典统计物理",
@@ -161,7 +158,8 @@ export const syllabus = [
   },
   {
     week: "Week 13",
-    topic: "Out of equilibrium: Diffusion, Langevin theory and Fokker–Planck equation",
+    topic:
+      "Out of equilibrium: Diffusion, Langevin theory and Fokker–Planck equation",
     chinese: "非平衡：扩散、Langevin 理论与 Fokker–Planck 方程",
   },
   {
@@ -175,7 +173,8 @@ export const notationAlerts = [
   {
     symbol: "Ω(E)",
     teacher: "微正则系综中可访问微观态数（multiplicity）。",
-    other: "有些书把相空间体积写作 Γ(E)，把态密度写作 ω(E)；不要只看字母，要看定义。",
+    other:
+      "有些书把相空间体积写作 Γ(E)，把态密度写作 ω(E)；不要只看字母，要看定义。",
   },
   {
     symbol: "Z",
@@ -190,7 +189,8 @@ export const notationAlerts = [
   {
     symbol: "G / ΦG",
     teacher: "部分课件把巨势写成 G = −kBT ln Q。",
-    other: "标准热力学里 G 通常是 Gibbs 自由能；网页把巨势写成 ΦG 或 ΩG，避免混淆。",
+    other:
+      "标准热力学里 G 通常是 Gibbs 自由能；网页把巨势写成 ΦG 或 ΩG，避免混淆。",
   },
   {
     symbol: "β",
@@ -266,7 +266,8 @@ export const formulaMap = [
     name: "Gibbs 正则系综",
     formula: "Δ(T,P,N) = ∫(dV/V0) e^(−βPV) Z(T,V,N);  G = −kBT ln Δ",
     use: "温度、压强、粒子数固定而体积涨落。",
-    warning: "连续 V 积分需约定参考体积/测度；它只影响 G 的加法常数。也不要把 Δ 与微小变化符号混为一谈。",
+    warning:
+      "连续 V 积分需约定参考体积/测度；它只影响 G 的加法常数。也不要把 Δ 与微小变化符号混为一谈。",
   },
   {
     family: "巨正则",
@@ -280,7 +281,8 @@ export const formulaMap = [
     name: "巨势与粒子数",
     formula: "ΦG = −kBT ln Ξ = −PV;  ⟨N⟩ = (1/β)∂μ ln Ξ",
     use: "从 Ξ 求压强、平均粒子数和粒子涨落。",
-    warning: "ΦG=−PV 假定均匀、广延的 bulk thermodynamic limit；巨势也不是 Gibbs 自由能，虽然部分课件都写 G。",
+    warning:
+      "ΦG=−PV 假定均匀、广延的 bulk thermodynamic limit；巨势也不是 Gibbs 自由能，虽然部分课件都写 G。",
   },
   {
     family: "量子统计",
@@ -327,24 +329,60 @@ export const formulaMap = [
 ];
 
 export const glossary = [
-  ["微观态 microstate", "系统每个自由度的完整微观配置；经典里是相空间一点，量子里是 Hilbert 空间中的态。"],
-  ["宏观态 macrostate", "只用 E、V、N、T、P 等少数宏观量描述的状态；一个宏观态通常对应海量微观态。"],
-  ["相空间 phase space", "所有广义坐标 q 和共轭动量 p 组成的空间；N 个三维粒子通常有 6N 维。"],
-  ["系综 ensemble", "满足同一宏观约束的一大群“系统副本”的概念集合，用它做概率平均。"],
+  [
+    "微观态 microstate",
+    "系统每个自由度的完整微观配置；经典里是相空间一点，量子里是 Hilbert 空间中的态。",
+  ],
+  [
+    "宏观态 macrostate",
+    "只用 E、V、N、T、P 等少数宏观量描述的状态；一个宏观态通常对应海量微观态。",
+  ],
+  [
+    "相空间 phase space",
+    "所有广义坐标 q 和共轭动量 p 组成的空间；N 个三维粒子通常有 6N 维。",
+  ],
+  [
+    "系综 ensemble",
+    "满足同一宏观约束的一大群“系统副本”的概念集合，用它做概率平均。",
+  ],
   ["简并度 degeneracy", "具有同一能量的不同单粒子或多粒子状态数。"],
   ["态密度 density of states", "单位能量区间内可用状态的数量，常写 g(ε)。"],
   ["熵 entropy", "在微正则语境中衡量兼容宏观约束的微观态数量；S = kB ln Ω。"],
-  ["配分函数 partition function", "对允许状态的 Boltzmann 权重求和；是正则系综的归一化常数与热力学生成器。"],
-  ["化学势 chemical potential", "在给定熵和体积等约束下增加一个粒子的能量代价；也控制粒子交换方向。"],
+  [
+    "配分函数 partition function",
+    "对允许状态的 Boltzmann 权重求和；是正则系综的归一化常数与热力学生成器。",
+  ],
+  [
+    "化学势 chemical potential",
+    "在给定熵和体积等约束下增加一个粒子的能量代价；也控制粒子交换方向。",
+  ],
   ["活度 fugacity", "z = e^(βμ)，让巨正则公式更紧凑。"],
-  ["热力学极限", "N,V → ∞ 且 N/V 固定；在此极限中不同系综通常给出相同宏观结果。"],
-  ["涨落 fluctuation", "微观量相对其平均值的随机偏离；方差是最基本的强度指标。"],
-  ["序参量 order parameter", "无序相为零、有序相非零的宏观量，例如 Ising 磁化强度 m。"],
-  ["响应函数 response function", "系统对外部微小扰动的响应，例如热容、磁化率、压缩率；临界点附近可发散。"],
-  ["密度矩阵 density matrix", "同时表示经典概率混合与量子态的算符；满足 Hermitian、正定、迹为 1。"],
+  [
+    "热力学极限",
+    "N,V → ∞ 且 N/V 固定；在此极限中不同系综通常给出相同宏观结果。",
+  ],
+  [
+    "涨落 fluctuation",
+    "微观量相对其平均值的随机偏离；方差是最基本的强度指标。",
+  ],
+  [
+    "序参量 order parameter",
+    "无序相为零、有序相非零的宏观量，例如 Ising 磁化强度 m。",
+  ],
+  [
+    "响应函数 response function",
+    "系统对外部微小扰动的响应，例如热容、磁化率、压缩率；临界点附近可发散。",
+  ],
+  [
+    "密度矩阵 density matrix",
+    "同时表示经典概率混合与量子态的算符；满足 Hermitian、正定、迹为 1。",
+  ],
   ["Boson", "多粒子波函数交换对称、同一单粒子态可容纳任意多个粒子的粒子。"],
   ["Fermion", "多粒子波函数交换反对称、服从 Pauli 不相容原理的粒子。"],
-  ["详细平衡 detailed balance", "平衡时任意两状态之间的正反跃迁概率流彼此抵消。"],
+  [
+    "详细平衡 detailed balance",
+    "平衡时任意两状态之间的正反跃迁概率流彼此抵消。",
+  ],
   ["漂移 drift", "概率分布因确定性力或平均速度产生的定向运动。"],
   ["扩散 diffusion", "随机运动使概率分布展宽并趋向均匀的过程。"],
 ];
@@ -440,13 +478,62 @@ export const materials = [
     maps: "Week 13",
     note: "Brownian、扩散、Langevin、Fokker–Planck",
   },
-  { id: "PS1", label: "作业 1", href: "/materials/problem-set-01.pdf", pages: "2 pages", maps: "Week 1–4", note: "Q2 直接对应 Week 1 MB；其余覆盖 Liouville、微正则气体与振子" },
-  { id: "PS1S", label: "作业 1 答案", href: "/materials/problem-set-01-solution.pdf", pages: "12 pages", maps: "Week 1–4", note: "做完再看；含数处已在勘误区纠正的符号/归一化问题" },
-  { id: "PS2", label: "作业 2", href: "/materials/problem-set-02.pdf", pages: "3 pages", maps: "Week 5–7；Q2 衔接 Week 10", note: "正则振子、巨正则吸附、lattice gas/Ising；量子振子按正式计划属 Week 10" },
-  { id: "PS2S", label: "作业 2 答案", href: "/materials/problem-set-02-solution.pdf", pages: "10 pages", maps: "Week 5–7；Q2 衔接 Week 10", note: "文件名原本未标 Solution，经逐页核对确为答案；内含需避开的公式错误" },
-  { id: "PS3", label: "作业 3", href: "/materials/problem-set-03.pdf", pages: "4 pages", maps: "Week 9–12", note: "密度矩阵、量子统计、Bose 与 Fermi 气体" },
-  { id: "PS3S", label: "作业 3 答案", href: "/materials/problem-set-03-solution.pdf", pages: "19 pages", maps: "Week 9–12", note: "含 Fourier 与多维 Gaussian 的长推导" },
-  { id: "MID", label: "2025 期中评分答案", href: "/materials/midterm-2025-solution.pdf", pages: "12 pages", maps: "Week 1–8", note: "4 题 × 25 分；是最直接的答题格式证据" },
+  {
+    id: "PS1",
+    label: "作业 1",
+    href: "/materials/problem-set-01.pdf",
+    pages: "2 pages",
+    maps: "Week 1–4",
+    note: "Q2 直接对应 Week 1 MB；其余覆盖 Liouville、微正则气体与振子",
+  },
+  {
+    id: "PS1S",
+    label: "作业 1 答案",
+    href: "/materials/problem-set-01-solution.pdf",
+    pages: "12 pages",
+    maps: "Week 1–4",
+    note: "做完再看；含数处已在勘误区纠正的符号/归一化问题",
+  },
+  {
+    id: "PS2",
+    label: "作业 2",
+    href: "/materials/problem-set-02.pdf",
+    pages: "3 pages",
+    maps: "Week 5–7；Q2 衔接 Week 10",
+    note: "正则振子、巨正则吸附、lattice gas/Ising；量子振子按正式计划属 Week 10",
+  },
+  {
+    id: "PS2S",
+    label: "作业 2 答案",
+    href: "/materials/problem-set-02-solution.pdf",
+    pages: "10 pages",
+    maps: "Week 5–7；Q2 衔接 Week 10",
+    note: "文件名原本未标 Solution，经逐页核对确为答案；内含需避开的公式错误",
+  },
+  {
+    id: "PS3",
+    label: "作业 3",
+    href: "/materials/problem-set-03.pdf",
+    pages: "4 pages",
+    maps: "Week 9–12",
+    note: "密度矩阵、量子统计、Bose 与 Fermi 气体",
+  },
+  {
+    id: "PS3S",
+    label: "作业 3 答案",
+    href: "/materials/problem-set-03-solution.pdf",
+    pages: "19 pages",
+    maps: "Week 9–12",
+    note: "含 Fourier 与多维 Gaussian 的长推导",
+  },
+  {
+    id: "MID",
+    label: "2025 期中评分答案",
+    href: "/materials/midterm-2025-solution.pdf",
+    pages: "12 pages",
+    maps: "Week 1–8",
+    note: "4 题 × 25 分；是最直接的答题格式证据",
+  },
 ];
 
 export const readings = [
@@ -454,26 +541,30 @@ export const readings = [
     level: "主参考 · 本地",
     title: "David Tong — Statistical Physics",
     href: "/readings/david-tong-statistical-physics.pdf",
-    route: "Ch. 4 热力学 → Ch. 1 系综 → Ch. 2 经典气体 → Ch. 5 相变 → Ch. 3 量子气体",
+    route:
+      "Ch. 4 热力学 → Ch. 1 系综 → Ch. 2 经典气体 → Ch. 5 相变 → Ch. 3 量子气体",
     why: "和本课覆盖高度重合，解释清楚且官方开放；不要从第 1 页硬啃，按网页节点跳读。",
   },
   {
     level: "非平衡参考 · 本地",
     title: "Daniel Arovas — Thermodynamics and Statistical Mechanics",
     href: "/readings/arovas-thermodynamics-statistical-mechanics.pdf",
-    route: "只读 Ch. 9 的 Brownian motion、Langevin 与 Fokker–Planck（约原书 520 页后）",
+    route:
+      "只读 Ch. 9 的 Brownian motion、Langevin 与 Fokker–Planck（约原书 520 页后）",
     why: "体积很大，不是主线教材；仅用于 Week 13 查缺补漏。",
   },
   {
     level: "老师课件列出 · 按需查阅",
     title: "Mehran Kardar — Statistical Physics of Particles (2007)",
     href: "https://www.cambridge.org/highereducation/books/statistical-physics-of-particles/3CC2F33BD9F8DC56758DBDDB5B870558",
-    route: "概率与热力学 → classical statistical mechanics → interacting particles → quantum statistical mechanics",
+    route:
+      "概率与热力学 → classical statistical mechanics → interacting particles → quantum statistical mechanics",
     why: "课件 1 slides 4、7、9 明确展示；适合 Week 1–3 查概念与完整推导，不要求整本顺读。",
   },
   {
     level: "老师课件列出 · 标准查表",
-    title: "R. K. Pathria & Paul D. Beale — Statistical Mechanics, 4th ed. (2021)",
+    title:
+      "R. K. Pathria & Paul D. Beale — Statistical Mechanics, 4th ed. (2021)",
     href: "https://shop.elsevier.com/books/statistical-mechanics/pathria/978-0-08-102692-2",
     route: "Ch. 1–4 三大系综；Ch. 5–8 量子、Bose/Fermi；Ch. 12 相变",
     why: "课件 1 slide 7 列出；内容完整但密度高，优先用来核对定义、公式适用条件和高阶扩展。",
@@ -489,14 +580,17 @@ export const readings = [
     level: "老师课件列出 · 传统严谨路线",
     title: "Kerson Huang — Statistical Mechanics, 2nd ed.",
     href: "https://www.wiley-vch.de/en/areas-interest/natural-sciences/statistical-mechanics-978-0-471-81518-1",
-    route: "classical ensembles → quantum statistics → Bose/Fermi → Ising/Landau",
+    route:
+      "classical ensembles → quantum statistics → Bose/Fermi → Ising/Landau",
     why: "课件 1 slide 7 与课件 3 slide 23 引用；老师评价为旧式但好，适合推导查证，不宜作为零基础第一读物。",
   },
   {
     level: "老师课件列出 · 最友好补读",
-    title: "S. J. Blundell & K. M. Blundell — Concepts in Thermal Physics, 2nd ed.",
+    title:
+      "S. J. Blundell & K. M. Blundell — Concepts in Thermal Physics, 2nd ed.",
     href: "https://academic.oup.com/book/26407",
-    route: "Ch. 4 Boltzmann factor；Ch. 5–6 MB/压强；Ch. 14–22 熵、热力学势与配分函数",
+    route:
+      "Ch. 4 Boltzmann factor；Ch. 5–6 MB/压强；Ch. 14–22 熵、热力学势与配分函数",
     why: "课件 1 slide 21 引用；直觉、例题与课程前半衔接友好，是卡在 Week 1–5 时最优先的老师书单补读。",
   },
   {
@@ -528,70 +622,80 @@ export const assessmentMap = [
     title: "作业 1 · Q1 Liouville 与最大熵",
     prerequisites: "Jacobian、Hamilton 方程、泛函/普通 Lagrange multiplier",
     target: "phase-ensemble",
-    method: "写出小时间映射 → 展开 Jacobian → 用 Hamilton 方程抵消散度 → 同时加归一化/平均能量约束得到 ρ=e⁻ᵝᴴ/Z；结果反向预告 Week 5 canonical",
+    method:
+      "写出小时间映射 → 展开 Jacobian → 用 Hamilton 方程抵消散度 → 同时加归一化/平均能量约束得到 ρ=e⁻ᵝᴴ/Z；结果反向预告 Week 5 canonical",
   },
   {
     id: "PS1-Q2",
     title: "作业 1 · Q2 重力场中的 Maxwell–Boltzmann（Week 1 直接考点）",
     prerequisites: "连续概率、Gaussian 积分、equipartition、方差",
     target: "classical-gases",
-    method: "写单粒子能量 → ρ ∝ e⁻ᵝε → 对速度积分得 n(z) → 用 Z 的导数或 Gaussian 矩求平均",
+    method:
+      "写单粒子能量 → ρ ∝ e⁻ᵝε → 对速度积分得 n(z) → 用 Z 的导数或 Gaussian 矩求平均",
   },
   {
     id: "PS1-Q3",
     title: "作业 1 · Q3 一维相对论理想气体",
     prerequisites: "微正则态数、Stirling、热力学偏导",
     target: "classical-gases",
-    method: "先声明累计体积 Γ(E) 还是壳密度 ω(E)，并用 hᴺ 无量纲化 → S=kBlnΩ → 从 dS 系数读 T、P、μ → 求热容和边缘分布",
+    method:
+      "先声明累计体积 Γ(E) 还是壳密度 ω(E)，并用 hᴺ 无量纲化 → S=kBlnΩ → 从 dS 系数读 T、P、μ → 求热容和边缘分布",
   },
   {
     id: "PS1-Q4",
     title: "作业 1 · Q4 等间距能级的微正则振子",
     prerequisites: "stars and bars、Stirling、组合数",
     target: "microcanonical",
-    method: "把量子数当球、分隔符当墙 → 数 Ω → 取 ln 与 Stirling → 求 E(T)、C 与单振子分布",
+    method:
+      "把量子数当球、分隔符当墙 → 数 Ω → 取 ln 与 Stirling → 求 E(T)、C 与单振子分布",
   },
   {
     id: "PS2-Q1",
     title: "作业 2 · Q1 经典谐振子（正则）",
     prerequisites: "多维 Gaussian、配分函数导数",
     target: "canonical",
-    method: "分离 p/q 积分 → 求 Z → F/U/S/C → 验证动能与势能各贡献 kBT/2 每二次自由度",
+    method:
+      "分离 p/q 积分 → 求 Z → F/U/S/C → 验证动能与势能各贡献 kBT/2 每二次自由度",
   },
   {
     id: "PS2-Q2",
     title: "作业 2 · Q2 量子谐振子（计划 Week 10；期中已出现同结构）",
     prerequisites: "几何级数、能级、低温/高温极限",
     target: "quantum-bridge",
-    method: "先完成量子桥，再回用 Week 5 的 Z 流水线：能级谱 → 单振子几何级数 → N 次方 → −∂β ln Z → C 与 p(n)；不要在 ket、能级和 ℏ 尚陌生时硬做",
+    method:
+      "先完成量子桥，再回用 Week 5 的 Z 流水线：能级谱 → 单振子几何级数 → N 次方 → −∂β ln Z → C 与 p(n)；不要在 ket、能级和 ℏ 尚陌生时硬做",
   },
   {
     id: "PS2-Q3",
     title: "作业 2 · Q3 吸附粒子的巨正则模型",
     prerequisites: "二项式、巨配分函数、化学平衡",
     target: "grand-canonical",
-    method: "数 C(N,M) → 求 Ξ → 用 ∂μ ln Ξ 求平均和方差 → 令吸附相与气相 μ 相等",
+    method:
+      "数 C(N,M) → 求 Ξ → 用 ∂μ ln Ξ 求平均和方差 → 令吸附相与气相 μ 相等",
   },
   {
     id: "PS2-Q4",
     title: "作业 2 · Q4 lattice gas → Ising",
     prerequisites: "变量替换、mean field、tanh 展开、Landau 展开",
     target: "phase-transition",
-    method: "ni=(1+σi)/2 → 识别 J/H → 忽略二阶涨落 → 自洽方程 → 临界附近 Taylor 展开",
+    method:
+      "ni=(1+σi)/2 → 识别 J/H → 忽略二阶涨落 → 自洽方程 → 临界附近 Taylor 展开",
   },
   {
     id: "PS3-Q1",
     title: "作业 3 · Q1 谐振子密度矩阵",
     prerequisites: "量子谐振子、Hermite、多维 Gaussian、Fourier、trace",
     target: "quantum-bridge",
-    method: "谱分解 → Fourier 把导数变乘法 → 二维 Gaussian → 取 trace 求 Z → 再算 ⟨x²⟩ 与 U",
+    method:
+      "谱分解 → Fourier 把导数变乘法 → 二维 Gaussian → 取 trace 求 Z → 再算 ⟨x²⟩ 与 U",
   },
   {
     id: "PS3-Q2",
     title: "作业 3 · Q2 BE/FD 量子统计",
     prerequisites: "全同粒子、占据数、几何级数、巨正则",
     target: "quantum-statistics",
-    method: "把每个单粒子态独立因子化 → Boson 求无限和、Fermion 求两项和 → 导数得平均占据",
+    method:
+      "把每个单粒子态独立因子化 → Boson 求无限和、Fermion 求两项和 → 导数得平均占据",
   },
   {
     id: "PS3-Q3",
@@ -612,14 +716,16 @@ export const assessmentMap = [
     title: "期中 · Q1 定义与热力学连接",
     prerequisites: "Liouville、Z/Ξ、F 与全微分",
     target: "midterm-review",
-    method: "概念句先答原因，再写完整积分（含 N!h³ᴺ），最后用 dF = −SdT−PdV 取偏导",
+    method:
+      "概念句先答原因，再写完整积分（含 N!h³ᴺ），最后用 dF = −SdT−PdV 取偏导",
   },
   {
     id: "MID-Q2",
     title: "期中 · Q2 微正则谐振子",
     prerequisites: "canonical transformation、6N 维球、Stirling、边缘分布",
     target: "midterm-review",
-    method: "尺度变换成球 → 求 Ω → S → E/C → 对剩余 N−1 个振子数态得到 Boltzmann 边缘",
+    method:
+      "尺度变换成球 → 求 Ω → S → E/C → 对剩余 N−1 个振子数态得到 Boltzmann 边缘",
   },
   {
     id: "MID-Q3",
@@ -633,7 +739,8 @@ export const assessmentMap = [
     title: "期中 · Q4 mean-field van der Waals 与临界涨落",
     prerequisites: "mean field、excluded volume、F 的体积导数、压缩率",
     target: "interactions-vdw",
-    method: "均匀密度近似相互作用 → 修正有效体积 → F→P → 用巨势导出 Var(N) 与响应函数发散",
+    method:
+      "均匀密度近似相互作用 → 修正有效体积 → F→P → 用巨势导出 Var(N) 与响应函数发散",
   },
 ];
 
@@ -657,7 +764,8 @@ export const studyPlans = [
     title: "28 日强化模式",
     pace: "28 天 · 每天 3.5–4 小时",
     bestFor: "有连续整块时间，想沿最短核心主线快速但完整地打通一次。",
-    rhythm: "1–6 天前置；7–15 天经典；16–23 天量子；24–25 天非平衡；26–28 天累计套题与错因回退。",
+    rhythm:
+      "1–6 天前置；7–15 天经典；16–23 天量子；24–25 天非平衡；26–28 天累计套题与错因回退。",
   },
 ];
 
@@ -673,7 +781,10 @@ export const modules: StudyModule[] = [
     hoursFull: 7,
     goal: "看到求和、偏导、指数、Gaussian 积分或 Taylor 展开时，不再因为记号而中断物理思路。",
     why: "PHY301 的真正难点经常不是物理概念，而是老师在一页内跳过三步数学。先把这些步骤变成固定动作，后面每章都会更快。",
-    prerequisites: ["只要求中学代数：移项、幂、函数图像", "知道普通导数表示斜率即可；忘了也可从本节重学"],
+    prerequisites: [
+      "只要求中学代数：移项、幂、函数图像",
+      "知道普通导数表示斜率即可；忘了也可从本节重学",
+    ],
     outcomes: [
       "能读懂 Σ、Π、∂、d、exp、ln、δ、⟨·⟩ 的角色",
       "能做简单偏导、全微分和链式法则",
@@ -686,7 +797,8 @@ export const modules: StudyModule[] = [
         title: "先学会读一行公式",
         label: "必会记号",
         core: true,
-        intuition: "公式是一句话的压缩版。先找“等号左边要算什么”，再找“右边对谁求和/积分”，最后检查每个量的单位。",
+        intuition:
+          "公式是一句话的压缩版。先找“等号左边要算什么”，再找“右边对谁求和/积分”，最后检查每个量的单位。",
         explanation: [
           "Σi ai 是把所有 i 对应的 ai 相加；Πi ai 是相乘。统计物理里状态很多，所以求和与乘积会一直出现。",
           "exp(x) 就是 eˣ，ln 是以 e 为底的对数。指数把可加的能量变成可乘的权重；对数又把巨大的态数乘积变回可加的熵。",
@@ -694,23 +806,40 @@ export const modules: StudyModule[] = [
           "下标 i 常标记微观态或能级；N 是粒子数；d 通常是空间维数。先查看定义，不要仅凭字母猜。",
         ],
         formula: "⟨A⟩ = Σi pi Ai（离散） 或  ⟨A⟩ = ∫dx p(x)A(x)（连续）",
-        formulaNote: "两式结构完全一样：概率权重 × 该状态的数值，再把所有可能相加。",
-        steps: ["圈出求和/积分变量", "确认概率已经归一化", "写清每个符号的定义与单位", "最后做极限或量纲检查"],
+        formulaNote:
+          "两式结构完全一样：概率权重 × 该状态的数值，再把所有可能相加。",
+        steps: [
+          "圈出求和/积分变量",
+          "确认概率已经归一化",
+          "写清每个符号的定义与单位",
+          "最后做极限或量纲检查",
+        ],
         example: {
-          question: "两能级系统 E0=0、E1=ε，概率分别为 1−p 与 p。平均能量是多少？",
-          solution: ["按“概率 × 能量”相加", "⟨E⟩=(1−p)·0+p·ε=pε", "p→0 时能量→0；p→1 时能量→ε，极限合理"],
+          question:
+            "两能级系统 E0=0、E1=ε，概率分别为 1−p 与 p。平均能量是多少？",
+          solution: [
+            "按“概率 × 能量”相加",
+            "⟨E⟩=(1−p)·0+p·ε=pε",
+            "p→0 时能量→0；p→1 时能量→ε，极限合理",
+          ],
         },
-        pitfalls: ["把状态标签 i 当成数值相乘", "忘记求和边界", "公式算完不检查单位"],
+        pitfalls: [
+          "把状态标签 i 当成数值相乘",
+          "忘记求和边界",
+          "公式算完不检查单位",
+        ],
         check: {
           question: "为什么 S=kB ln Ω 使用 ln，而不是直接令 S=Ω？",
-          answer: "独立系统的态数相乘 ΩAB=ΩAΩB，而热力学熵应相加；ln 把乘法变成加法。",
+          answer:
+            "独立系统的态数相乘 ΩAB=ΩAΩB，而热力学熵应相加；ln 把乘法变成加法。",
         },
       },
       {
         title: "偏导、全微分与“保持谁不变”",
         label: "热力学语言",
         core: true,
-        intuition: "偏导是在多旋钮系统里只拧一个旋钮；下标告诉你其他旋钮被锁住。",
+        intuition:
+          "偏导是在多旋钮系统里只拧一个旋钮；下标告诉你其他旋钮被锁住。",
         explanation: [
           "若 F=F(T,V,N)，那么 (∂F/∂T)V,N 表示只改变 T，保持 V、N 固定。",
           "全微分 dF 把所有小变化的贡献加起来：dF=(∂F/∂T)dT+(∂F/∂V)dV+(∂F/∂N)dN。",
@@ -719,12 +848,25 @@ export const modules: StudyModule[] = [
         ],
         formula: "dF = −S dT − P dV + μ dN  ⇒  S=−(∂F/∂T)V,N，P=−(∂F/∂V)T,N",
         formulaNote: "这不是背出两个孤立公式，而是比较同一个全微分的系数。",
-        steps: ["先列出函数依赖 F(T,V,N)", "写数学全微分", "再用物理定义写 dF", "逐项比较相同微分前的系数"],
+        steps: [
+          "先列出函数依赖 F(T,V,N)",
+          "写数学全微分",
+          "再用物理定义写 dF",
+          "逐项比较相同微分前的系数",
+        ],
         example: {
           question: "F(T,V)=−aVT²（a>0）。求 S 和 P。",
-          solution: ["S=−∂F/∂T=2aVT", "P=−∂F/∂V=aT²", "S 随 T 增大、P 为正；符号合理"],
+          solution: [
+            "S=−∂F/∂T=2aVT",
+            "P=−∂F/∂V=aT²",
+            "S 随 T 增大、P 为正；符号合理",
+          ],
         },
-        pitfalls: ["漏掉偏导下标", "把 dF/dT 与 F/T 混淆", "第一定律符号约定换了却不跟着调整"],
+        pitfalls: [
+          "漏掉偏导下标",
+          "把 dF/dT 与 F/T 混淆",
+          "第一定律符号约定换了却不跟着调整",
+        ],
         check: {
           question: "已知 dG=−S dT+V dP+μ dN，(∂G/∂P)T,N 等于什么？",
           answer: "等于 V，因为在保持 T、N 时，dG 中 dP 的系数就是 V。",
@@ -734,7 +876,8 @@ export const modules: StudyModule[] = [
         title: "小量展开、大 N 与最可能项",
         label: "近似发动机",
         core: true,
-        intuition: "统计物理不追踪 10²³ 个粒子；它利用“大数让分布尖锐”这一事实，把难求和化成找最大值附近。",
+        intuition:
+          "统计物理不追踪 10²³ 个粒子；它利用“大数让分布尖锐”这一事实，把难求和化成找最大值附近。",
         explanation: [
           "Taylor 展开把复杂函数在某点附近写成多项式。临界点附近常保留 m²、m⁴；小时间演化常只保留 δt 的一阶项。",
           "Stirling 公式 ln N!≈N lnN−N 把组合数的阶乘变成可微函数，是微正则计数和 Lagrange multiplier 的基础。",
@@ -743,7 +886,12 @@ export const modules: StudyModule[] = [
         ],
         formula: "ln N! ≈ N lnN − N；  ∫dx e^{Nf(x)} 由 f(x) 最大处 x* 主导",
         formulaNote: "不是说其他项严格为零，而是相对贡献随 N 指数小。",
-        steps: ["识别小参数或大参数", "选展开点", "保留题目需要的最低阶", "用极限/数值估计确认丢弃项确实更小"],
+        steps: [
+          "识别小参数或大参数",
+          "选展开点",
+          "保留题目需要的最低阶",
+          "用极限/数值估计确认丢弃项确实更小",
+        ],
         example: {
           question: "为什么两大系统接触后几乎总在总熵最大的能量分配附近？",
           solution: [
@@ -752,7 +900,11 @@ export const modules: StudyModule[] = [
             "N≈10²³ 时该比值极小，因此观测几乎总落在最大熵附近",
           ],
         },
-        pitfalls: ["没说明展开参数为什么小", "把最可能值和平均值在小系统中也强行等同", "Stirling 后忘记 N 必须足够大"],
+        pitfalls: [
+          "没说明展开参数为什么小",
+          "把最可能值和平均值在小系统中也强行等同",
+          "Stirling 后忘记 N 必须足够大",
+        ],
         check: {
           question: "若 f′(x*)=0 但 f″(x*)>0，e^{Nf(x)} 在 x* 附近是峰还是谷？",
           answer: "是谷；要主导 e^{Nf}，需要 f 的局部最大值，即 f″(x*)<0。",
@@ -761,24 +913,43 @@ export const modules: StudyModule[] = [
       {
         title: "Gaussian、Gamma、超球与 Fourier：只学用途",
         label: "作业工具",
-        intuition: "这四个工具看似分散，其实都在把“很多自由度的积分”变成可重复套用的模板。",
+        intuition:
+          "这四个工具看似分散，其实都在把“很多自由度的积分”变成可重复套用的模板。",
         explanation: [
           "Gaussian 积分负责二次 Hamiltonian：动量 p²、谐振子 q²。每个独立二次项通常贡献一个 √(π/a)。",
           "Gamma 函数把阶乘延伸到非整数，并给出高维球体积。微正则理想气体和期中谐振子都把能量约束变成高维球。",
           "d 维球面面积 Sd−1=2π^{d/2}/Γ(d/2)，球体积 Vd(R)=π^{d/2}R^d/Γ(d/2+1)。",
           "Fourier 变换把导数变成 ik 的乘法。作业 3 Q1 用它处理 Hermite 多项式与密度矩阵；这是深读工具，不应阻塞经典部分。",
         ],
-        formula: "∫₋∞^∞ e^(−ax²)dx=√(π/a)；  ∫dⁿx e^(−½xᵀAx+Jᵀx)=√[(2π)ⁿ/detA] e^(½JᵀA⁻¹J)",
-        formulaNote: "作业 3 给出的多维公式符号约定可能不同；使用前对照指数中 1/2 与 J 的正负号。",
-        steps: ["先把指数配成标准二次型", "确认 a>0 或矩阵 A 正定", "逐自由度因子化或用 detA", "结果用单位与一维特例检查"],
+        formula:
+          "∫₋∞^∞ e^(−ax²)dx=√(π/a)；  ∫dⁿx e^(−½xᵀAx+Jᵀx)=√[(2π)ⁿ/detA] e^(½JᵀA⁻¹J)",
+        formulaNote:
+          "作业 3 给出的多维公式符号约定可能不同；使用前对照指数中 1/2 与 J 的正负号。",
+        steps: [
+          "先把指数配成标准二次型",
+          "确认 a>0 或矩阵 A 正定",
+          "逐自由度因子化或用 detA",
+          "结果用单位与一维特例检查",
+        ],
         example: {
-          question: "经典一维谐振子 H=p²/(2m)+mω²q²/2 的 Z 中，p 与 q 积分为什么能分开？",
-          solution: ["e^{-βH}=e^{-βp²/(2m)}e^{-βmω²q²/2}", "积分区域是整个 p、q 平面，乘积可拆成两个一维 Gaussian", "分别套公式后相乘"],
+          question:
+            "经典一维谐振子 H=p²/(2m)+mω²q²/2 的 Z 中，p 与 q 积分为什么能分开？",
+          solution: [
+            "e^{-βH}=e^{-βp²/(2m)}e^{-βmω²q²/2}",
+            "积分区域是整个 p、q 平面，乘积可拆成两个一维 Gaussian",
+            "分别套公式后相乘",
+          ],
         },
-        pitfalls: ["漏掉矩阵 determinant 的平方根", "把球面面积和球体积混用", "Fourier 约定 2π 因子不一致"],
+        pitfalls: [
+          "漏掉矩阵 determinant 的平方根",
+          "把球面面积和球体积混用",
+          "Fourier 约定 2π 因子不一致",
+        ],
         check: {
-          question: "一个 Hamiltonian 中有 3N 个独立动量二次项，动量 Gaussian 积分大致给出温度的什么幂？",
-          answer: "每个二次项给 β^{-1/2}，共 3N 个，所以给 β^{-3N/2}，也就是 T^{3N/2}。",
+          question:
+            "一个 Hamiltonian 中有 3N 个独立动量二次项，动量 Gaussian 积分大致给出温度的什么幂？",
+          answer:
+            "每个二次项给 β^{-1/2}，共 3N 个，所以给 β^{-3N/2}，也就是 T^{3N/2}。",
         },
       },
     ],
@@ -806,8 +977,10 @@ export const modules: StudyModule[] = [
     practice: [
       {
         title: "一分钟记号翻译",
-        instruction: "用中文读出 U=−∂βlnZ 与 CV=∂U/∂T，并说明各自保持什么外参。",
-        answer: "平均内能等于 lnZ 对 β 的负导数；定容热容是保持 V、N 时内能对 T 的导数。",
+        instruction:
+          "用中文读出 U=−∂βlnZ 与 CV=∂U/∂T，并说明各自保持什么外参。",
+        answer:
+          "平均内能等于 lnZ 对 β 的负导数；定容热容是保持 V、N 时内能对 T 的导数。",
       },
       {
         title: "全微分练习",
@@ -821,8 +994,13 @@ export const modules: StudyModule[] = [
       },
     ],
     gate: {
-      prompt: "闭卷解释“偏导下标、Gaussian、Stirling、Lagrange multiplier”分别在课程里解决什么问题。",
-      criteria: ["四项都能用一句话说出用途", "能正确做一个全微分", "知道何时不能随便使用大 N 近似"],
+      prompt:
+        "闭卷解释“偏导下标、Gaussian、Stirling、Lagrange multiplier”分别在课程里解决什么问题。",
+      criteria: [
+        "四项都能用一句话说出用途",
+        "能正确做一个全微分",
+        "知道何时不能随便使用大 N 近似",
+      ],
     },
   },
   {
@@ -836,20 +1014,29 @@ export const modules: StudyModule[] = [
     hoursFull: 6,
     goal: "把“统计”理解成可计算的概率模型，而不是一堆模糊平均。",
     why: "系综就是概率分布；熵来自计数；热容、压缩率、磁化率又和方差相连。这里不牢，后面每个公式都会像魔法。",
-    prerequisites: ["math-toolbox：求和、积分、指数与对数", "会算简单组合数更好；不会可在本节补"],
+    prerequisites: [
+      "math-toolbox：求和、积分、指数与对数",
+      "会算简单组合数更好；不会可在本节补",
+    ],
     outcomes: [
       "能区分概率、概率密度与状态数",
       "能计算平均、二阶矩、方差和相对涨落",
       "能做二项式、多项式与 stars-and-bars 计数",
       "能解释为什么大系统的宏观量稳定",
     ],
-    sourceRefs: ["课件 1 slides 4–6, 21–25", "课件 3 slides 10–15", "作业 1 Q2/Q4", "作业 2 Q3"],
+    sourceRefs: [
+      "课件 1 slides 4–6, 21–25",
+      "课件 3 slides 10–15",
+      "作业 1 Q2/Q4",
+      "作业 2 Q3",
+    ],
     concepts: [
       {
         title: "概率与概率密度不是同一件事",
         label: "归一化",
         core: true,
-        intuition: "离散状态有“一个状态的概率”；连续变量单点概率为零，只能说落在小区间里的概率。",
+        intuition:
+          "离散状态有“一个状态的概率”；连续变量单点概率为零，只能说落在小区间里的概率。",
         explanation: [
           "离散：pi≥0 且 Σipi=1。连续：p(x)≥0 且 ∫p(x)dx=1。",
           "连续变量中 p(x) 是密度，p(x)dx 才是 x 到 x+dx 的概率。因此 p(x) 可以大于 1，只要积分为 1。",
@@ -857,12 +1044,25 @@ export const modules: StudyModule[] = [
           "简并能级的总概率要乘状态数 gi；漏 gi 是量子统计常见错误。",
         ],
         formula: "P(x∈[a,b])=∫ₐᵇp(x)dx；  Σi pi=1",
-        steps: ["判断变量是离散还是连续", "写可能范围", "求归一化常数", "再求任何平均值"],
+        steps: [
+          "判断变量是离散还是连续",
+          "写可能范围",
+          "求归一化常数",
+          "再求任何平均值",
+        ],
         example: {
           question: "p(x)=C e^{-ax²}（−∞<x<∞，a>0），C 是多少？",
-          solution: ["归一化 1=C∫e^{-ax²}dx", "Gaussian 积分为 √(π/a)", "所以 C=√(a/π)"],
+          solution: [
+            "归一化 1=C∫e^{-ax²}dx",
+            "Gaussian 积分为 √(π/a)",
+            "所以 C=√(a/π)",
+          ],
         },
-        pitfalls: ["连续密度 p(x) 直接当概率", "忘记积分测度 d³p、d³q", "有简并度时只数一个状态"],
+        pitfalls: [
+          "连续密度 p(x) 直接当概率",
+          "忘记积分测度 d³p、d³q",
+          "有简并度时只数一个状态",
+        ],
         check: {
           question: "若 x 的密度 p(x)=2x（0≤x≤1），P(x<1/2) 是多少？",
           answer: "∫₀^{1/2}2x dx=1/4。",
@@ -883,19 +1083,29 @@ export const modules: StudyModule[] = [
         formulaNote: "方差永不为负；算出负数通常说明代数或归一化错了。",
         example: {
           question: "公平硬币正面记 X=1，反面 X=0。求平均与方差。",
-          solution: ["⟨X⟩=1/2", "⟨X²⟩=1/2（因为 0²=0、1²=1）", "Var(X)=1/2−1/4=1/4"],
+          solution: [
+            "⟨X⟩=1/2",
+            "⟨X²⟩=1/2（因为 0²=0、1²=1）",
+            "Var(X)=1/2−1/4=1/4",
+          ],
         },
-        pitfalls: ["把 ⟨X²⟩ 当方差", "只给方差不说明单位", "平均为零时还除以平均求相对涨落"],
+        pitfalls: [
+          "把 ⟨X²⟩ 当方差",
+          "只给方差不说明单位",
+          "平均为零时还除以平均求相对涨落",
+        ],
         check: {
           question: "N 个独立相同变量之和 S 的标准差怎样随 N 变？",
-          answer: "Var(S)=N Var(X)，所以标准差随 √N 变；若平均随 N 变，相对涨落随 1/√N 下降。",
+          answer:
+            "Var(S)=N Var(X)，所以标准差随 √N 变；若平均随 N 变，相对涨落随 1/√N 下降。",
         },
       },
       {
         title: "从“数方法”到熵",
         label: "组合计数",
         core: true,
-        intuition: "微正则系综的第一任务不是解运动方程，而是数有多少微观安排符合宏观约束。",
+        intuition:
+          "微正则系综的第一任务不是解运动方程，而是数有多少微观安排符合宏观约束。",
         explanation: [
           "从 N 个位置选 M 个激发：Ω=C(N,M)=N!/[M!(N−M)!]。",
           "把 M 个相同能量量子分给 N 个振子：stars and bars 给 Ω=C(M+N−1,M)。",
@@ -903,38 +1113,66 @@ export const modules: StudyModule[] = [
           "全同经典粒子相空间积分除 N!，是消除交换标签造成的重复计数；这也是 Gibbs paradox 的核心。",
         ],
         formula: "C(N,M)=N!/[M!(N−M)!]；  Ωstars-bars=C(M+N−1,M)",
-        steps: ["先问对象是否可区分", "明确盒子/能级是否有标签", "写约束", "选择组合、排列或 stars-and-bars"],
+        steps: [
+          "先问对象是否可区分",
+          "明确盒子/能级是否有标签",
+          "写约束",
+          "选择组合、排列或 stars-and-bars",
+        ],
         example: {
           question: "3 个相同量子分给 2 个可区分振子，有多少占据数组合？",
-          solution: ["解 n1+n2=3，ni≥0", "可能为 (0,3),(1,2),(2,1),(3,0)", "共 C(3+2−1,3)=4"],
+          solution: [
+            "解 n1+n2=3，ni≥0",
+            "可能为 (0,3),(1,2),(2,1),(3,0)",
+            "共 C(3+2−1,3)=4",
+          ],
         },
-        pitfalls: ["把相同粒子当可区分", "盒子和球的可区分性没写", "计数完忘记与能量约束相连"],
+        pitfalls: [
+          "把相同粒子当可区分",
+          "盒子和球的可区分性没写",
+          "计数完忘记与能量约束相连",
+        ],
         check: {
-          question: "N 个吸附位置每个最多一个粒子，恰有 M 个粒子时简并度是多少？",
-          answer: "从 N 个位置选择 M 个，Γ(M)=C(N,M)。这正是作业 2 Q3 的第一步。",
+          question:
+            "N 个吸附位置每个最多一个粒子，恰有 M 个粒子时简并度是多少？",
+          answer:
+            "从 N 个位置选择 M 个，Γ(M)=C(N,M)。这正是作业 2 Q3 的第一步。",
         },
       },
       {
         title: "最大熵与指数分布",
         label: "分布来源",
         core: true,
-        intuition: "在只知道有限约束时，选择不额外偏爱任何未知细节的分布；数学上就是在约束下最大化熵。",
+        intuition:
+          "在只知道有限约束时，选择不额外偏爱任何未知细节的分布；数学上就是在约束下最大化熵。",
         explanation: [
           "离散 Gibbs/Shannon 熵为 −kBΣipi lnpi。只约束归一化时，最大熵给均匀分布。",
           "再约束平均能量 ΣipiEi=U，Lagrange multiplier 给 pi∝e^{-βEi}。",
           "β 的物理意义不是凭空假设；把小系统与大热库比较或与热力学关系匹配后，得到 β=1/(kBT)。",
           "最大熵是建模原则，不替代动力学；系统是否实际遍历到这些状态仍是另一问题。",
         ],
-        formula: "maximize −Σi pi lnpi, subject to Σipi=1 and ΣipiEi=U  ⇒  pi=e^{-βEi}/Z",
-        steps: ["写目标熵", "写所有约束", "加 Lagrange 乘子", "对 pi 求导", "归一化并识别乘子"],
+        formula:
+          "maximize −Σi pi lnpi, subject to Σipi=1 and ΣipiEi=U  ⇒  pi=e^{-βEi}/Z",
+        steps: [
+          "写目标熵",
+          "写所有约束",
+          "加 Lagrange 乘子",
+          "对 pi 求导",
+          "归一化并识别乘子",
+        ],
         example: {
           question: "只有两个状态且无能量约束，最大熵概率是什么？",
           solution: ["只约束 p0+p1=1", "熵在 p0=p1 时最大", "因此 p0=p1=1/2"],
         },
-        pitfalls: ["把 entropy 的正负号写反", "忘记归一化乘子", "最大熵结果未经物理约束就直接称为平衡"],
+        pitfalls: [
+          "把 entropy 的正负号写反",
+          "忘记归一化乘子",
+          "最大熵结果未经物理约束就直接称为平衡",
+        ],
         check: {
           question: "为什么加入平均能量约束后不再得到均匀分布？",
-          answer: "均匀分布通常不满足指定 U；能量高的状态必须按 e^{-βE} 被抑制，才能同时满足能量约束并保持最大熵。",
+          answer:
+            "均匀分布通常不满足指定 U；能量高的状态必须按 e^{-βE} 被抑制，才能同时满足能量约束并保持最大熵。",
         },
       },
     ],
@@ -970,13 +1208,20 @@ export const modules: StudyModule[] = [
       },
       {
         title: "涨落判断",
-        instruction: "系统粒子数扩大 100 倍，若贡献近似独立，相对涨落大约变为多少？",
+        instruction:
+          "系统粒子数扩大 100 倍，若贡献近似独立，相对涨落大约变为多少？",
         answer: "变为原来的 1/√100=1/10。",
       },
     ],
     gate: {
-      prompt: "不看答案完成：一个简单连续分布的归一化、平均、方差；再判断一个计数题对象是否可区分。",
-      criteria: ["方差公式不写错", "连续密度带积分测度", "组合计数先声明可区分性", "能解释 1/√N 的来源"],
+      prompt:
+        "不看答案完成：一个简单连续分布的归一化、平均、方差；再判断一个计数题对象是否可区分。",
+      criteria: [
+        "方差公式不写错",
+        "连续密度带积分测度",
+        "组合计数先声明可区分性",
+        "能解释 1/√N 的来源",
+      ],
     },
   },
   {
@@ -990,14 +1235,22 @@ export const modules: StudyModule[] = [
     hoursFull: 8,
     goal: "能用状态、过程、热、功、熵和热力学势描述系统，不再靠死记四条定律。",
     why: "统计物理要解释热力学。若热力学本身只剩零散公式，你就无法判断统计结果是否合理。",
-    prerequisites: ["math-toolbox：偏导与全微分", "生活直觉：热会从热物体流向冷物体"],
+    prerequisites: [
+      "math-toolbox：偏导与全微分",
+      "生活直觉：热会从热物体流向冷物体",
+    ],
     outcomes: [
       "区分状态函数与路径量、强度量与广延量",
       "固定本课的第一定律符号约定",
       "理解 0–3 定律的任务分工",
       "能从自然变量选择 U、F、G 或巨势",
     ],
-    sourceRefs: ["课件 1 slides 8–20", "课件 3 slides 3–9", "David Tong Ch. 4", "OpenStax Thermodynamics"],
+    sourceRefs: [
+      "课件 1 slides 8–20",
+      "课件 3 slides 3–9",
+      "David Tong Ch. 4",
+      "OpenStax Thermodynamics",
+    ],
     concepts: [
       {
         title: "系统、边界、平衡与状态量",
@@ -1013,11 +1266,20 @@ export const modules: StudyModule[] = [
         formula: "ideal gas: PV = NkBT",
         example: {
           question: "一杯水达到室温后，分子是否停止运动？它是否处于热平衡？",
-          solution: ["分子仍高速运动", "宏观温度与分布不再有净变化", "因此可以处于热平衡"],
+          solution: [
+            "分子仍高速运动",
+            "宏观温度与分布不再有净变化",
+            "因此可以处于热平衡",
+          ],
         },
-        pitfalls: ["把 equilibrium 等同静止", "把 heat 当系统内储存的状态量", "把密度当广延量"],
+        pitfalls: [
+          "把 equilibrium 等同静止",
+          "把 heat 当系统内储存的状态量",
+          "把密度当广延量",
+        ],
         check: {
-          question: "把两个相同盒子的理想气体并排视为一个系统，E、V、T 怎样变化？",
+          question:
+            "把两个相同盒子的理想气体并排视为一个系统，E、V、T 怎样变化？",
           answer: "E 和 V 加倍，T 不变；前两者广延，温度是强度量。",
         },
       },
@@ -1027,18 +1289,32 @@ export const modules: StudyModule[] = [
         core: true,
         intuition: "内能是账户余额；热和功是两种转账方式，不是账户里两种物质。",
         explanation: [
-          "本网页采用老师课件/常见物理约定：dE=δQ−P dV+μdN。气体膨胀 dV>0 时对外做功，系统能量减少。",
+          "先区分两种式子：封闭系统真实过程的账本是 dE=δQ−P_ext dV；简单可压缩单组分的平衡态基本关系是 dE=T dS−P dV+μdN。不要把它们无条件拼成一条开放系统过程公式。",
           "有些工程教材写 dE=δQ+δW 且 δW 表示外界对系统做功。两者都对，关键是先声明。",
           "E 是状态函数，所以 dE 只看初末态；Q、W 依赖路径，严格写作 δQ、δW。",
-          "可逆过程只是由一串无限接近平衡的状态组成的理想过程；只有可逆热量才有 δQrev=T dS。",
+          "可逆准静态过程中才可同时令 δQrev=T dS、P_ext=P；不可逆过程中二者一般不能逐项替换。",
         ],
-        formula: "dE = δQ − P dV + μ dN；固定 N 时 dE = T dS − P dV",
-        steps: ["画出系统边界", "标出能量/粒子流方向", "写正号约定", "再代入第一定律"],
+        formula:
+          "过程: dE=δQ−P_{ext} dV（封闭, 仅 P dV 功）；平衡态: dE=T dS−P dV+μ dN",
+        steps: [
+          "画出系统边界",
+          "标出能量/粒子流方向",
+          "写正号约定",
+          "再代入第一定律",
+        ],
         example: {
           question: "封闭气体吸热 100 J，同时对外做功 30 J，内能改变多少？",
-          solution: ["δQ=+100 J", "系统对外做功为 30 J，所以进入 dE 时是 −30 J", "ΔE=70 J"],
+          solution: [
+            "δQ=+100 J",
+            "系统对外做功为 30 J，所以进入 dE 时是 −30 J",
+            "ΔE=70 J",
+          ],
         },
-        pitfalls: ["热和温度混为一谈", "不同教材符号直接拼接", "不可逆过程也写 δQ=T dS"],
+        pitfalls: [
+          "热和温度混为一谈",
+          "不同教材符号直接拼接",
+          "不可逆过程也写 δQ=T dS",
+        ],
         check: {
           question: "绝热压缩中 δQ=0、dV<0，dE 的符号是什么？",
           answer: "−P dV>0，所以内能增加；外界对系统做功。",
@@ -1048,29 +1324,41 @@ export const modules: StudyModule[] = [
         title: "四条定律各自解决什么",
         label: "0–3 定律",
         core: true,
-        intuition: "第零定律定义温度，第一定律管账，第二定律给方向，第三定律给低温边界。",
+        intuition:
+          "第零定律定义温度，第一定律管账，第二定律给方向，第三定律给低温边界。",
         explanation: [
           "第零定律：若 A 与 C、B 与 C 分别热平衡，则 A 与 B 热平衡。它让温度成为可传递比较的状态量。",
           "第一定律：能量守恒；不能告诉过程会不会自发发生。",
           "第二定律：孤立系统熵不减，平衡是可达约束下熵最大。它解释时间方向与热机效率上限。",
           "第三定律：理想完美晶体 T→0 时熵趋向常数（常取 0）；激发被冻结，热容常趋零。",
         ],
-        formula: "isolated system: ΔS ≥ 0；  reversible cycle efficiency ≤ Carnot efficiency",
+        formula: "isolated system: ΔS≥0；两热库热机: η≤1−T_c/T_h，可逆时取等号",
         example: {
-          question: "为什么“热量自发从冷物体流到热物体”不违反第一定律，却违反第二定律？",
-          solution: ["总能量仍可守恒，所以第一定律不禁止", "但该方向会让孤立总熵下降", "因此第二定律禁止其自发发生"],
+          question:
+            "为什么“热量自发从冷物体流到热物体”不违反第一定律，却违反第二定律？",
+          solution: [
+            "总能量仍可守恒，所以第一定律不禁止",
+            "但该方向会让孤立总熵下降",
+            "因此第二定律禁止其自发发生",
+          ],
         },
-        pitfalls: ["把 ΔS≥0 用在任意子系统而不计环境", "认为可逆过程没有变化", "把第三定律说成所有系统绝对熵必为零"],
+        pitfalls: [
+          "把 ΔS≥0 用在任意子系统而不计环境",
+          "认为可逆过程没有变化",
+          "把第三定律说成所有系统绝对熵必为零",
+        ],
         check: {
           question: "冰箱把热从冷处搬到热处是否违反第二定律？",
-          answer: "不违反，因为冰箱需要外界做功；把冰箱与环境一起算，总熵不减。",
+          answer:
+            "不违反，因为冰箱需要外界做功；把冰箱与环境一起算，总熵不减。",
         },
       },
       {
         title: "熵：从热力学定义到统计定义",
         label: "核心桥梁",
         core: true,
-        intuition: "热力学说熵决定方向；统计物理解释熵为何与可实现的微观方式数有关。",
+        intuition:
+          "热力学说熵决定方向；统计物理解释熵为何与可实现的微观方式数有关。",
         explanation: [
           "热力学定义可逆微小过程 dS=δQrev/T。",
           "统计定义 S=kBlnΩ。两个系统接触后，最可能的宏观分配是联合 Ω 最大，也就是总 S 最大。",
@@ -1080,20 +1368,31 @@ export const modules: StudyModule[] = [
         formula: "S=kBlnΩ；  1/T=(∂S/∂E)V,N",
         formulaNote: "这两式会在微正则模块严格从组合系统推导。",
         example: {
-          question: "系统 A 加一点能量能新增很多微观态，系统 B 新增很少。能量倾向流向谁？",
-          solution: ["∂S/∂E 较大的系统温度较低", "联合态数增长最快的方向是能量流向 A", "直到两边 ∂S/∂E 相等，即温度相等"],
+          question:
+            "系统 A 加一点能量能新增很多微观态，系统 B 新增很少。能量倾向流向谁？",
+          solution: [
+            "∂S/∂E 较大的系统温度较低",
+            "联合态数增长最快的方向是能量流向 A",
+            "直到两边 ∂S/∂E 相等，即温度相等",
+          ],
         },
-        pitfalls: ["把熵简单等同“混乱”", "只看单个子系统熵，不看总系统", "认为微观动力学每一步都不可逆"],
+        pitfalls: [
+          "把熵简单等同“混乱”",
+          "只看单个子系统熵，不看总系统",
+          "认为微观动力学每一步都不可逆",
+        ],
         check: {
           question: "为什么总熵最大条件给出温度相等？",
-          answer: "固定总能量时 dStot/dE1=∂S1/∂E1−∂S2/∂E2=0；用 1/T=∂S/∂E 得 1/T1=1/T2。",
+          answer:
+            "固定总能量时 dStot/dE1=∂S1/∂E1−∂S2/∂E2=0；用 1/T=∂S/∂E 得 1/T1=1/T2。",
         },
       },
       {
         title: "为什么需要不同热力学势",
         label: "选择工具",
         core: true,
-        intuition: "实验能控制的旋钮不同，就换一个以这些旋钮为自然变量的“平衡评分函数”。",
+        intuition:
+          "实验能控制的旋钮不同，就换一个以这些旋钮为自然变量的“平衡评分函数”。",
         explanation: [
           "孤立系统固定 S,V,N：平衡使 U 最小；或固定 E,V,N：平衡使 S 最大。",
           "热库固定 T,V,N：使用 Helmholtz 自由能 F=U−TS，平衡使 F 最小。",
@@ -1101,16 +1400,31 @@ export const modules: StudyModule[] = [
           "固定 T,V,μ：使用巨势 ΦG=U−TS−μN=−PV，平衡使巨势最小。",
         ],
         formula: "F=U−TS； G=U−TS+PV； ΦG=U−TS−μN",
-        formulaNote: "Legendre transform 的本质是把不方便控制的变量换成方便控制的共轭变量。",
-        steps: ["列出固定的外界控制量", "选自然变量匹配的势", "写全微分", "用最小/最大条件或偏导求平衡"],
+        formulaNote:
+          "Legendre transform 的本质是把不方便控制的变量换成方便控制的共轭变量。",
+        steps: [
+          "列出固定的外界控制量",
+          "选自然变量匹配的势",
+          "写全微分",
+          "用最小/最大条件或偏导求平衡",
+        ],
         example: {
           question: "恒温恒容盒子里比较两个可能相，应该比较 U、S 还是 F？",
-          solution: ["外界固定 T,V,N", "对应 Helmholtz F(T,V,N)", "F 较小的相稳定"],
+          solution: [
+            "外界固定 T,V,N",
+            "对应 Helmholtz F(T,V,N)",
+            "F 较小的相稳定",
+          ],
         },
-        pitfalls: ["看到自由能都叫 G", "固定条件没看就选势", "忘记 μN 或 PV 的正负号"],
+        pitfalls: [
+          "看到自由能都叫 G",
+          "固定条件没看就选势",
+          "忘记 μN 或 PV 的正负号",
+        ],
         check: {
           question: "恒温恒压条件下相共存为什么比较 Gibbs 自由能/化学势？",
-          answer: "因为 T、P、N 是控制量，G 的自然变量与之匹配；相间转移达到平衡时化学势相等。",
+          answer:
+            "因为 T、P、N 是控制量，G 的自然变量与之匹配；相间转移达到平衡时化学势相等。",
         },
       },
     ],
@@ -1153,8 +1467,14 @@ export const modules: StudyModule[] = [
       },
     ],
     gate: {
-      prompt: "给任意一个热力学过程，能画系统边界、声明符号、选势，并解释第二定律判断的对象。",
-      criteria: ["热与功不再称为状态函数", "能从 dF 读出 S/P", "能区分系统熵与总熵", "四个势按固定条件选择正确"],
+      prompt:
+        "给任意一个热力学过程，能画系统边界、声明符号、选势，并解释第二定律判断的对象。",
+      criteria: [
+        "热与功不再称为状态函数",
+        "能从 dF 读出 S/P",
+        "能区分系统熵与总熵",
+        "四个势按固定条件选择正确",
+      ],
     },
   },
   {
@@ -1168,7 +1488,10 @@ export const modules: StudyModule[] = [
     hoursFull: 7,
     goal: "理解经典微观态为何是相空间的一点，以及概率分布为何必须服从 Liouville 方程。",
     why: "Week 2 和作业 1 Q1 默认你已经会 Hamilton 方程、Jacobian 与相空间；这一节把它们连成一张图。",
-    prerequisites: ["math-toolbox：多变量偏导与小量展开", "知道 Newton 第二定律 F=ma"],
+    prerequisites: [
+      "math-toolbox：多变量偏导与小量展开",
+      "知道 Newton 第二定律 F=ma",
+    ],
     outcomes: [
       "能从 Lagrangian/Hamiltonian 的角色理解 q、p",
       "能数出 N 个三维粒子的 6N 维相空间",
@@ -1181,7 +1504,8 @@ export const modules: StudyModule[] = [
         title: "为什么换成 Hamilton 语言",
         label: "动力学重写",
         core: true,
-        intuition: "Newton 用位置和加速度描述轨迹；Hamilton 把位置 q 与动量 p 放在对称的一阶方程里，更适合描述一整群可能状态。",
+        intuition:
+          "Newton 用位置和加速度描述轨迹；Hamilton 把位置 q 与动量 p 放在对称的一阶方程里，更适合描述一整群可能状态。",
         explanation: [
           "一维粒子 H(q,p)=p²/(2m)+V(q)，通常就是总能量。",
           "Hamilton 方程 q̇=∂H/∂p、ṗ=−∂H/∂q 等价于 Newton 方程。",
@@ -1193,7 +1517,11 @@ export const modules: StudyModule[] = [
           question: "H=p²/(2m)+mω²q²/2，写出 Hamilton 方程并恢复谐振子方程。",
           solution: ["q̇=p/m", "ṗ=−mω²q", "对 q̇ 再求时间导数：q̈=ṗ/m=−ω²q"],
         },
-        pitfalls: ["ṗ 方程漏负号", "所有 Hamiltonian 都机械地叫总能量而不检查显含时间", "把 q、p 当成彼此独立的粒子"],
+        pitfalls: [
+          "ṗ 方程漏负号",
+          "所有 Hamiltonian 都机械地叫总能量而不检查显含时间",
+          "把 q、p 当成彼此独立的粒子",
+        ],
         check: {
           question: "自由粒子 H=p²/(2m) 的 q̇、ṗ 是什么？",
           answer: "q̇=p/m，ṗ=0，所以动量不变、位置匀速变化。",
@@ -1203,7 +1531,8 @@ export const modules: StudyModule[] = [
         title: "一个微观态就是相空间一点",
         label: "6N 维",
         core: true,
-        intuition: "要预测经典系统下一刻，必须同时知道所有位置和动量；把这些数排成一个大坐标，就是相空间点。",
+        intuition:
+          "要预测经典系统下一刻，必须同时知道所有位置和动量；把这些数排成一个大坐标，就是相空间点。",
         explanation: [
           "一个三维粒子有 (x,y,z,px,py,pz) 六个相空间坐标。",
           "N 个三维粒子有 6N 维。相空间不是普通实空间，不要试图“看见”6N 维，只需会数自由度和写积分。",
@@ -1213,9 +1542,16 @@ export const modules: StudyModule[] = [
         formula: "dΓ = d³Nq d³Np；  classical state count ∼ [1/(N!h³ᴺ)]∫dΓ",
         example: {
           question: "N 个一维谐振子相空间是几维？能量约束是什么形状？",
-          solution: ["每个振子有 qi、pi 两个坐标，共 2N 维", "适当缩放 q、p 后 H≤E 变成 2N 维球内部"],
+          solution: [
+            "每个振子有 qi、pi 两个坐标，共 2N 维",
+            "适当缩放 q、p 后 H≤E 变成 2N 维球内部",
+          ],
         },
-        pitfalls: ["把 N 个三维粒子写成 3N 维而漏动量", "H=E 的壳与 H≤E 的体积混用", "经典 Z 漏 h³ᴺ/N!"],
+        pitfalls: [
+          "把 N 个三维粒子写成 3N 维而漏动量",
+          "H=E 的壳与 H≤E 的体积混用",
+          "经典 Z 漏 h³ᴺ/N!",
+        ],
         check: {
           question: "两个三维粒子的相空间维数是多少？",
           answer: "12 维：每个粒子 3 个位置加 3 个动量。",
@@ -1235,9 +1571,17 @@ export const modules: StudyModule[] = [
         formula: "dA/dt = ∂A/∂t + {A,H}",
         example: {
           question: "为什么任何 ρ=f(H) 都满足 {ρ,H}=0？",
-          solution: ["链式法则 {f(H),H}=f′(H){H,H}", "{H,H}=0", "所以括号为零；若不显含时间，ρ 稳定"],
+          solution: [
+            "链式法则 {f(H),H}=f′(H){H,H}",
+            "{H,H}=0",
+            "所以括号为零；若不显含时间，ρ 稳定",
+          ],
         },
-        pitfalls: ["Poisson bracket 两项顺序写反", "有显含时间时漏 ∂A/∂t", "stationary 分布就等于唯一平衡分布"],
+        pitfalls: [
+          "Poisson bracket 两项顺序写反",
+          "有显含时间时漏 ∂A/∂t",
+          "stationary 分布就等于唯一平衡分布",
+        ],
         check: {
           question: "{q,p} 是多少（单自由度）？",
           answer: "{q,p}=(∂q/∂q)(∂p/∂p)−(∂q/∂p)(∂p/∂q)=1。",
@@ -1247,7 +1591,8 @@ export const modules: StudyModule[] = [
         title: "Jacobian、连续性与相空间不可压缩",
         label: "Liouville 预告",
         core: true,
-        intuition: "Hamilton 演化会拉伸和折叠概率云，但不会把一小块相空间体积压扁或膨胀。",
+        intuition:
+          "Hamilton 演化会拉伸和折叠概率云，但不会把一小块相空间体积压扁或膨胀。",
         explanation: [
           "小时间 δt 后 q′=q+q̇δt、p′=p+ṗδt。坐标变换的 Jacobian 决定小体积如何变化。",
           "Jacobian 一阶变化由 Σi(∂q̇i/∂qi+∂ṗi/∂pi)δt 决定。",
@@ -1255,12 +1600,26 @@ export const modules: StudyModule[] = [
           "概率守恒再给 ∂tρ+∇Γ·(ρvΓ)=0；相空间散度为零时得到 ∂tρ+{ρ,H}=0。",
         ],
         formula: "∇Γ·vΓ = Σi(∂q̇i/∂qi+∂ṗi/∂pi)=0",
-        steps: ["写小时间坐标映射", "展开 Jacobian 到一阶", "代 Hamilton 方程", "用混合偏导相等抵消", "结合概率守恒"],
+        steps: [
+          "写小时间坐标映射",
+          "展开 Jacobian 到一阶",
+          "代 Hamilton 方程",
+          "用混合偏导相等抵消",
+          "结合概率守恒",
+        ],
         example: {
           question: "为什么 Liouville 定理不是说每个相空间点不动？",
-          solution: ["点会沿 Hamilton 轨迹移动", "定理只说随流移动的小体积不变", "像不可压缩水流：水滴移动，但体积不变"],
+          solution: [
+            "点会沿 Hamilton 轨迹移动",
+            "定理只说随流移动的小体积不变",
+            "像不可压缩水流：水滴移动，但体积不变",
+          ],
         },
-        pitfalls: ["把体积守恒误解为概率密度处处常数", "一阶 Jacobian 展开漏 O(δt²)", "没说明使用混合偏导可交换"],
+        pitfalls: [
+          "把体积守恒误解为概率密度处处常数",
+          "一阶 Jacobian 展开漏 O(δt²)",
+          "没说明使用混合偏导可交换",
+        ],
         check: {
           question: "Hamilton 流相空间散度为什么为零？",
           answer: "∂q̇/∂q=∂²H/(∂q∂p)，∂ṗ/∂p=−∂²H/(∂p∂q)，对光滑 H 两者抵消。",
@@ -1280,7 +1639,8 @@ export const modules: StudyModule[] = [
       },
       {
         title: "补课：ergodicity 需要知道到什么程度",
-        summary: "遍历假设让长时间平均可由系综平均代替，但并非所有系统严格遍历。",
+        summary:
+          "遍历假设让长时间平均可由系综平均代替，但并非所有系统严格遍历。",
         paragraphs: [
           "实验通常观测一个系统随时间；理论计算一群系统副本的 ensemble average。遍历性是连接二者的常用假设。",
           "积分常数、规则轨道、玻璃等可能破坏简单遍历图景。本课解题通常接受平衡系综假设，不要求证明遍历性。",
@@ -1290,7 +1650,8 @@ export const modules: StudyModule[] = [
     practice: [
       {
         title: "维数检查",
-        instruction: "5 个三维粒子的相空间维数、位置子空间维数、动量子空间维数分别是多少？",
+        instruction:
+          "5 个三维粒子的相空间维数、位置子空间维数、动量子空间维数分别是多少？",
         answer: "30、15、15。",
       },
       {
@@ -1301,12 +1662,19 @@ export const modules: StudyModule[] = [
       {
         title: "Liouville 一句话",
         instruction: "不用公式解释 Liouville 定理。",
-        answer: "Hamilton 动力学使相空间中的状态云像不可压缩流体那样移动：形状可变，但随流体积不变。",
+        answer:
+          "Hamilton 动力学使相空间中的状态云像不可压缩流体那样移动：形状可变，但随流体积不变。",
       },
     ],
     gate: {
-      prompt: "从 Hamilton 方程开始，用五行以内写出相空间散度为零，并说出它和概率守恒如何组成 Liouville 方程。",
-      criteria: ["ṗ 的负号正确", "混合偏导抵消写清", "能区分轨迹移动与体积守恒", "会数 6N 维"],
+      prompt:
+        "从 Hamilton 方程开始，用五行以内写出相空间散度为零，并说出它和概率守恒如何组成 Liouville 方程。",
+      criteria: [
+        "ṗ 的负号正确",
+        "混合偏导抵消写清",
+        "能区分轨迹移动与体积守恒",
+        "会数 6N 维",
+      ],
     },
   },
   {
@@ -1327,35 +1695,54 @@ export const modules: StudyModule[] = [
       "能读 Maxwell 速度分布并做量纲/极限判断",
       "能解释 equipartition 与理想气体定律为什么是统计结果",
     ],
-    sourceRefs: ["课件 1 slides 1–25", "David Tong pp. 1–2 与 Ch. 2.3", "MIT OCW L1–2"],
+    sourceRefs: [
+      "课件 1 slides 1–25",
+      "David Tong pp. 1–2 与 Ch. 2.3",
+      "MIT OCW L1–2",
+    ],
     concepts: [
       {
         title: "统计物理的翻译任务",
         label: "课程总图",
         core: true,
-        intuition: "我们不是放弃微观定律，而是把“每个粒子怎样动”翻译成“整体通常会怎样”。",
+        intuition:
+          "我们不是放弃微观定律，而是把“每个粒子怎样动”翻译成“整体通常会怎样”。",
         explanation: [
           "微观层：给定 Hamiltonian 或量子 Hamiltonian，粒子遵守确定的运动/演化规律。",
           "统计层：由于微观自由度太多且初态未知，用微观态上的概率分布描述系统。",
           "宏观层：对压力、能量、磁化等可观测量取 ensemble average，得到热力学。",
           "“More is different”：温度、熵、相变是大量自由度共同出现的 emergent concepts，单个粒子通常没有同样意义的温度。",
         ],
-        formula: "microphysics → probability over microstates → ensemble average → thermodynamics",
+        formula:
+          "microphysics → probability over microstates → ensemble average → thermodynamics",
         example: {
-          question: "知道一箱气体每个分子的 Newton 方程，为什么仍不直接逐粒子求解？",
-          solution: ["初始条件数量约 6N，无法测全", "数值误差与碰撞使逐轨迹信息不可用", "实验关心的是 P、T、U 等少数稳定平均量", "概率描述直接针对这些问题"],
+          question:
+            "知道一箱气体每个分子的 Newton 方程，为什么仍不直接逐粒子求解？",
+          solution: [
+            "初始条件数量约 6N，无法测全",
+            "数值误差与碰撞使逐轨迹信息不可用",
+            "实验关心的是 P、T、U 等少数稳定平均量",
+            "概率描述直接针对这些问题",
+          ],
         },
-        pitfalls: ["把统计理解为微观规律不确定", "认为平均值意味着每个粒子都等于平均", "一开始就背系综而忘了控制条件"],
+        pitfalls: [
+          "把统计理解为微观规律不确定",
+          "认为平均值意味着每个粒子都等于平均",
+          "一开始就背系综而忘了控制条件",
+        ],
         check: {
-          question: "statistical mechanics 中最需要预测的是一个特定微观态，还是宏观可观测量？",
-          answer: "通常是宏观可观测量及其涨落；特定微观态既难获得也通常不是实验目标。",
+          question:
+            "statistical mechanics 中最需要预测的是一个特定微观态，还是宏观可观测量？",
+          answer:
+            "通常是宏观可观测量及其涨落；特定微观态既难获得也通常不是实验目标。",
         },
       },
       {
         title: "宏观状态、微观态与 ensemble",
         label: "三层对象",
         core: true,
-        intuition: "宏观态像邮编，微观态像完整地址；系综是同一邮编下所有可能地址的概率清单。",
+        intuition:
+          "宏观态像邮编，微观态像完整地址；系综是同一邮编下所有可能地址的概率清单。",
         explanation: [
           "宏观约束 E,V,N 固定时，仍有巨大数量的相空间点符合条件。",
           "ensemble 不是实验室里真的复制无数盒子，而是概率论上的概念集合。",
@@ -1363,12 +1750,26 @@ export const modules: StudyModule[] = [
           "不同控制条件给不同允许集合与概率：E 固定是微正则，T 固定是正则，μ 固定是巨正则。",
         ],
         formula: "⟨A⟩ = ∫dΓ ρ(Γ) A(Γ)",
-        steps: ["写微观态空间", "列宏观约束", "选概率分布", "归一化", "计算 observable 的平均/方差"],
+        steps: [
+          "写微观态空间",
+          "列宏观约束",
+          "选概率分布",
+          "归一化",
+          "计算 observable 的平均/方差",
+        ],
         example: {
           question: "同一温度和体积的气体，微观态是否唯一？",
-          solution: ["不唯一", "粒子位置和动量有海量组合", "这些组合在相应系综中以不同概率出现"],
+          solution: [
+            "不唯一",
+            "粒子位置和动量有海量组合",
+            "这些组合在相应系综中以不同概率出现",
+          ],
         },
-        pitfalls: ["把 ensemble 与单个微观态混用", "平均时漏相空间测度", "认为换系综就是换物理系统而不是换控制方式"],
+        pitfalls: [
+          "把 ensemble 与单个微观态混用",
+          "平均时漏相空间测度",
+          "认为换系综就是换物理系统而不是换控制方式",
+        ],
         check: {
           question: "若要预测能量涨落，只有平均能量够吗？",
           answer: "不够，还需要 ⟨E²⟩ 或分布；Var(E)=⟨E²⟩−⟨E⟩²。",
@@ -1378,7 +1779,8 @@ export const modules: StudyModule[] = [
         title: "Maxwell–Boltzmann 速度分布怎么读",
         label: "第一种统计模型",
         core: true,
-        intuition: "一个速度分量呈 Gaussian；速度大小还要乘球壳面积 4πv²，所以最可能速度不是零。",
+        intuition:
+          "一个速度分量呈 Gaussian；速度大小还要乘球壳面积 4πv²，所以最可能速度不是零。",
         explanation: [
           "三分量独立且各向同性时，p(vx,vy,vz)∝exp[−βm(vx²+vy²+vz²)/2]。",
           "若问速度向量落在 d³v 中，用三维密度；若问 speed v 到 v+dv，要对方向积分，得到 4πv² 因子。",
@@ -1389,9 +1791,17 @@ export const modules: StudyModule[] = [
         formulaNote: "f(v)dv 是 speed 位于 [v,v+dv] 的概率。",
         example: {
           question: "为什么 vx 最可能为 0，但 speed v 最可能不为 0？",
-          solution: ["单分量密度在 0 最大", "三维中半径 v 的球壳状态数随 v² 增大", "v² 与指数抑制竞争，在非零 v 出现峰"],
+          solution: [
+            "单分量密度在 0 最大",
+            "三维中半径 v 的球壳状态数随 v² 增大",
+            "v² 与指数抑制竞争，在非零 v 出现峰",
+          ],
         },
-        pitfalls: ["速度向量分布与 speed 分布漏掉 4πv²", "把平均速度向量 0 当平均 speed 0", "指数中漏 m 或 2"],
+        pitfalls: [
+          "速度向量分布与 speed 分布漏掉 4πv²",
+          "把平均速度向量 0 当平均 speed 0",
+          "指数中漏 m 或 2",
+        ],
         check: {
           question: "同温度下，氢分子与氧分子谁的典型速度更大？",
           answer: "氢分子更大；典型速度随 √(kBT/m) 变化。",
@@ -1412,9 +1822,17 @@ export const modules: StudyModule[] = [
         formula: "P=(N/V)m⟨v_x²⟩=(N/3V)m⟨v²⟩;  U=3NkBT/2;  PV=NkBT",
         example: {
           question: "N 个三维经典谐振子总平均能量是多少？",
-          solution: ["每个振子 3 个动量二次项 + 3 个位置二次项，共 6 个", "每项 kBT/2", "每振子 3kBT，总能量 3NkBT"],
+          solution: [
+            "每个振子 3 个动量二次项 + 3 个位置二次项，共 6 个",
+            "每项 kBT/2",
+            "每振子 3kBT，总能量 3NkBT",
+          ],
         },
-        pitfalls: ["任意势能都套 kBT/2", "量子低温也强行 equipartition", "自由度计数漏位置或动量"],
+        pitfalls: [
+          "任意势能都套 kBT/2",
+          "量子低温也强行 equipartition",
+          "自由度计数漏位置或动量",
+        ],
         check: {
           question: "单原子理想气体定容热容 CV 是多少？",
           answer: "U=3NkBT/2，所以 CV=(∂U/∂T)V,N=3NkB/2。",
@@ -1424,7 +1842,8 @@ export const modules: StudyModule[] = [
     deepDives: [
       {
         title: "先不要纠结：为什么 statistics 能给因果解释",
-        summary: "课件提醒统计描述模式，不自动给微观机制；统计物理还需 Hamiltonian 提供机制。",
+        summary:
+          "课件提醒统计描述模式，不自动给微观机制；统计物理还需 Hamiltonian 提供机制。",
         paragraphs: [
           "只拟合分布不能告诉你粒子为何具有某能量；Hamiltonian 决定允许状态与能量，系综决定在约束下如何加权。",
           "因此完整答案常有三层：模型的微观能量、系综分布、由平均得到的宏观定律。",
@@ -1432,7 +1851,8 @@ export const modules: StudyModule[] = [
       },
       {
         title: "课程旧版考核信息",
-        summary: "课件 1 的 2025-09 版本写 Assignment 30%、Mid-term 30%、Final 40%。",
+        summary:
+          "课件 1 的 2025-09 版本写 Assignment 30%、Mid-term 30%、Final 40%。",
         paragraphs: [
           "网页据此重视三套作业和期中评分答案，但下一次重修的比例可能改变。",
           "开课第一周请把新 syllabus 与这里对照；知识路径通常不变，权重和截止日期需要更新。",
@@ -1442,12 +1862,15 @@ export const modules: StudyModule[] = [
     practice: [
       {
         title: "概念复述",
-        instruction: "用“邮编/地址”的比喻解释 macrostate、microstate、ensemble。",
-        answer: "宏观态是邮编；微观态是完整地址；系综是该邮编下地址及其概率的清单。",
+        instruction:
+          "用“邮编/地址”的比喻解释 macrostate、microstate、ensemble。",
+        answer:
+          "宏观态是邮编；微观态是完整地址；系综是该邮编下地址及其概率的清单。",
       },
       {
         title: "自由度计数",
-        instruction: "三维单原子理想气体每个粒子有几个对能量作二次贡献的自由度？",
+        instruction:
+          "三维单原子理想气体每个粒子有几个对能量作二次贡献的自由度？",
         answer: "3 个动量二次自由度，所以平均能量 3kBT/2。",
       },
       {
@@ -1457,8 +1880,13 @@ export const modules: StudyModule[] = [
       },
     ],
     gate: {
-      prompt: "不用公式先讲清：为何大量粒子可以用概率预测，以及 Maxwell speed 分布为何在 v=0 为零。",
-      criteria: ["三层翻译链完整", "分清速度向量与 speed", "能正确做一次自由度计数"],
+      prompt:
+        "不用公式先讲清：为何大量粒子可以用概率预测，以及 Maxwell speed 分布为何在 v=0 为零。",
+      criteria: [
+        "三层翻译链完整",
+        "分清速度向量与 speed",
+        "能正确做一次自由度计数",
+      ],
     },
   },
   {
@@ -1479,13 +1907,20 @@ export const modules: StudyModule[] = [
       "能解释 stationary distribution 为何可写成 f(H, conserved quantities)",
       "能区分 time reversal、recurrence、ergodicity 与 equilibrium",
     ],
-    sourceRefs: ["课件 2 slides 1–16", "课件 7 slides 2–4", "作业 1 Q1", "期中 Q1(a)", "MIT OCW L7"],
+    sourceRefs: [
+      "课件 2 slides 1–16",
+      "课件 7 slides 2–4",
+      "作业 1 Q1",
+      "期中 Q1(a)",
+      "MIT OCW L7",
+    ],
     concepts: [
       {
         title: "Liouville 方程：概率也要服从微观动力学",
         label: "核心定理",
         core: true,
-        intuition: "不能任意在相空间画一个随时间变化的概率云；它必须被 Hamilton 流搬运并守恒。",
+        intuition:
+          "不能任意在相空间画一个随时间变化的概率云；它必须被 Hamilton 流搬运并守恒。",
         explanation: [
           "状态点速度是 vΓ=(q̇,ṗ)。概率守恒给相空间 continuity equation。",
           "Hamilton 流散度为零，于是 ∂tρ+vΓ·∇Γρ=0，也就是 ∂tρ+{ρ,H}=0。",
@@ -1493,22 +1928,37 @@ export const modules: StudyModule[] = [
           "这对应 phase-space volume preservation；两种证明是同一几何事实。",
         ],
         formula: "∂tρ + {ρ,H} = 0  ⇔  dρ/dt along trajectory = 0",
-        steps: ["写 continuity", "计算 Hamilton 流散度", "令散度为零", "识别 Poisson bracket"],
+        steps: [
+          "写 continuity",
+          "计算 Hamilton 流散度",
+          "令散度为零",
+          "识别 Poisson bracket",
+        ],
         example: {
           question: "若初始概率云被拉成长条，Liouville 是否允许？",
-          solution: ["允许形状改变", "只要求随流小体积与密度保持", "长条在某方向拉长时必须在其他方向压缩，整体相空间体积不变"],
+          solution: [
+            "允许形状改变",
+            "只要求随流小体积与密度保持",
+            "长条在某方向拉长时必须在其他方向压缩，整体相空间体积不变",
+          ],
         },
-        pitfalls: ["把 ∂tρ=0 当成一般 Liouville 结论", "只写方程不解释 phase volume", "认为 Liouville 本身证明熵增"],
+        pitfalls: [
+          "把 ∂tρ=0 当成一般 Liouville 结论",
+          "只写方程不解释 phase volume",
+          "认为 Liouville 本身证明熵增",
+        ],
         check: {
           question: "平衡分布的 ∂tρ=0，还需满足什么？",
-          answer: "还需 {ρ,H}=0；因此 ρ 必须沿 Hamilton 轨迹不变，通常可取守恒量的函数。",
+          answer:
+            "还需 {ρ,H}=0；因此 ρ 必须沿 Hamilton 轨迹不变，通常可取守恒量的函数。",
         },
       },
       {
         title: "平衡分布的允许形式",
         label: "stationarity",
         core: true,
-        intuition: "平衡时概率图案不随时间变，所以同一条动力学轨道上的概率不能忽高忽低。",
+        intuition:
+          "平衡时概率图案不随时间变，所以同一条动力学轨道上的概率不能忽高忽低。",
         explanation: [
           "若 ρ=f(H)，则 {ρ,H}=f′(H){H,H}=0，所以 stationary。",
           "若还有粒子数、总动量、角动量等守恒量，ρ 也可以依赖它们。",
@@ -1518,9 +1968,17 @@ export const modules: StudyModule[] = [
         formula: "ρeq = f(H,C1,C2,...)",
         example: {
           question: "ρ∝e^{-βH} 为什么与 Liouville 相容？",
-          solution: ["它是 H 的函数", "Poisson bracket {e^{-βH},H}=0", "所以在时间无关 H 下 stationary"],
+          solution: [
+            "它是 H 的函数",
+            "Poisson bracket {e^{-βH},H}=0",
+            "所以在时间无关 H 下 stationary",
+          ],
         },
-        pitfalls: ["把“可以是 f(H)”说成“只能是均匀分布”", "忽略额外守恒量", "只凭 stationary 就确定 β"],
+        pitfalls: [
+          "把“可以是 f(H)”说成“只能是均匀分布”",
+          "忽略额外守恒量",
+          "只凭 stationary 就确定 β",
+        ],
         check: {
           question: "ρ=q（单自由度）一般是平衡分布吗？",
           answer: "一般不是，因为 {q,H}=∂H/∂p=q̇ 通常不为零。",
@@ -1530,28 +1988,41 @@ export const modules: StudyModule[] = [
         title: "ensemble average 与 time average",
         label: "遍历桥梁",
         core: true,
-        intuition: "理论同时看很多可能系统，实验往往长时间看一个系统；遍历假设让两种平均在适当条件下相等。",
+        intuition:
+          "理论同时看很多可能系统，实验往往长时间看一个系统；遍历假设让两种平均在适当条件下相等。",
         explanation: [
           "ensemble average 在某时刻对所有微观态按 ρ 加权。",
           "time average 沿一条长轨迹对 A(t) 平均。",
-          "ergodicity 粗略说轨迹会充分探索可访问区域；课程解题中通常默认平衡系综可代表长期实验。",
+          "ergodicity 粗略说轨迹会充分探索对应 invariant measure 的可访问区域；孤立 Hamilton 轨迹固定能量，只能直接对应同一能量壳的 microcanonical measure。",
+          "canonical 长时平均要把小系统连同热库视为更大微正则系统，或使用确实保存 canonical measure 的恒温/随机动力学；不能让一条封闭固定能量轨迹凭空采样不同能量。",
           "recurrence 说有限受限 Hamilton 系统可能极长时间后接近初态，并不妨碍实际时间尺度上的热力学。",
         ],
         formula: "lim(τ→∞)(1/τ)∫₀^τA(t)dt ≈ ∫dΓ ρeq A",
         example: {
           question: "温度计测量更接近瞬时微观态还是时间/系综平均？",
-          solution: ["温度计响应时间内与大量粒子相互作用", "读数本质上是时空平均", "所以稳定宏观量由 ensemble average 预测"],
+          solution: [
+            "温度计响应时间内与大量粒子相互作用",
+            "读数本质上是时空平均",
+            "所以稳定宏观量由 ensemble average 预测",
+          ],
         },
-        pitfalls: ["把遍历性当对所有系统的已证定理", "recurrence 时间与实验时间混为一谈", "认为 time reversal 直接否定熵增"],
+        pitfalls: [
+          "把遍历性当对所有系统的已证定理",
+          "把孤立 Hamilton 轨迹说成会直接遍历 canonical 能量分布",
+          "recurrence 时间与实验时间混为一谈",
+          "认为 time reversal 直接否定熵增",
+        ],
         check: {
           question: "为什么课程可以用 ensemble average 预测一个真实气体？",
-          answer: "假设其平衡动力学能在观测尺度上充分采样可访问微观态，使时间/空间平均接近系综平均。",
+          answer:
+            "假设其平衡动力学能在观测尺度上充分采样可访问微观态，使时间/空间平均接近系综平均。",
         },
       },
       {
         title: "不可逆性的正确表述",
         label: "概念防坑",
-        intuition: "微观方程允许倒放，不等于宏观熵减过程常见；差别在初态集合的体积与概率。",
+        intuition:
+          "微观方程允许倒放，不等于宏观熵减过程常见；差别在初态集合的体积与概率。",
         explanation: [
           "低熵宏观态只占能量壳中极小区域；高熵宏观态占绝大多数。",
           "从低熵态出发，多数微观轨迹进入更大宏观区域；精确反向动量可倒放，但这种准备极特殊。",
@@ -1560,18 +2031,23 @@ export const modules: StudyModule[] = [
         ],
         check: {
           question: "Liouville 体积守恒是否等于所有宏观熵不变？",
-          answer: "不等于。细粒度相空间信息守恒；热力学熵对应宏观粗粒化和可访问宏观区域，仍可表现为增加。",
+          answer:
+            "不等于。细粒度相空间信息守恒；热力学熵对应宏观粗粒化和可访问宏观区域，仍可表现为增加。",
         },
       },
     ],
     deepDives: [
       {
         title: "作业 1 Q1 的答题骨架",
-        summary: "这道题考两条线：Jacobian 体积守恒，以及最大熵分布的 stationarity。",
+        summary:
+          "这道题考两条线：Jacobian 体积守恒，以及最大熵分布的 stationarity。",
         paragraphs: [
           "第一部分：写 q′、p′ 的小时间映射；det(I+δtM)=1+δtTrM+O(δt²)；TrM 是相空间散度；用 Hamilton 方程归零。",
           "第二部分：对 −∫ρlnρ（注意题目可能漏负号或采用不同号）加归一化与平均能量约束；变分得 ρ∝e^{-βH}。",
           "最后验证 ∂tρ=−{ρ,H}=0，因为 ρ 只依赖 H。",
+        ],
+        formulas: [
+          "$$\\det J=1+\\mathcal O(\\delta t^2);\\quad \\rho_{\\mathrm{eq}}=Z^{-1}e^{-\\beta H};\\quad \\partial_t\\rho_{\\mathrm{eq}}+\\{\\rho_{\\mathrm{eq}},H\\}=0$$",
         ],
       },
       {
@@ -1597,12 +2073,17 @@ export const modules: StudyModule[] = [
       {
         title: "口头解释",
         instruction: "用“不可压缩水流”解释 Liouville，并指出比喻不代表什么。",
-        answer: "概率云随流移动且局部体积不变；不代表相空间点静止，也不单独保证达到平衡。",
+        answer:
+          "概率云随流移动且局部体积不变；不代表相空间点静止，也不单独保证达到平衡。",
       },
     ],
     gate: {
       prompt: "按期中 Q1(a) 的 10 分结构，限时 4 分钟写完并自评。",
-      criteria: ["volume preservation 的动力学原因 5 分点齐", "ρeq=f(conserved quantities) 5 分点齐", "没有把 Liouville 误写成熵增定理"],
+      criteria: [
+        "volume preservation 的动力学原因 5 分点齐",
+        "ρeq=f(conserved quantities) 5 分点齐",
+        "没有把 Liouville 误写成熵增定理",
+      ],
     },
   },
   {
@@ -1624,13 +2105,19 @@ export const modules: StudyModule[] = [
       "能用熵偏导求 T、P、μ",
       "能完成两能级/等间距能级的基本计数",
     ],
-    sourceRefs: ["课件 3 slides 1–15, 23", "作业 1 Q3–Q4", "David Tong Ch. 1.2", "MIT OCW L12"],
+    sourceRefs: [
+      "课件 3 slides 1–15, 23",
+      "作业 1 Q3–Q4",
+      "David Tong Ch. 1.2",
+      "MIT OCW L12",
+    ],
     concepts: [
       {
         title: "等先验概率不是“所有宇宙状态等概率”",
         label: "基本假设",
         core: true,
-        intuition: "在已知孤立系统 E、V、N 且达到平衡后，对所有可访问且满足约束的微观态不额外偏爱。",
+        intuition:
+          "在已知孤立系统 E、V、N 且达到平衡后，对所有可访问且满足约束的微观态不额外偏爱。",
         explanation: [
           "微正则控制量：E、V、N 固定。能量在狭窄壳 [E,E+δE] 内的可访问态等概率。",
           "若可访问态数为 Ω，单个微观态 pi=1/Ω。",
@@ -1642,32 +2129,48 @@ export const modules: StudyModule[] = [
           question: "4 个二能级粒子固定恰有 2 个激发，单个具体排列概率是多少？",
           solution: ["可访问态数 Ω=C(4,2)=6", "每个排列等概率", "所以概率 1/6"],
         },
-        pitfalls: ["忘记固定 E,V,N", "把不同能量状态也等概率", "不说明 equilibrium/accessibility"],
+        pitfalls: [
+          "忘记固定 E,V,N",
+          "把不同能量状态也等概率",
+          "不说明 equilibrium/accessibility",
+        ],
         check: {
           question: "微正则中系统能量会像正则系综一样涨落吗？",
-          answer: "理想定义中总能量固定（只允许极窄能量壳），因此总能量不作热涨落；子系统能量仍可涨落。",
+          answer:
+            "理想定义中总能量固定（只允许极窄能量壳），因此总能量不作热涨落；子系统能量仍可涨落。",
         },
       },
       {
         title: "Ω、ω 与能量壳",
         label: "计数对象",
         core: true,
-        intuition: "可以数 H≤E 的累计体积，也可以数 E 附近薄壳；大系统热力学结果通常只差次领先项。",
+        intuition:
+          "可以数 H≤E 的累计体积，也可以数 E 附近薄壳；大系统热力学结果通常只差次领先项。",
         explanation: [
-          "累计相空间体积 Φ(E)=∫Θ(E−H)dΓ；态密度 ω(E)=∂Φ/∂E；薄壳态数约 ω(E)δE。",
+          "先用原始测度 dΓ=d³ᴺq d³ᴺp 定义有量纲累计体积 Σraw(E)=∫Θ(E−H)dΓ；这里 dΓ 本身不暗含 N! 或 h³ᴺ。",
+          "对三维经典全同粒子，再定义无量纲累计态数 Γ(E)=Σraw(E)/(N!h³ᴺ)、态密度 ω(E)=∂EΓ(E)，薄壳态数约 ω(E)δE；可区分粒子不除 N!。",
           "课件/作业常统一写 Ω(E)，必须从上下文看它指体积还是薄壳。",
-          "熵可写 kBlnΩ。大 N 下选择 Φ 或 ω 通常给同一 leading thermodynamics，但严格推导要一致。",
-          "任何经典态数还要考虑 h³ᴺ 与 N!，否则 Z/Ω 量纲或 extensivity 出问题。",
+          "熵可写 kBlnΩ。大 N 下选择累计态数 Γ 或薄壳态数通常给同一 leading thermodynamics，但严格推导要一致。",
         ],
-        formula: "Φ(E)=∫dΓ Θ(E−H);  ω(E)=∂EΦ(E);  Ωshell≈ω(E)δE",
+        formula:
+          "Σraw(E)=∫dΓ Θ(E−H);  Γ(E)=Σraw(E)/(N!h³ᴺ);  ω(E)=∂EΓ(E);  Ωshell≈ω(E)δE",
         example: {
           question: "为什么期中 Q2 把 H≤E 变成 6N 维球体积，而不是只积分球面？",
-          solution: ["题目明确定义 available phase-space volume H≤E", "因此积分球内部", "若要薄壳态密度再对 E 求导"],
+          solution: [
+            "题目明确定义 available phase-space volume H≤E",
+            "因此积分球内部",
+            "若要薄壳态密度再对 E 求导",
+          ],
         },
-        pitfalls: ["球面面积与球体积互换", "忘 δE", "不同定义的 Ω 在同一推导里混用"],
+        pitfalls: [
+          "球面面积与球体积互换",
+          "忘 δE",
+          "不同定义的 Ω 在同一推导里混用",
+        ],
         check: {
-          question: "若已知累计体积 Φ(E)，如何得到单位能量区间态密度？",
-          answer: "ω(E)=dΦ/dE。",
+          question: "若已知无量纲累计态数 Γ(E)，如何得到单位能量区间态密度？",
+          answer:
+            "ω(E)=dΓ/dE；若起点是有量纲 Σraw，必须先除 N!h³ᴺ（可区分粒子省略 N!）。",
         },
       },
       {
@@ -1682,22 +2185,38 @@ export const modules: StudyModule[] = [
           "把共同的导数定义为 1/T，就得到 T1=T2；二阶导为负保证稳定最大值并关联正热容。",
         ],
         formula: "dStot/dE1 = 1/T1 − 1/T2 = 0",
-        steps: ["写总能量约束", "联合态数相乘", "取 ln 变总熵相加", "求极值", "识别 1/T"],
+        steps: [
+          "写总能量约束",
+          "联合态数相乘",
+          "取 ln 变总熵相加",
+          "求极值",
+          "识别 1/T",
+        ],
         example: {
           question: "若初始 T1>T2，能量平均从哪边流向哪边？",
-          solution: ["T1>T2 ⇒ 1/T1<1/T2", "把少量能量从 1 移到 2 会增加 Stot", "所以从热的 1 流向冷的 2"],
+          solution: [
+            "T1>T2 ⇒ 1/T1<1/T2",
+            "把少量能量从 1 移到 2 会增加 Stot",
+            "所以从热的 1 流向冷的 2",
+          ],
         },
-        pitfalls: ["E2 对 E1 的导数漏负号", "只写 T1=T2 不写态数/熵逻辑", "极值不检查稳定性"],
+        pitfalls: [
+          "E2 对 E1 的导数漏负号",
+          "只写 T1=T2 不写态数/熵逻辑",
+          "极值不检查稳定性",
+        ],
         check: {
           question: "温度在统计定义中衡量什么？",
-          answer: "它的倒数衡量熵随能量增加的斜率：系统新增能量能打开多少对数态数。",
+          answer:
+            "它的倒数衡量熵随能量增加的斜率：系统新增能量能打开多少对数态数。",
         },
       },
       {
         title: "从熵微分读出第一定律",
         label: "热力学连接",
         core: true,
-        intuition: "S(E,V,N) 的三个斜率分别定义 T、P、μ；把全微分重排，就是第一定律。",
+        intuition:
+          "S(E,V,N) 的三个斜率分别定义 T、P、μ；把全微分重排，就是第一定律。",
         explanation: [
           "写 dS=(∂ES)dE+(∂VS)dV+(∂NS)dN。",
           "定义 ∂ES=1/T、∂VS=P/T、∂NS=−μ/T。",
@@ -1708,9 +2227,17 @@ export const modules: StudyModule[] = [
         steps: ["明确 S 的自然变量", "写全微分", "代三条统计定义", "重排成 dE"],
         example: {
           question: "若 S=kB[N lnV+(3N/2)lnE+const]，压强怎样求？",
-          solution: ["P/T=(∂S/∂V)E,N=NkB/V", "所以 P=NkBT/V", "得到理想气体定律"],
+          solution: [
+            "P/T=(∂S/∂V)E,N=NkB/V",
+            "所以 P=NkBT/V",
+            "得到理想气体定律",
+          ],
         },
-        pitfalls: ["μ 项负号", "偏导固定量不写", "把 E 与 T 同时当微正则独立控制量"],
+        pitfalls: [
+          "μ 项负号",
+          "偏导固定量不写",
+          "把 E 与 T 同时当微正则独立控制量",
+        ],
         check: {
           question: "为什么 ∂S/∂V=P/T 通常为正？",
           answer: "增大可用体积通常增加可访问微观态和熵；正压强系统中 P/T>0。",
@@ -1720,7 +2247,8 @@ export const modules: StudyModule[] = [
         title: "两能级系统：最小完整模型",
         label: "第一例题",
         core: true,
-        intuition: "每个粒子只有基态 0 与激发态 ε，却已包含计数、熵、温度、能量饱和与低温冻结。",
+        intuition:
+          "每个粒子只有基态 0 与激发态 ε，却已包含计数、熵、温度、能量饱和与低温冻结。",
         explanation: [
           "N 个可区分位置，M 个激发，总能量 E=Mε，态数 Ω=C(N,M)。",
           "用 Stirling 得 S(M)，再由 1/T=∂S/∂E 求 M/N=1/[e^{βε}+1]（相应模型约定下）。",
@@ -1730,12 +2258,21 @@ export const modules: StudyModule[] = [
         formula: "Ω=C(N,M);  E=Mε;  excited fraction → 1/(e^{βε}+1)",
         example: {
           question: "为什么高温极限平均能量不是无限大？",
-          solution: ["每个粒子只有两个能级", "高温只让两态等概率", "平均每粒子能量趋 ε/2，能量饱和"],
+          solution: [
+            "每个粒子只有两个能级",
+            "高温只让两态等概率",
+            "平均每粒子能量趋 ε/2，能量饱和",
+          ],
         },
-        pitfalls: ["把二能级粒子当 Boson/Fermion 占据问题", "漏 C(N,M)", "高温仍套经典 equipartition"],
+        pitfalls: [
+          "把二能级粒子当 Boson/Fermion 占据问题",
+          "漏 C(N,M)",
+          "高温仍套经典 equipartition",
+        ],
         check: {
           question: "低温热容为什么趋近 0？",
-          answer: "几乎所有粒子已在基态，热能不足以跨过能隙 ε，能量对温度不敏感。",
+          answer:
+            "几乎所有粒子已在基态，热能不足以跨过能隙 ε，能量对温度不敏感。",
         },
       },
     ],
@@ -1779,8 +2316,14 @@ export const modules: StudyModule[] = [
       },
     ],
     gate: {
-      prompt: "完整讲一遍“两系统接触 → 最大联合态数 → 最大总熵 → 温度相等”，再做一个两能级计数。",
-      criteria: ["联合态数写成乘积", "E2=Etot−E1 的负号正确", "三条共轭偏导会写", "Ω/ω 不混用"],
+      prompt:
+        "完整讲一遍“两系统接触 → 最大联合态数 → 最大总熵 → 温度相等”，再做一个两能级计数。",
+      criteria: [
+        "联合态数写成乘积",
+        "E2=Etot−E1 的负号正确",
+        "三条共轭偏导会写",
+        "Ω/ω 不混用",
+      ],
     },
   },
   {
@@ -1794,7 +2337,11 @@ export const modules: StudyModule[] = [
     hoursFull: 9,
     goal: "用微正则态数计算理想气体的 S、U、CV、P 和单粒子分布，并看见 N! 为什么不可缺。",
     why: "它把 Week 3 的抽象定义兑现成你熟悉的理想气体，也是作业 1、期中 Q2 和后续所有配分函数计算的模板。",
-    prerequisites: ["microcanonical", "math-toolbox 的 Gaussian/Gamma/超球", "thermo-bridge"],
+    prerequisites: [
+      "microcanonical",
+      "math-toolbox 的 Gaussian/Gamma/超球",
+      "thermo-bridge",
+    ],
     outcomes: [
       "能把 H≤E 化成 3N 或 6N 维球",
       "能从 Ω 得 Sackur–Tetrode 型结构和理想气体定律",
@@ -1802,13 +2349,20 @@ export const modules: StudyModule[] = [
       "能解释 equipartition 与第三定律的统计图像",
       "能解释 Gibbs paradox 与 N! 修正",
     ],
-    sourceRefs: ["课件 3 slides 16–27", "作业 1 Q2–Q3", "期中 Q2", "David Tong Ch. 2.2", "MIT OCW L13"],
+    sourceRefs: [
+      "课件 3 slides 16–27",
+      "作业 1 Q2–Q3",
+      "期中 Q2",
+      "David Tong Ch. 2.2",
+      "MIT OCW L13",
+    ],
     concepts: [
       {
         title: "把能量约束看成高维球",
         label: "几何主线",
         core: true,
-        intuition: "理想气体 Hamiltonian 是许多动量平方之和；固定总能量就是固定高维向量长度。",
+        intuition:
+          "理想气体 Hamiltonian 是许多动量平方之和；固定总能量就是固定高维向量长度。",
         explanation: [
           "H=Σi pᵢ²/(2m)，位置只受盒子限制，给出 Vᴺ。",
           "动量条件 Σ pᵢ²≤2mE 是 3N 维半径 √(2mE) 的球内部。",
@@ -1816,13 +2370,29 @@ export const modules: StudyModule[] = [
           "总态数含 Vᴺ、球体积、1/(N!h³ᴺ)。对数后分别贡献体积、能量与 indistinguishability 项。",
         ],
         formula: "Φ(E,V,N)=[Vᴺ/(N!h³ᴺ)](2πmE)^{3N/2}/Γ(3N/2+1)",
-        formulaNote: "这里 Φ 是 H≤E 的累计无量纲态数；π^{3N/2} 来自 3N 维球体积，不能在涉及 N 导数时藏进一个与 N 有关的“常数”。",
-        steps: ["位置积分→Vᴺ", "动量约束→高维球", "写球体积", "除 N!h³ᴺ", "再取 ln 与 Stirling"],
+        formulaNote:
+          "这里 Φ 是 H≤E 的累计无量纲态数；π^{3N/2} 来自 3N 维球体积，不能在涉及 N 导数时藏进一个与 N 有关的“常数”。",
+        steps: [
+          "位置积分→Vᴺ",
+          "动量约束→高维球",
+          "写球体积",
+          "除 N!h³ᴺ",
+          "再取 ln 与 Stirling",
+        ],
         example: {
           question: "为什么理想气体 Ω 对 V 是 Vᴺ？",
-          solution: ["每个粒子的位置可在体积 V 中选择", "无相互作用时位置积分因子化", "N 个粒子给 V×…×V=Vᴺ，随后用 N! 消除标签重复"],
+          solution: [
+            "每个粒子的位置可在体积 V 中选择",
+            "无相互作用时位置积分因子化",
+            "N 个粒子给 V×…×V=Vᴺ，随后用 N! 消除标签重复",
+          ],
         },
-        pitfalls: ["球维数写 3 而不是 3N", "半径漏 2m", "位置积分漏 Vᴺ", "N!h³ᴺ 缺失"],
+        pitfalls: [
+          "球维数写 3 而不是 3N",
+          "半径漏 2m",
+          "位置积分漏 Vᴺ",
+          "N!h³ᴺ 缺失",
+        ],
         check: {
           question: "若 Ω∝E^{3N/2}，1/T=∂E(kBlnΩ) 给什么 E(T)？",
           answer: "1/T=(3NkB/2)/E，所以 E=3NkBT/2。",
@@ -1842,19 +2412,29 @@ export const modules: StudyModule[] = [
         formula: "U=3NkBT/2;  CV=3NkB/2;  PV=NkBT",
         example: {
           question: "若粒子数翻倍、T 与密度 N/V 不变，U、P、S 如何变？",
-          solution: ["U 加倍（广延）", "P 不变（强度）", "含 N! 修正后 S 加倍（广延）"],
+          solution: [
+            "U 加倍（广延）",
+            "P 不变（强度）",
+            "含 N! 修正后 S 加倍（广延）",
+          ],
         },
-        pitfalls: ["先背结果后无法处理改造 Hamiltonian", "求 P 时固定变量错误", "S 表达式中 E、V 没除 N 导致非广延"],
+        pitfalls: [
+          "先背结果后无法处理改造 Hamiltonian",
+          "求 P 时固定变量错误",
+          "S 表达式中 E、V 没除 N 导致非广延",
+        ],
         check: {
           question: "为何单原子理想气体 CV 不依赖 V？",
-          answer: "其内能只有动量二次项并只依赖 T；无相互作用使体积不改变能量谱的经典平均。",
+          answer:
+            "其内能只有动量二次项并只依赖 T；无相互作用使体积不改变能量谱的经典平均。",
         },
       },
       {
         title: "从大系统中抽一个粒子：Boltzmann 因子",
         label: "边缘分布",
         core: true,
-        intuition: "给一个粒子能量 ε 后，剩余热库少了 ε；剩余可用态数的相对减少正好近似 e^{-βε}。",
+        intuition:
+          "给一个粒子能量 ε 后，剩余热库少了 ε；剩余可用态数的相对减少正好近似 e^{-βε}。",
         explanation: [
           "单粒子取状态 x、能量 ε(x) 的概率 ∝ Ωbath(E−ε)。",
           "展开 Sbath(E−ε)≈Sbath(E)−ε/T，得到 Ωbath(E−ε)/Ωbath(E)≈e^{-βε}。",
@@ -1862,22 +2442,38 @@ export const modules: StudyModule[] = [
           "理想气体的 ε=p²/2m，得到 Gaussian momentum 与 Maxwell speed distribution。",
         ],
         formula: "P(x) ∝ Ωbath(E−εx) ≈ exp[−βεx]",
-        steps: ["固定子系统状态", "数剩余系统态数", "对 bath entropy 一阶展开", "识别 β=1/kBT", "归一化"],
+        steps: [
+          "固定子系统状态",
+          "数剩余系统态数",
+          "对 bath entropy 一阶展开",
+          "识别 β=1/kBT",
+          "归一化",
+        ],
         example: {
           question: "为什么高能单粒子状态概率更小？",
-          solution: ["子系统占去更多能量", "热库剩余能量更少、可用微观态数更少", "比值按 e^{-βε} 抑制"],
+          solution: [
+            "子系统占去更多能量",
+            "热库剩余能量更少、可用微观态数更少",
+            "比值按 e^{-βε} 抑制",
+          ],
         },
-        pitfalls: ["直接宣称 Boltzmann 因子而不说明 bath", "展开时漏 kB", "子系统不够小时仍只保留一阶"],
+        pitfalls: [
+          "直接宣称 Boltzmann 因子而不说明 bath",
+          "展开时漏 kB",
+          "子系统不够小时仍只保留一阶",
+        ],
         check: {
           question: "bath 熵展开的二阶项对应什么物理？",
-          answer: "有限热容引起的非无限热库修正与能量涨落；热库越大，二阶相对越小。",
+          answer:
+            "有限热容引起的非无限热库修正与能量涨落；热库越大，二阶相对越小。",
         },
       },
       {
         title: "Gibbs paradox：N! 不是装饰",
         label: "全同粒子",
         core: true,
-        intuition: "交换两个完全相同粒子的标签不产生新的物理微观态；若重复计数，混合同种气体会凭空增熵。",
+        intuition:
+          "交换两个完全相同粒子的标签不产生新的物理微观态；若重复计数，混合同种气体会凭空增熵。",
         explanation: [
           "把带标签的经典粒子相空间直接积分，会把同一物理配置的 N! 种标签排列分别计算。",
           "除 N! 后熵成为 extensive，移除同种气体隔板不再产生虚假 mixing entropy。",
@@ -1887,9 +2483,17 @@ export const modules: StudyModule[] = [
         formula: "ZN = (1/N!h³ᴺ)∫dΓ e^{-βH}",
         example: {
           question: "两个同温同压、同种气体盒子移除隔板，宏观状态是否改变？",
-          solution: ["密度、温度、压强都不变", "物理上没有可观测混合", "正确计数给 ΔS=0"],
+          solution: [
+            "密度、温度、压强都不变",
+            "物理上没有可观测混合",
+            "正确计数给 ΔS=0",
+          ],
         },
-        pitfalls: ["任何粒子都机械除 N! 而不讲全同/经典极限", "同种与不同种气体混淆", "把 paradox 只说成数学技巧"],
+        pitfalls: [
+          "任何粒子都机械除 N! 而不讲全同/经典极限",
+          "同种与不同种气体混淆",
+          "把 paradox 只说成数学技巧",
+        ],
         check: {
           question: "期中写经典 Z 时漏 N! 可能说明什么概念没体现？",
           answer: "没有消除全同粒子交换标签的重复计数，即缺 Gibbs correction。",
@@ -1899,7 +2503,8 @@ export const modules: StudyModule[] = [
         title: "热力学定律的统计图像",
         label: "Week 4 核心",
         core: true,
-        intuition: "第零定律是最大联合态数的斜率匹配；第二定律是系统从小宏观区域走向占据绝大多数态的大区域。",
+        intuition:
+          "第零定律是最大联合态数的斜率匹配；第二定律是系统从小宏观区域走向占据绝大多数态的大区域。",
         explanation: [
           "第零定律：能量交换平衡给 T 相等。",
           "第一定律：S(E,V,N) 的全微分定义共轭变量并重排得到能量账本。",
@@ -1908,9 +2513,17 @@ export const modules: StudyModule[] = [
         ],
         example: {
           question: "两能级系统为何直观体现第三定律？",
-          solution: ["T→0 时 e^{-βε} 抑制激发", "几乎全在基态", "能量不再随 T 改变，所以 C→0"],
+          solution: [
+            "T→0 时 e^{-βε} 抑制激发",
+            "几乎全在基态",
+            "能量不再随 T 改变，所以 C→0",
+          ],
         },
-        pitfalls: ["统计解释写成循环定义", "忽略基态简并", "第二定律说成每个微观轨迹的态数真的增加"],
+        pitfalls: [
+          "统计解释写成循环定义",
+          "忽略基态简并",
+          "第二定律说成每个微观轨迹的态数真的增加",
+        ],
         check: {
           question: "平衡态最大熵是绝对无约束最大吗？",
           answer: "不是，是在给定 E、V、N 及其他守恒约束下的最大。",
@@ -1924,7 +2537,7 @@ export const modules: StudyModule[] = [
         paragraphs: [
           "作 canonical scaling P=p/√(mω)、Q=√(mω)q，使 H=(ω/2)Σ(P²+Q²)，且相空间 Jacobian 为 1。",
           "H≤E 变为半径 √(2E/ω) 的 6N 维球；由球体积得到老师题目中的几何相空间体积 Ωphase=(2πE/ω)^{3N}/(3N)!，它的单位是 action^{3N}。",
-          "真正放入对数的无量纲计数应写 Γ=Ωphase/h^{3N}。这些振子固定在各自位置、彼此可区分，所以这里不再除 N!；h 只改变熵的加法常数，不改变 E=3NkBT 与 C=3NkB。",
+          "真正放入对数的无量纲计数应写 Γ=Ωphase/h^{3N}，其中 h=2πℏ，不是任意 cell convention。这些振子固定在各自位置、彼此可区分，所以这里不再除 N!。固定 N 时该因子不改变 E=3NkBT 与 C=3NkB；但熵移位与 N 成比例，会影响化学势，不能在变 N 问题中任意丢弃。",
           "单振子边缘由剩余 N−1 个振子的态数比得到 canonical Gaussian。",
         ],
         formulas: [
@@ -1934,11 +2547,15 @@ export const modules: StudyModule[] = [
       },
       {
         title: "作业 1 Q3：一维质量为零相对论气体",
-        summary: "色散 ε=c|p| 让动量区域变成 L1 球/交叉多面体，而非普通二次球。",
+        summary:
+          "色散 ε=c|p| 让动量区域变成 L1 球/交叉多面体，而非普通二次球。",
         paragraphs: [
           "题目已给动量积分，可集中处理位置 Lᴺ、N!hᴺ 与给定动量体积。",
           "取 ln、Stirling 后从 dS 的 dE、dL、dN 系数读 T、P、μ；求 Cp 时要包含对外做功。",
           "边缘动量分布仍由 bath state ratio 推到指数 e^{-βc|p|}。",
+        ],
+        formulas: [
+          "$$\\Gamma(E,L,N)=\\frac{L^N}{N!h^N}\\frac{2^N(E/c)^N}{N!};\\quad E=Nk_{\\mathrm B}T;\\quad PL=Nk_{\\mathrm B}T;\\quad C_V=Nk_{\\mathrm B};\\quad C_P=2Nk_{\\mathrm B};\\quad p(p)=\\frac{\\beta c}{2}e^{-\\beta c|p|}$$",
         ],
       },
       {
@@ -1955,7 +2572,8 @@ export const modules: StudyModule[] = [
       {
         title: "从 Ω 求热力学",
         instruction: "只用 Ω∝VᴺE^{3N/2} 推 U(T) 和 P(T,V)。",
-        answer: "S=kB[NlnV+(3N/2)lnE+const]；1/T=3NkB/(2E) ⇒ U=3NkBT/2；P/T=NkB/V ⇒ P=NkBT/V。",
+        answer:
+          "S=kB[NlnV+(3N/2)lnE+const]；1/T=3NkB/(2E) ⇒ U=3NkBT/2；P/T=NkB/V ⇒ P=NkBT/V。",
       },
       {
         title: "Boltzmann 边缘",
@@ -1969,8 +2587,14 @@ export const modules: StudyModule[] = [
       },
     ],
     gate: {
-      prompt: "限时 20 分钟，独立完成“Ω∝VᴺE^{3N/2} → S,U,CV,P”，再口述 Boltzmann 边缘分布来源。",
-      criteria: ["高维球维数/幂正确", "N!h³ᴺ 不漏", "三条偏导控制变量正确", "能解释而非背诵 e^{-βε}"],
+      prompt:
+        "限时 20 分钟，独立完成“Ω∝VᴺE^{3N/2} → S,U,CV,P”，再口述 Boltzmann 边缘分布来源。",
+      criteria: [
+        "高维球维数/幂正确",
+        "N!h³ᴺ 不漏",
+        "三条偏导控制变量正确",
+        "能解释而非背诵 e^{-βε}",
+      ],
     },
   },
   {
@@ -1984,7 +2608,11 @@ export const modules: StudyModule[] = [
     hoursFull: 8,
     goal: "在 T、V、N 固定时，从热库推导 Boltzmann 分布，并熟练用 Z 的导数求 F、U、S、C 与涨落。",
     why: "正则系综是本课计算最频繁的工具；真正要学的是一条固定流水线，而不是每道题从头发明。",
-    prerequisites: ["microcanonical 的 bath state-ratio", "classical-gases 的 Gaussian 积分", "thermo-bridge 的 Helmholtz F"],
+    prerequisites: [
+      "microcanonical 的 bath state-ratio",
+      "classical-gases 的 Gaussian 积分",
+      "thermo-bridge 的 Helmholtz F",
+    ],
     outcomes: [
       "能从 system+bath 推出 pi=e^{-βEi}/Z",
       "能写离散、量子与经典连续三种 Z",
@@ -1992,13 +2620,19 @@ export const modules: StudyModule[] = [
       "能完成两能级、经典谐振子与理想气体；学完 Week 9 量子桥后再回访量子谐振子",
       "能解释 ensemble equivalence 的大 N 条件",
     ],
-    sourceRefs: ["课件 4 slides 1–13", "作业 2 Q1–Q2", "David Tong Ch. 1.3", "MIT OCW L13"],
+    sourceRefs: [
+      "课件 4 slides 1–13",
+      "作业 2 Q1–Q2",
+      "David Tong Ch. 1.3",
+      "MIT OCW L13",
+    ],
     concepts: [
       {
         title: "从微正则总系统切出正则子系统",
         label: "分布来源",
         core: true,
-        intuition: "子系统能量可涨落，但系统+热库总能量固定；某子系统状态的概率由热库剩余态数决定。",
+        intuition:
+          "子系统能量可涨落，但系统+热库总能量固定；某子系统状态的概率由热库剩余态数决定。",
         explanation: [
           "总系统 isolated：Etot fixed。子系统在状态 i、能量 Ei 时，bath 能量 Etot−Ei。",
           "pi∝Ωbath(Etot−Ei)=exp[Sbath(Etot−Ei)/kB]。",
@@ -2006,15 +2640,30 @@ export const modules: StudyModule[] = [
           "Z=Σie^{-βEi} 只负责归一化，也记录全部能谱信息。",
         ],
         formula: "pi=e^{-βEi}/Z;  Z=Σi e^{-βEi}",
-        steps: ["写总能量约束", "概率∝bath 态数", "展开 bath entropy", "识别 β", "用 Z 归一化"],
+        steps: [
+          "写总能量约束",
+          "概率∝bath 态数",
+          "展开 bath entropy",
+          "识别 β",
+          "用 Z 归一化",
+        ],
         example: {
           question: "能量差 ΔE 的两状态概率比 p2/p1 是多少？",
-          solution: ["p2/p1=e^{-βE2}/e^{-βE1}", "所以 p2/p1=e^{-βΔE}", "比值不需要先算 Z"],
+          solution: [
+            "p2/p1=e^{-βE2}/e^{-βE1}",
+            "所以 p2/p1=e^{-βΔE}",
+            "比值不需要先算 Z",
+          ],
         },
-        pitfalls: ["把 Z 当某个微观态的能量", "概率比还多带 Z", "bath 不够大却忽略二阶项"],
+        pitfalls: [
+          "把 Z 当某个微观态的能量",
+          "概率比还多带 Z",
+          "bath 不够大却忽略二阶项",
+        ],
         check: {
           question: "T→∞ 时有限能级系统的 pi 怎样？",
-          answer: "β→0，所有 e^{-βEi}→1，概率趋向各微观态等概率（简并态仍逐态计数）。",
+          answer:
+            "β→0，所有 e^{-βEi}→1，概率趋向各微观态等概率（简并态仍逐态计数）。",
         },
       },
       {
@@ -2024,17 +2673,33 @@ export const modules: StudyModule[] = [
         intuition: "对象不同，求和测度不同；Boltzmann 权重的结构不变。",
         explanation: [
           "离散状态：Z=Σi e^{-βEi}，若按能级求和则写 Σlevel gi e^{-βεi}。",
-          "量子：Z=Tr e^{-βĤ}，在能量本征基就回到离散和。",
-          "经典全同粒子：ZN=[1/(N!h³ᴺ)]∫d³Np d³Nq e^{-βH}。",
+          "量子：Z=Tr e^{-βĤ}，在能量本征基严格等于 Σn e^{-βEn}；这是换基表示的精确等号。",
+          "经典全同粒子：只在高温、稀薄、交换量子效应可忽略的 Maxwell–Boltzmann / semiclassical 极限，才近似为 ZN≈[1/(N!h³ᴺ)]∫d³Np d³Nq e^{-βH}。",
           "Hamiltonian 可分成独立部分时，指数和积分因子化；这是 oscillator、ideal gas 的加速关键。",
         ],
-        formula: "Zquantum=Tr e^{-βĤ};  Zclassical=1/(N!h³ᴺ)∫dΓ e^{-βH}",
-        steps: ["确认 classical/quantum", "确认状态是否按简并能级合并", "写完整测度/prefactor", "检查 Hamiltonian 能否因子化"],
+        formula:
+          "Zquantum=Tr e^{-βĤ}=Σn e^{-βEn};  Zclassical≈1/(N!h³ᴺ)∫dΓ e^{-βH}",
+        steps: [
+          "确认 classical/quantum",
+          "确认状态是否按简并能级合并",
+          "写完整测度/prefactor",
+          "检查 Hamiltonian 能否因子化",
+        ],
         example: {
-          question: "N 个互不作用、可区分的相同子系统，单体配分函数 z1，ZN 是多少？",
-          solution: ["总能量为单体能量和", "Boltzmann 权重与求和因子化", "可区分时 ZN=z1ᴺ；经典全同气体还需 /N!"],
+          question:
+            "N 个互不作用、可区分的相同子系统，单体配分函数 z1，ZN 是多少？",
+          solution: [
+            "总能量为单体能量和",
+            "Boltzmann 权重与求和因子化",
+            "可区分时 ZN=z1ᴺ；经典全同气体还需 /N!",
+          ],
         },
-        pitfalls: ["简并度 gi 漏掉", "经典全同粒子漏 N!h³ᴺ", "固定 N 的 canonical 与允许 N 变化的 grand partition 混用"],
+        pitfalls: [
+          "简并度 gi 漏掉",
+          "把经典 phase-space integral 与量子 trace 说成任意温度下严格相等",
+          "经典全同粒子漏 N!h³ᴺ",
+          "固定 N 的 canonical 与允许 N 变化的 grand partition 混用",
+        ],
         check: {
           question: "两个能级 0、ε，激发态简并度 g，Z 是什么？",
           answer: "Z=1+g e^{-βε}。",
@@ -2052,22 +2717,34 @@ export const modules: StudyModule[] = [
           "若 Hamiltonian 含外参 λ，广义力通常由 −∂F/∂λ 得到；符号依 H 中耦合约定。",
         ],
         formula: "F=−kBTlnZ; U=−∂βlnZ; S=kB(lnZ+βU); Var(E)=∂²βlnZ",
-        steps: ["先求 Z", "取 ln 并化简", "一阶 β 导数求 U", "F/S 用代数关系", "二阶导或 T 导数求 C/涨落"],
+        steps: [
+          "先求 Z",
+          "取 ln 并化简",
+          "一阶 β 导数求 U",
+          "F/S 用代数关系",
+          "二阶导或 T 导数求 C/涨落",
+        ],
         example: {
           question: "Z=Aβ^{-a}（A 与 β 无关），求 U 与 CV。",
           solution: ["lnZ=lnA−a lnβ", "U=−∂βlnZ=a/β=akBT", "CV=akB"],
         },
-        pitfalls: ["对 T 与 β 链式法则错", "求 ∂β 时把 β 依赖藏在 λT 中漏掉", "F、U、S 单位混淆"],
+        pitfalls: [
+          "对 T 与 β 链式法则错",
+          "求 ∂β 时把 β 依赖藏在 λT 中漏掉",
+          "F、U、S 单位混淆",
+        ],
         check: {
           question: "为什么 Var(E)≥0 能推出 CV≥0（普通正则系综）？",
-          answer: "CV=Var(E)/(kBT²)，右边非负；因此稳定正则系统的定容热容非负。",
+          answer:
+            "CV=Var(E)/(kBT²)，右边非负；因此稳定正则系统的定容热容非负。",
         },
       },
       {
         title: "能量涨落与 ensemble equivalence",
         label: "大系统",
         core: true,
-        intuition: "正则中 E 会抖动，但宏观系统的相对抖动通常只有 1/√N，所以看起来像固定能量。",
+        intuition:
+          "正则中 E 会抖动，但宏观系统的相对抖动通常只有 1/√N，所以看起来像固定能量。",
         explanation: [
           "Var(E)=kBT²CV；若 CV∝N，则标准差∝√N，而 U∝N。",
           "相对涨落 σE/U∝1/√N，于是 microcanonical 与 canonical 对局域/宏观平均常等价。",
@@ -2079,17 +2756,23 @@ export const modules: StudyModule[] = [
           question: "N 增大一万倍，相对能量涨落约缩小多少？",
           solution: ["按 1/√N", "√10000=100", "所以缩小约 100 倍"],
         },
-        pitfalls: ["说正则 E 固定", "说相对涨落小就绝对涨落小", "临界点也无条件套 1/√N"],
+        pitfalls: [
+          "说正则 E 固定",
+          "说相对涨落小就绝对涨落小",
+          "临界点也无条件套 1/√N",
+        ],
         check: {
           question: "为何 canonical 可以模拟与微正则相同的宏观气体？",
-          answer: "热力学极限中 canonical 能量分布相对极窄，几乎集中在与微正则同一平均能量附近。",
+          answer:
+            "热力学极限中 canonical 能量分布相对极窄，几乎集中在与微正则同一平均能量附近。",
         },
       },
       {
         title: "经典与量子谐振子：最重要的对照",
         label: "回访支线 · 学完 Week 9 后",
         core: false,
-        intuition: "高温时能级间隔看不清，量子结果回到经典 equipartition；低温时能隙冻结热容。",
+        intuition:
+          "高温时能级间隔看不清，量子结果回到经典 equipartition；低温时能隙冻结热容。",
         explanation: [
           "顺序提醒：第一次学习 Week 5 时，只需掌握经典谐振子的 Gaussian 与 Z 流水线。若 ket、能级、ℏ 仍陌生，请先跳过本卡；完成“量子语言与密度矩阵”后再回来做作业 2 Q2。",
           "经典三维振子每个振子 6 个二次项，Z1∝(kBT/ℏω)³，U1=3kBT。",
@@ -2100,9 +2783,17 @@ export const modules: StudyModule[] = [
         formula: "Zq,1=e^{-βℏω/2}/(1−e^{-βℏω}); Uq,1=ℏω/2+ℏω/(e^{βℏω}−1)",
         example: {
           question: "为何量子一维振子高温 U≈kBT 而不是 kBT/2？",
-          solution: ["Hamiltonian 有 p² 与 q² 两个二次自由度", "经典极限每项 kBT/2", "合计 kBT"],
+          solution: [
+            "Hamiltonian 有 p² 与 q² 两个二次自由度",
+            "经典极限每项 kBT/2",
+            "合计 kBT",
+          ],
         },
-        pitfalls: ["量子数 n 与粒子 occupation number 混用", "几何级数漏零点能因子", "N 个独立振子忘记 Z=Z1ᴺ"],
+        pitfalls: [
+          "量子数 n 与粒子 occupation number 混用",
+          "几何级数漏零点能因子",
+          "N 个独立振子忘记 Z=Z1ᴺ",
+        ],
         check: {
           question: "T→0 时 U 为何不趋 0？CV 又为何趋 0？",
           answer: "U 保留零点能 ℏω/2；但它不随 T 变化，所以 CV=dU/dT→0。",
@@ -2117,6 +2808,9 @@ export const modules: StudyModule[] = [
           "canonical integration by parts 可得到 ⟨xi ∂H/∂xj⟩=kBTδij（边界项消失时）。",
           "对 H=p_i²/(2m) 取 x=p_i，得到 ⟨p_i∂H/∂p_i⟩=⟨p_i²/m⟩=kBT，因此该能量项本身是 ⟨p_i²/(2m)⟩=kBT/2；harmonic 的 q_i² 项同理。",
           "应用前必须检查积分边界与分布衰减，不能对任意坐标机械套。",
+        ],
+        formulas: [
+          "$$\\left\\langle x_i\\frac{\\partial H}{\\partial x_j}\\right\\rangle=k_{\\mathrm B}T\\,\\delta_{ij}$$",
         ],
       },
       {
@@ -2146,8 +2840,14 @@ export const modules: StudyModule[] = [
       },
     ],
     gate: {
-      prompt: "不看笔记完成一个两能级系统和一个 classical oscillator 的 Z→F/U/S/C 流水线。",
-      criteria: ["Z 定义与简并正确", "β/T 链式法则正确", "极限检查写出", "能量涨落公式会解释"],
+      prompt:
+        "不看笔记完成一个两能级系统和一个 classical oscillator 的 Z→F/U/S/C 流水线。",
+      criteria: [
+        "Z 定义与简并正确",
+        "β/T 链式法则正确",
+        "极限检查写出",
+        "能量涨落公式会解释",
+      ],
     },
   },
   {
@@ -2169,13 +2869,20 @@ export const modules: StudyModule[] = [
       "能用 Ξ 求 ΦG、P、⟨N⟩、Var(N)",
       "能完成经典理想气体与吸附位点模型",
     ],
-    sourceRefs: ["课件 5 slides 1–13", "作业 2 Q3", "期中 Q1(b)/Q3", "David Tong Ch. 1.4", "MIT OCW L14"],
+    sourceRefs: [
+      "课件 5 slides 1–13",
+      "作业 2 Q3",
+      "期中 Q1(b)/Q3",
+      "David Tong Ch. 1.4",
+      "MIT OCW L14",
+    ],
     concepts: [
       {
         title: "四大系综只看“允许交换什么”",
         label: "总表",
         core: true,
-        intuition: "与什么 reservoir 接触，就固定相应强度量，让共轭广延量涨落。",
+        intuition:
+          "与什么 reservoir 接触，就固定相应强度量，让共轭广延量涨落。",
         explanation: [
           "microcanonical：E,V,N 固定。",
           "canonical：接热库，T,V,N 固定，E 涨落。",
@@ -2184,43 +2891,65 @@ export const modules: StudyModule[] = [
         ],
         formula: "(E,V,N) → (T,V,N) → (T,P,N) or (T,V,μ)",
         example: {
-          question: "开放小孔允许粒子交换、盒子壁固定、温度受热浴控制，选什么系综？",
-          solution: ["粒子和能量可交换，体积固定", "控制 T,V,μ", "选 grand canonical"],
+          question:
+            "开放小孔允许粒子交换、盒子壁固定、温度受热浴控制，选什么系综？",
+          solution: [
+            "粒子和能量可交换，体积固定",
+            "控制 T,V,μ",
+            "选 grand canonical",
+          ],
         },
-        pitfalls: ["grand canonical 里还说 N 固定", "NPT 与 grand canonical 都叫 Gibbs 而混淆", "只背名字不写控制量"],
+        pitfalls: [
+          "grand canonical 里还说 N 固定",
+          "NPT 与 grand canonical 都叫 Gibbs 而混淆",
+          "只背名字不写控制量",
+        ],
         check: {
           question: "固定 T、P、N 时哪一项涨落？",
-          answer: "能量和体积可涨落；使用 isothermal–isobaric（课件称 Gibbs canonical）系综。",
+          answer:
+            "能量和体积可涨落；使用 isothermal–isobaric（课件称 Gibbs canonical）系综。",
         },
       },
       {
         title: "Gibbs canonical / NPT",
         label: "体积涨落",
         core: true,
-        intuition: "外界活塞保持压强 P，系统采用体积 V 要付出 PV 的“体积能量成本”。",
+        intuition:
+          "外界活塞保持压强 P，系统采用体积 V 要付出 PV 的“体积能量成本”。",
         explanation: [
           "给定 V 的 canonical 权重由 Z(T,V,N) 描述；再让 V 可变并乘 e^{-βPV}。",
           "取一个固定 reference volume V0 后，严格的无量纲 NPT partition 可写 Δ=∫(dV/V0)e^{-βPV}Z(T,V,N)。课件常把不影响宏观结果的 V0 省略。",
           "G=−kBTlnΔ；平均体积 ⟨V⟩=−(1/β)∂P lnΔ。",
-          "只要 V0 与 P、T、N 无关，更换它只给 G 增加常数，不改变常用的 ⟨V⟩ 导数；若另选含 P 的归一化 convention，则必须把相应有限尺寸导数项一并保留。",
+          "对理想气体 ZN∝Vᴺ，这个固定 dV/V0 测度严格给 ⟨V⟩=(N+1)kBT/P；宏观极限才有 ⟨V⟩/N→kBT/P。+1 是次广延的测度修正。",
+          "只要 V0 与 P、T、N 无关，更换它不改变 ⟨V⟩ 的 P 导数，但会移动 Δ、G 的参考项与相应熵零点；若另选含 P 的 prefactor，则必须把它的有限尺寸导数一并保留。",
           "体积方差与 isothermal compressibility 关联，结构和 canonical 能量涨落相同。",
         ],
         formula: "Δ=∫₀∞(dV/V0)e^{-βPV}Z;  G=−kBTlnΔ;  ⟨V⟩=−β^{-1}∂PlnΔ",
         example: {
           question: "为什么权重里是 H+PV 而不是 H−PV？",
-          solution: ["系统占据体积 V 要排开外界、付出 PV", "总有效指数为 e^{-β(H+PV)}", "相应 thermodynamic potential 是 G=U−TS+PV"],
+          solution: [
+            "系统占据体积 V 要排开外界、付出 PV",
+            "总有效指数为 e^{-β(H+PV)}",
+            "相应 thermodynamic potential 是 G=U−TS+PV",
+          ],
         },
-        pitfalls: ["Δ 与小变化 Δ 混淆", "P 导数的负号漏掉", "把 NPT 的 G 与巨势混为同一个 G"],
+        pitfalls: [
+          "Δ 与小变化 Δ 混淆",
+          "P 导数的负号漏掉",
+          "把 NPT 的 G 与巨势混为同一个 G",
+        ],
         check: {
           question: "NPT 中 V 较大的状态为何被 e^{-βPV} 抑制？",
-          answer: "在固定外压下扩大体积需要更多 PV work，因此统计权重较小；系统内部 Z 的 V 增长与之竞争。",
+          answer:
+            "在固定外压下扩大体积需要更多 PV work，因此统计权重较小；系统内部 Z 的 V 增长与之竞争。",
         },
       },
       {
         title: "巨正则权重与巨配分函数",
         label: "粒子交换",
         core: true,
-        intuition: "加入粒子需要能量，但粒子库用化学势 μ 给每个粒子“补贴”；有效成本是 E−μN。",
+        intuition:
+          "加入粒子需要能量，但粒子库用化学势 μ 给每个粒子“补贴”；有效成本是 E−μN。",
         explanation: [
           "状态由粒子数 N 和 N 粒子微观态 i 共同标记。",
           "概率 p_{N,i}=e^{-β(E_{N,i}−μN)}/Ξ。",
@@ -2228,15 +2957,30 @@ export const modules: StudyModule[] = [
           "μ 越大，增加粒子的统计权重越高；平衡时可交换粒子的系统 μ 相等。",
         ],
         formula: "Ξ=ΣN=0∞ zᴺZN;  pN,i=e^{-β(EN,i−μN)}/Ξ",
-        steps: ["写每个 N 的 canonical ZN", "乘 zᴺ", "对 N 从 0 求和", "取 lnΞ 与导数"],
+        steps: [
+          "写每个 N 的 canonical ZN",
+          "乘 zᴺ",
+          "对 N 从 0 求和",
+          "取 lnΞ 与导数",
+        ],
         example: {
-          question: "若单个位置只能空/占据，空能量 0、占据能量 ε，单位置 Ξ 是什么？",
-          solution: ["n=0 权重 1", "n=1 权重 e^{-β(ε−μ)}", "Ξsite=1+e^{-β(ε−μ)}"],
+          question:
+            "若单个位置只能空/占据，空能量 0、占据能量 ε，单位置 Ξ 是什么？",
+          solution: [
+            "n=0 权重 1",
+            "n=1 权重 e^{-β(ε−μ)}",
+            "Ξsite=1+e^{-β(ε−μ)}",
+          ],
         },
-        pitfalls: ["e^{βμN} 正负号", "ZN 中已经含 N 粒子统计又重复除/乘", "把 chemical potential 当固定粒子数"],
+        pitfalls: [
+          "e^{βμN} 正负号",
+          "ZN 中已经含 N 粒子统计又重复除/乘",
+          "把 chemical potential 当固定粒子数",
+        ],
         check: {
           question: "为什么 photon gas 在平衡中 μ=0？",
-          answer: "光子数不守恒，系统可自由产生/湮灭；没有固定 N 约束对应的 Lagrange multiplier，因此平衡 μ=0。",
+          answer:
+            "光子数不守恒，系统可自由产生/湮灭；没有固定 N 约束对应的 Lagrange multiplier，因此平衡 μ=0。",
         },
       },
       {
@@ -2253,19 +2997,29 @@ export const modules: StudyModule[] = [
         formula: "ΦG=−kBTlnΞ=−PV;  ⟨N⟩=β^{-1}∂μlnΞ;  VarN=β^{-2}∂²μlnΞ",
         example: {
           question: "若 lnΞ=Az（z=e^{βμ}），求 ⟨N⟩ 与 Var(N)。",
-          solution: ["∂μz=βz", "⟨N⟩=Az", "再求导得 Var(N)=Az=⟨N⟩，是 Poisson 结构"],
+          solution: [
+            "∂μz=βz",
+            "⟨N⟩=Az",
+            "再求导得 Var(N)=Az=⟨N⟩，是 Poisson 结构",
+          ],
         },
-        pitfalls: ["漏 1/β", "二阶导后忘减均值平方（lnΞ 已自动给 cumulant）", "κT 负号/固定量不写"],
+        pitfalls: [
+          "漏 1/β",
+          "二阶导后忘减均值平方（lnΞ 已自动给 cumulant）",
+          "κT 负号/固定量不写",
+        ],
         check: {
           question: "对 lnΞ 而非 Ξ 求二阶导为何直接得到方差？",
-          answer: "ln of generating function 生成 cumulants；二阶 cumulant 正是方差。",
+          answer:
+            "ln of generating function 生成 cumulants；二阶 cumulant 正是方差。",
         },
       },
       {
         title: "经典理想气体与吸附位点",
         label: "两个模板",
         core: true,
-        intuition: "理想气体的 ZN∝1/N! 让 N 求和变成指数；独立二态位置让乘积变二项式。",
+        intuition:
+          "理想气体的 ZN∝1/N! 让 N 求和变成指数；独立二态位置让乘积变二项式。",
         explanation: [
           "经典理想气体 ZN=(1/N!)(V/λT³)ᴺ，所以 Ξ=exp(zV/λT³)。",
           "于是 P=kBT z/λT³、⟨N⟩=zV/λT³，恢复 PV=NkBT。",
@@ -2278,10 +3032,15 @@ export const modules: StudyModule[] = [
           question: "理想气体 lnΞ=zV/λ³，如何用 ΦG=−PV 求压强？",
           solution: ["ΦG=−kBT zV/λ³", "与 −PV 比较", "P=kBT z/λ³"],
         },
-        pitfalls: ["thermal wavelength 颠倒", "binding energy 正负约定没声明", "吸附位点最多一个却用无限几何级数"],
+        pitfalls: [
+          "thermal wavelength 颠倒",
+          "binding energy 正负约定没声明",
+          "吸附位点最多一个却用无限几何级数",
+        ],
         check: {
           question: "经典理想气体的粒子数分布为何是 Poisson？",
-          answer: "Ξ=e^{mean} 的展开系数给 P(N)=e^{-mean}mean^N/N!，其方差等于平均。",
+          answer:
+            "Ξ=e^{mean} 的展开系数给 P(N)=e^{-mean}mean^N/N!，其方差等于平均。",
         },
       },
     ],
@@ -2294,6 +3053,9 @@ export const modules: StudyModule[] = [
           "Ξ=ΣM C(Nsite,M)e^{-β(E(M)−μM)}，用二项式化为单位置因子的 Nsite 次方。",
           "most probable M 用 Stirling 最大化 summand；average M 用 β^{-1}∂μlnΞ。大 N 时相同，但写法要区分。",
           "与外部气体平衡时令 μads=μgas，再用理想气体 fugacity–pressure 关系代入。",
+        ],
+        formulas: [
+          "$$\\Xi=\\left[1+e^{\\beta(\\mu+\\varepsilon)}\\right]^{N_{\\mathrm{site}}};\\quad \\langle M\\rangle=\\frac{N_{\\mathrm{site}}}{1+e^{-\\beta(\\mu+\\varepsilon)}};\\quad \\operatorname{Var}(M)=N_{\\mathrm{site}}f(1-f)$$",
         ],
       },
       {
@@ -2310,7 +3072,8 @@ export const modules: StudyModule[] = [
       {
         title: "系综选择",
         instruction: "给四种固定条件分别写系综、配分函数符号与热力学势。",
-        answer: "E,V,N microcanonical/Ω/S；T,V,N canonical/Z/F；T,P,N NPT/Δ/G；T,V,μ grand/Ξ/ΦG。",
+        answer:
+          "E,V,N microcanonical/Ω/S；T,V,N canonical/Z/F；T,P,N NPT/Δ/G；T,V,μ grand/Ξ/ΦG。",
       },
       {
         title: "理想气体 grand sum",
@@ -2324,8 +3087,14 @@ export const modules: StudyModule[] = [
       },
     ],
     gate: {
-      prompt: "看到任意固定条件，10 秒内选出系综；再独立完成 ideal gas 的 Ξ→P/⟨N⟩/VarN。",
-      criteria: ["NPT 与 grand 不混", "e^{βμN} 符号正确", "λT 方向正确", "巨势与 Gibbs free energy 区分"],
+      prompt:
+        "看到任意固定条件，10 秒内选出系综；再独立完成 ideal gas 的 Ξ→P/⟨N⟩/VarN。",
+      criteria: [
+        "NPT 与 grand 不混",
+        "e^{βμN} 符号正确",
+        "λT 方向正确",
+        "巨势与 Gibbs free energy 区分",
+      ],
     },
   },
   {
@@ -2339,7 +3108,11 @@ export const modules: StudyModule[] = [
     hoursFull: 9,
     goal: "理解理想气体为何不会相变，以及吸引、排斥怎样通过 mean field/virial 修正方程并产生临界点。",
     why: "期中 Q4 与作业 2 Q4 都从这里出发；原评分答案有量纲/求导错误，必须掌握正确结构而非死背。",
-    prerequisites: ["canonical", "grand-canonical", "thermo-bridge 的相稳定与响应函数"],
+    prerequisites: [
+      "canonical",
+      "grand-canonical",
+      "thermo-bridge 的相稳定与响应函数",
+    ],
     outcomes: [
       "能解释 mean-field approximation 的假设与边界",
       "能写 excluded volume + average attraction 的 Z/F/P 结构",
@@ -2347,13 +3120,19 @@ export const modules: StudyModule[] = [
       "能解释临界点响应函数与涨落发散",
       "能说明 coexistence、latent heat 与 Clausius–Clapeyron",
     ],
-    sourceRefs: ["课件 6 slides 1–9", "期中 Q4", "David Tong Ch. 2.5 与 5.1", "MIT OCW L15–18"],
+    sourceRefs: [
+      "课件 6 slides 1–9",
+      "期中 Q4",
+      "David Tong Ch. 2.5 与 5.1",
+      "MIT OCW L15–18",
+    ],
     concepts: [
       {
         title: "为什么 ideal gas 不会液化",
         label: "相互作用动机",
         core: true,
-        intuition: "没有粒子间吸引就没有聚在一起的能量收益；没有短程排斥又没有有限分子体积。",
+        intuition:
+          "没有粒子间吸引就没有聚在一起的能量收益；没有短程排斥又没有有限分子体积。",
         explanation: [
           "理想气体 Hamiltonian 只有动能，Z 的位置积分仅 Vᴺ，方程 PV=NkBT 在所有 T 平滑。",
           "真实势通常有短程强排斥和较长程吸引。",
@@ -2362,32 +3141,58 @@ export const modules: StudyModule[] = [
         ],
         example: {
           question: "只有吸引没有短程排斥的经典粒子模型可能怎样？",
-          solution: ["粒子可无限靠近以不断降低势能", "系统可能 collapse，热力学不稳定", "真实模型需要短程排斥/量子效应稳定"],
+          solution: [
+            "粒子可无限靠近以不断降低势能",
+            "系统可能 collapse，热力学不稳定",
+            "真实模型需要短程排斥/量子效应稳定",
+          ],
         },
-        pitfalls: ["把统计有效 attraction 当真实势", "认为 ideal gas 低温自动液化", "忽略稳定性"],
+        pitfalls: [
+          "把统计有效 attraction 当真实势",
+          "认为 ideal gas 低温自动液化",
+          "忽略稳定性",
+        ],
         check: {
           question: "van der Waals 的 b 与 a 分别粗略代表什么？",
-          answer: "b 代表排斥导致的 excluded volume；a>0 代表平均吸引带来的 pressure correction。",
+          answer:
+            "b 代表排斥导致的 excluded volume；a>0 代表平均吸引带来的 pressure correction。",
         },
       },
       {
         title: "mean field：把邻居换成平均密度",
         label: "近似方法",
         core: true,
-        intuition: "不追踪每对粒子相关，而让每个粒子感受由平均密度产生的平滑背景。",
+        intuition:
+          "不追踪每对粒子相关，而让每个粒子感受由平均密度产生的平滑背景。",
         explanation: [
-          "pair interaction ½Σi≠jU(ri−rj) 近似为 N²ū/(2V)，其中 ū=∫d³r U(r)。",
+          "把硬核排斥单独交给 excluded volume；只对可积 attractive tail 定义本站的带符号参数 ū=ūsite=∫d³r Uattr(r)<0。",
+          "不同 pair 的精确数量是 N(N−1)/2，所以 mean field 先给 N(N−1)ū/(2V)，再在 thermodynamic limit 用 N² 替代 N(N−1)。",
+          "若老师课件把 attraction strength 定成正数 ūteacher，则 ūsite=−ūteacher；若 Ωexcl 是一对粒子的 pair excluded volume，则每粒子参数 b=Ωexcl/2。",
           "核心假设 n(r)≈N/V 且 fluctuations/correlations 小。",
-          "吸引势使 ū<0，平均相互作用能随密度 N/V 增大而更负。",
+          "吸引势使本站 ū<0，平均相互作用能随密度 N/V 增大而更负。",
           "mean field 常给正确定性相图与临界行为框架，但临界点附近大涨落会破坏它。",
         ],
         formula: "Hint ≈ N²ū/(2V)",
-        steps: ["把邻居和替成密度积分", "令 n(r)≈N/V", "处理 1/2 避免 pair double count", "检查 ū 的符号/量纲"],
+        steps: [
+          "把邻居和替成密度积分",
+          "令 n(r)≈N/V",
+          "处理 1/2 避免 pair double count",
+          "检查 ū 的符号/量纲",
+        ],
         example: {
           question: "pair sum 前为什么有 1/2？",
-          solution: ["Σi≠j 同时数 (i,j) 与 (j,i)", "同一物理 pair 被数两次", "乘 1/2 消除重复"],
+          solution: [
+            "Σi≠j 同时数 (i,j) 与 (j,i)",
+            "同一物理 pair 被数两次",
+            "乘 1/2 消除重复",
+          ],
         },
-        pitfalls: ["N² 与 N(N−1) 精度层次不说明", "漏 1/2", "ū 负却又把 attraction correction 符号写反"],
+        pitfalls: [
+          "把发散硬核也放进 ū 的积分",
+          "N² 与 N(N−1) 精度层次不说明",
+          "漏 1/2",
+          "本站负 ū 与课件正 ūteacher 不做符号桥接",
+        ],
         check: {
           question: "为何临界点附近 mean field 更可疑？",
           answer: "相关长度和涨落变大，局部密度不再只是平均密度附近的小扰动。",
@@ -2399,29 +3204,48 @@ export const modules: StudyModule[] = [
         core: true,
         intuition: "排斥把 V 改成 V−Nb；吸引把压强减去与密度平方成正比的一项。",
         explanation: [
-          "近似 ZN≈[(V−Nb)ᴺ/(N!λT³ᴺ)] exp[−βN²ū/(2V)]。",
+          "硬核用 b=Ωexcl/2 和 V−Nb 表示；吸引尾才进入 ū=ūsite=∫Uattr<0。有限 N 先写 exp[−βN(N−1)ū/(2V)]，热力学极限再用 N²。",
+          "因此近似 ZN≈[(V−Nb)ᴺ/(N!λT³ᴺ)] exp[−βN²ū/(2V)]。",
           "F=−kBTlnZ 包含 +N²ū/(2V)，不是再多一个 β。",
           "P=−∂VF=NkBT/(V−Nb)+N²ū/(2V²)。若 ū<0，第二项降低 P。",
-          "定义 a=−ū/2>0，得到 P=NkBT/(V−Nb)−aN²/V²。",
+          "若课件用正数 ūteacher 表示 attraction strength，则 ū=−ūteacher；定义 a=−ū/2=ūteacher/2>0，得到 P=NkBT/(V−Nb)−aN²/V²。",
         ],
         formula: "[P+a(N/V)²](V−Nb)=NkBT（近似 van der Waals）",
-        formulaNote: "原 midterm marking scheme 的 F/P 有 β 与 V 次幂错误；这里给物理/量纲一致结构。",
-        steps: ["写正确 Z", "ln 后求 F", "对 V 求导", "再定义正的 a", "检查每项都是 pressure"],
+        formulaNote:
+          "原 midterm marking scheme 的 F/P 有 β 与 V 次幂错误；这里给物理/量纲一致结构。",
+        steps: [
+          "写正确 Z",
+          "ln 后求 F",
+          "对 V 求导",
+          "再定义正的 a",
+          "检查每项都是 pressure",
+        ],
         example: {
           question: "为何 attraction correction ∝n²？",
-          solution: ["pair 数量约 N²", "每 pair 平均作用随 1/V", "总能量约 N²/V，压强导数约 N²/V²=n²"],
+          solution: [
+            "pair 数量约 N²",
+            "每 pair 平均作用随 1/V",
+            "总能量约 N²/V，压强导数约 N²/V²=n²",
+          ],
         },
-        pitfalls: ["interaction exponential 放进整体 N 次方", "F 相互作用项多 β", "P correction 写成 1/V 而非 1/V²", "a 定义含 N/V 导致不是材料常数"],
+        pitfalls: [
+          "interaction exponential 放进整体 N 次方",
+          "F 相互作用项多 β",
+          "P correction 写成 1/V 而非 1/V²",
+          "a 定义含 N/V 导致不是材料常数",
+        ],
         check: {
           question: "P+aN²/V² 中 aN²/V² 的量纲必须是什么？",
-          answer: "压强；因此 a 的量纲是 pressure·volume²/particle²（若 N 视纯数则 pressure·volume²）。",
+          answer:
+            "压强；因此 a 的量纲是 pressure·volume²/particle²（若 N 视纯数则 pressure·volume²）。",
         },
       },
       {
         title: "临界点与响应函数发散",
         label: "collective fluctuation",
         core: true,
-        intuition: "临界等温线在拐点变得很平：压一点体积就变很多，所以压缩率和密度涨落变大。",
+        intuition:
+          "临界等温线在拐点变得很平：压一点体积就变很多，所以压缩率和密度涨落变大。",
         explanation: [
           "van der Waals critical point 满足 (∂P/∂V)T=0 与 (∂²P/∂V²)T=0。",
           "isothermal compressibility κT=−(1/V)(∂V/∂P)T,N，因此斜率趋零时 κT 发散。",
@@ -2431,9 +3255,17 @@ export const modules: StudyModule[] = [
         formula: "(∂VP)Tc=0; (∂²VP)Tc=0;  VarN/⟨N⟩=n kBTκT",
         example: {
           question: "为何临界点附近 fluid 看起来乳白（critical opalescence）？",
-          solution: ["密度涨落跨很多尺度增强", "折射率随密度变化", "光被强烈散射"],
+          solution: [
+            "密度涨落跨很多尺度增强",
+            "折射率随密度变化",
+            "光被强烈散射",
+          ],
         },
-        pitfalls: ["只记“发散”不写 thermodynamic limit", "κT 负号漏掉", "固定 T/N 条件不写"],
+        pitfalls: [
+          "只记“发散”不写 thermodynamic limit",
+          "κT 负号漏掉",
+          "固定 T/N 条件不写",
+        ],
         check: {
           question: "若 (∂P/∂V)T 接近 0，(∂V/∂P)T 怎样？",
           answer: "其倒数绝对值很大，因此压缩率很大。",
@@ -2443,7 +3275,8 @@ export const modules: StudyModule[] = [
         title: "相共存、潜热与 Clausius–Clapeyron",
         label: "相图",
         core: true,
-        intuition: "不稳定 S 形等温线不会被真实系统走过；系统分成气液两相，以共同压力改变相比例。",
+        intuition:
+          "不稳定 S 形等温线不会被真实系统走过；系统分成气液两相，以共同压力改变相比例。",
         explanation: [
           "机械稳定要求 κT>0，即通常 (∂P/∂V)T<0。van der Waals 中正斜率段不稳定。",
           "coexistence 时两相 T、P、μ 相等；改变总 V 主要改变两相比例，P 保持 vapor pressure。",
@@ -2453,12 +3286,21 @@ export const modules: StudyModule[] = [
         formula: "dPcoex/dT = ΔS/ΔV = L/(TΔV)",
         example: {
           question: "沸腾时持续加热，水温为何在固定压强下近似不升？",
-          solution: ["输入热量用于改变相比例、提供 latent heat", "两相共存温度由 P 决定", "直到液相基本耗尽"],
+          solution: [
+            "输入热量用于改变相比例、提供 latent heat",
+            "两相共存温度由 P 决定",
+            "直到液相基本耗尽",
+          ],
         },
-        pitfalls: ["共存区当均匀不稳定气体", "latent heat 与 heat capacity 混", "相平衡只写 P 相等漏 μ"],
+        pitfalls: [
+          "共存区当均匀不稳定气体",
+          "latent heat 与 heat capacity 混",
+          "相平衡只写 P 相等漏 μ",
+        ],
         check: {
           question: "一阶相变和连续相变在序参量上最直观差别？",
-          answer: "一阶相变序参量发生跳变并常有潜热；连续相变序参量连续趋零但响应可发散。",
+          answer:
+            "一阶相变序参量发生跳变并常有潜热；连续相变序参量连续趋零但响应可发散。",
         },
       },
     ],
@@ -2470,6 +3312,9 @@ export const modules: StudyModule[] = [
           "equation of state 可写 P/(nkBT)=1+B2(T)n+B3(T)n²+…；B2 由 pair potential 决定。",
           "Mayer f(r)=e^{-βU(r)}−1 把 interaction expansion 组织成 connected clusters。",
           "本课课件提到但考试材料更重 mean field/van der Waals；先理解 B2 的物理符号，不必先攻完整图展开。",
+        ],
+        formulas: [
+          "$$\\frac{P}{nk_{\\mathrm B}T}=1+B_2(T)n+B_3(T)n^2+\\cdots;\\quad f(r)=e^{-\\beta U(r)}-1$$",
         ],
       },
       {
@@ -2500,8 +3345,14 @@ export const modules: StudyModule[] = [
       },
     ],
     gate: {
-      prompt: "从近似 Z 推到 van der Waals P，并用量纲逐项检查；再解释临界 κT/VarN 发散链。",
-      criteria: ["排斥/吸引符号正确", "V^{-2} 导数正确", "a 是材料参数而非含 N/V", "响应–涨落关系会解释"],
+      prompt:
+        "从近似 Z 推到 van der Waals P，并用量纲逐项检查；再解释临界 κT/VarN 发散链。",
+      criteria: [
+        "排斥/吸引符号正确",
+        "V^{-2} 导数正确",
+        "a 是材料参数而非含 N/V",
+        "响应–涨落关系会解释",
+      ],
     },
   },
   {
@@ -2515,7 +3366,11 @@ export const modules: StudyModule[] = [
     hoursFull: 11,
     goal: "用 Ising 模型看懂自洽 mean field、序参量、对称性破缺、临界响应和一阶/二阶相变。",
     why: "这是课件 6 体积最大的部分，也是作业 2 Q4 的核心；需要分成主线与可折叠深读。",
-    prerequisites: ["interactions-vdw", "canonical", "math-toolbox 的 Taylor/Lagrange"],
+    prerequisites: [
+      "interactions-vdw",
+      "canonical",
+      "math-toolbox 的 Taylor/Lagrange",
+    ],
     outcomes: [
       "能读 Ising Hamiltonian 中 J、h、σi",
       "能完成 mean-field decoupling 与 self-consistency",
@@ -2524,13 +3379,19 @@ export const modules: StudyModule[] = [
       "知道 susceptibility/correlation length 与 critical fluctuation",
       "能解释 1D Ising 为何有限 T 无相变（结论与 transfer-matrix 证据）",
     ],
-    sourceRefs: ["课件 6 slides 10–29", "作业 2 Q4", "David Tong Ch. 5.2–5.5", "MIT OCW L18–19"],
+    sourceRefs: [
+      "课件 6 slides 10–29",
+      "作业 2 Q4",
+      "David Tong Ch. 5.2–5.5",
+      "MIT OCW L18–19",
+    ],
     concepts: [
       {
         title: "Ising 模型把 collective order 压到 ±1",
         label: "模型",
         core: true,
-        intuition: "每个格点只有向上/向下，邻居偏好同向，外场偏好某一方向；最简单却能产生真正的相变语言。",
+        intuition:
+          "每个格点只有向上/向下，邻居偏好同向，外场偏好某一方向；最简单却能产生真正的相变语言。",
         explanation: [
           "σi=±1；H=−JΣ⟨ij⟩σiσj−hΣiσi（是否有 1/2 取决于 pair sum 定义）。",
           "J>0 ferromagnetic，邻居同向降能；h 是外磁场耦合。",
@@ -2540,9 +3401,17 @@ export const modules: StudyModule[] = [
         formula: "H=−JΣ⟨ij⟩σiσj−hΣiσi;  m=(1/N)Σi⟨σi⟩",
         example: {
           question: "为什么 h=0、m≠0 称自发对称性破缺？",
-          solution: ["方程对 m→−m 对称", "低温平衡却选一个符号", "微观定律有对称，宏观态没有"],
+          solution: [
+            "方程对 m→−m 对称",
+            "低温平衡却选一个符号",
+            "微观定律有对称，宏观态没有",
+          ],
         },
-        pitfalls: ["J/h/磁化 m 字母混", "pair sum 是否重复不说明", "finite system 里绝对对称破缺与热力学极限混用"],
+        pitfalls: [
+          "J/h/磁化 m 字母混",
+          "pair sum 是否重复不说明",
+          "finite system 里绝对对称破缺与热力学极限混用",
+        ],
         check: {
           question: "高温为什么 m 倾向 0？",
           answer: "entropy 喜欢向上/向下近随机；热涨落压过 J 的有序能量收益。",
@@ -2552,7 +3421,8 @@ export const modules: StudyModule[] = [
         title: "mean-field decoupling 与自洽方程",
         label: "作业核心",
         core: true,
-        intuition: "把每个邻居 σj 换成平均 m，但 m 又必须等于在这个平均场里算出的磁化，所以要自洽。",
+        intuition:
+          "把每个邻居 σj 换成平均 m，但 m 又必须等于在这个平均场里算出的磁化，所以要自洽。",
         explanation: [
           "写 σi=m+δσi；忽略 δσiδσj，得 σiσj≈mσi+mσj−m²。",
           "每个自旋感受有效场 heff=h+zJm，其中 z 是 coordination number（具体 prefactor 看课件 pair 约定）。",
@@ -2560,57 +3430,96 @@ export const modules: StudyModule[] = [
           "这不是显式解；m 同时在两边，要用图像、数值或临界附近展开。",
         ],
         formula: "m = tanh[β(h+zJm)]",
-        steps: ["σ=m+δσ", "丢二阶 fluctuation", "收集单自旋有效场", "求单自旋 Z", "令算出的 ⟨σ⟩=m"],
+        steps: [
+          "σ=m+δσ",
+          "丢二阶 fluctuation",
+          "收集单自旋有效场",
+          "求单自旋 Z",
+          "令算出的 ⟨σ⟩=m",
+        ],
         example: {
           question: "h=0、很高 T 时自洽方程有哪些解？",
           solution: ["βzJ<1", "tanh(βzJm) 的斜率小于 1", "只有 m=0 稳定解"],
         },
-        pitfalls: ["decoupling 漏 −m²", "z（邻居数）漏掉", "tanh 展开适用于任意 m", "求出多个解不比较 free energy/stability"],
+        pitfalls: [
+          "decoupling 漏 −m²",
+          "z（邻居数）漏掉",
+          "tanh 展开适用于任意 m",
+          "求出多个解不比较 free energy/stability",
+        ],
         check: {
           question: "mean-field Tc 如何从图像斜率得到？",
-          answer: "h=0 在 m=0 比较 RHS 斜率 βzJ 与 LHS 斜率 1；βczJ=1，所以 kBTc=zJ。",
+          answer:
+            "h=0 在 m=0 比较 RHS 斜率 βzJ 与 LHS 斜率 1；βczJ=1，所以 kBTc=zJ。",
         },
       },
       {
         title: "临界附近展开与响应",
         label: "critical behavior",
         core: true,
-        intuition: "Tc 附近 m 小，所以 tanh 或 free energy 可低阶展开；最小几个幂决定通用形状。",
+        intuition:
+          "Tc 附近 m 小，所以 tanh 或 free energy 可低阶展开；最小几个幂决定通用形状。",
         explanation: [
           "tanh x≈x−x³/3。h=0 代入得非零解 m∝(Tc−T)^{1/2}（mean-field exponent βcrit=1/2）。",
-          "susceptibility χ=(∂m/∂h)h→0 在 Tc 附近发散，mean field 给 χ∝|T−Tc|^{-1}。",
+          "隐式求导给 χ=β(1−m²)/[1−βzJ(1−m²)]。高温侧 m=0，χ+=1/[kB(T−Tc)]；低温侧要代入非零分支 m²≈3(βzJ−1)/(βzJ)³，得到 χ−≈1/[2kB(Tc−T)]。",
+          "所以两侧 susceptibility 都按 |T−Tc|^{-1} 发散（mean-field exponent γ=1），但低温与高温振幅不同。",
           "这里临界指数 βcrit 与逆温度 β=1/kBT 同字母；网页始终写 βcrit 区分。",
           "临界涨落导致 cluster size/correlation length 增大，实际低维指数可偏离 mean field。",
         ],
         formula: "m∼(Tc−T)^{1/2};  χ∼|T−Tc|^{-1}  (mean field)",
         example: {
           question: "为何微小 h 在 Tc 附近能产生很大 m？",
-          solution: ["free-energy minimum 很平", "恢复力/二阶曲率很小", "响应 χ 是曲率的倒数，因此大"],
+          solution: [
+            "free-energy minimum 很平",
+            "恢复力/二阶曲率很小",
+            "响应 χ 是曲率的倒数，因此大",
+          ],
         },
-        pitfalls: ["β 两种含义混", "critical exponent 当所有维数精确值", "只求 stationary 不判 stable"],
+        pitfalls: [
+          "β 两种含义混",
+          "critical exponent 当所有维数精确值",
+          "只求 stationary 不判 stable",
+        ],
         check: {
           question: "响应函数发散和 free-energy 曲率有什么关系？",
-          answer: "对序参量的 susceptibility 大致是 free-energy 二阶曲率的倒数；曲率趋零时响应发散。",
+          answer:
+            "对序参量的 susceptibility 大致是 free-energy 二阶曲率的倒数；曲率趋零时响应发散。",
         },
       },
       {
         title: "Landau free energy：只保留对称性允许的幂",
         label: "统一语言",
         core: true,
-        intuition: "不必知道所有微观细节；在 Tc 附近按小序参量 m 展开，自由能形状决定相。",
+        intuition:
+          "不必知道所有微观细节；在 Tc 附近按小序参量 m 展开，自由能形状决定相。",
         explanation: [
-          "h=0 且 m→−m 对称时，F(m)=F0+a(T)m²+b m⁴+…，不含奇次项。",
+          "这里 m 是每格点磁化，因此展开每格点自由能 f=F/N：h=0 且 m→−m 对称时，f(m)=f0+a(T)m²+b m⁴+…，不含奇次项。",
           "b>0 且 a∝T−Tc：T>Tc 时单谷在 m=0；T<Tc 时双谷在 ±m0，连续二阶相变。",
           "若允许 m³，或 m⁴ 系数变负并需 m⁶ 稳定，可产生不连续的一阶跳变。",
-          "外场加 −hm 倾斜自由能，选择一个极小值。",
+          "外场在 f 中加 −hm；等价地，总自由能 F 的耦合是 −Nhm。",
         ],
-        formula: "F(m)=F0+a0(T−Tc)m²+b m⁴−hm+…",
-        steps: ["确定序参量", "列对称性", "写最低稳定展开", "求 ∂mF=0", "比较极小值与曲率"],
+        formula: "f(m)=F(m)/N=f0+a0(T−Tc)m²+b m⁴−hm+…",
+        steps: [
+          "确定序参量及其归一化",
+          "列对称性",
+          "写最低稳定展开",
+          "求 ∂mf=0",
+          "比较极小值与曲率",
+        ],
         example: {
           question: "b>0、a<0、h=0 时极小值在哪？",
-          solution: ["∂F/∂m=2am+4bm³=0", "m=0 或 m²=−a/(2b)", "m=0 曲率 2a<0 是极大；±√(−a/2b) 是极小"],
+          solution: [
+            "∂f/∂m=2am+4bm³=0",
+            "m=0 或 m²=−a/(2b)",
+            "m=0 曲率 2a<0 是极大；±√(−a/2b) 是极小",
+          ],
         },
-        pitfalls: ["只解 ∂F=0 不比较", "对称性禁止奇次项却仍写 m³", "最高保留阶不稳定（系数负）"],
+        pitfalls: [
+          "把每格点 m 与总自由能耦合误写成 −hm（应为 −Nhm）",
+          "只解 ∂f=0 不比较",
+          "对称性禁止奇次项却仍写 m³",
+          "最高保留阶不稳定（系数负）",
+        ],
         check: {
           question: "order parameter 在连续相变中怎样过 Tc？",
           answer: "从有序侧连续趋向 0；其导数或响应可不连续/发散。",
@@ -2620,7 +3529,8 @@ export const modules: StudyModule[] = [
         title: "lattice gas 与 Ising 是同一数学骨架",
         label: "作业 2 Q4",
         core: true,
-        intuition: "空/占据 n=0,1 可以改写成向下/向上 σ=±1，于是液气密度相变变成磁化相变。",
+        intuition:
+          "空/占据 n=0,1 可以改写成向下/向上 σ=±1，于是液气密度相变变成磁化相变。",
         explanation: [
           "使用 ni=(1+σi)/2，把 −uΣninj+εΣni 展开。",
           "σiσj 项给 Ising coupling J；线性 σi 项给 effective field h；常数项不影响概率比但影响绝对 F。",
@@ -2632,7 +3542,11 @@ export const modules: StudyModule[] = [
           question: "m=0 对应 lattice gas 的平均占据是多少？",
           solution: ["n̄=(1+0)/2", "所以 n̄=1/2"],
         },
-        pitfalls: ["pair sum coordination 系数错", "常数项全删后又要求绝对 free energy", "occupation 与粒子总数记号混"],
+        pitfalls: [
+          "pair sum coordination 系数错",
+          "常数项全删后又要求绝对 free energy",
+          "occupation 与粒子总数记号混",
+        ],
         check: {
           question: "lattice gas 的粒子–空穴对称对应 Ising 的什么？",
           answer: "ni→1−ni 对应 σi→−σi，即自旋翻转对称。",
@@ -2642,11 +3556,15 @@ export const modules: StudyModule[] = [
     deepDives: [
       {
         title: "1D Ising transfer matrix：为何有限温度无相变",
-        summary: "这是课件 6 slides 25–29 的大块内容，放在深读，不阻断期中主线。",
+        summary:
+          "这是课件 6 slides 25–29 的大块内容，放在深读，不阻断期中主线。",
         paragraphs: [
           "把 partition sum 写成相邻自旋权重矩阵 T 的乘积，周期边界下 Z=Tr(Tᴺ)=λ+ᴺ+λ−ᴺ。",
           "热力学极限由最大 eigenvalue λ+ 主导；有限 T 时 λ+ 是解析函数，所以 free energy 无非解析点。",
           "correlation length 由 ξ^{-1}=ln(λ+/|λ−|) 给出，只在 T→0 发散，因此 1D short-range Ising 无有限 T 相变。",
+        ],
+        formulas: [
+          "$$Z=\\operatorname{Tr}(T^N)=\\lambda_+^N+\\lambda_-^N;\\quad \\xi^{-1}=\\ln\\frac{\\lambda_+}{|\\lambda_-|};\\quad T_c=0$$",
         ],
       },
       {
@@ -2654,7 +3572,7 @@ export const modules: StudyModule[] = [
         summary: "课件 slides 22–24 是相变语言的应用，不是先修主干。",
         paragraphs: [
           "超导序参量 ψ(r) 是空间变化的复场：|ψ|² 表示凝聚强度，复相位承载超流/超导电流的信息。Landau 的局域多项式因此还要补上 spatial gradient cost。",
-          "课件采用的 GL free-energy density 可写成普通态 f_n、α|ψ|²、β|ψ|⁴/2、gauge-covariant gradient 与磁场能 B²/(8π) 之和；对 ψ* 与 vector potential 变分可得到序参量和电磁响应方程。",
+          "课件采用的 GL free-energy density 可写成普通态 f_n、α|ψ|²、β|ψ|⁴/2、gauge-covariant gradient 与磁场能 B²/(8π) 之和；四次截断要求 β(T)>0，若 β(T)≤0 则必须补正的 |ψ|⁶ 或更高偶次项才能稳定。对 ψ* 与 vector potential 变分可得到序参量和电磁响应方程。",
           "式中的 m* 与 e* 是 Cooper pair 的有效质量与电荷；星号属于符号名称，不是乘号。课件使用 B²/(8π) 的 Gaussian-unit convention，换 SI 时电磁项写法会改变。",
           "均匀低场下系统排斥内部磁场，对应 Meissner effect；type-II 超导体允许量子化磁通以 vortex 穿入，多涡旋可排成 Abrikosov lattice。",
           "本课主线只需识别 complex order parameter、symmetry、gradient cost、Meissner/vortex 这条因果链；不需先学完整 gauge field theory。",
@@ -2684,7 +3602,8 @@ export const modules: StudyModule[] = [
       {
         title: "Landau 极小值",
         instruction: "F=am²+bm⁴（b>0），分别讨论 a>0 与 a<0。",
-        answer: "a>0：m=0 唯一稳定极小；a<0：m=0 不稳定，±√(−a/2b) 为两个稳定极小。",
+        answer:
+          "a>0：m=0 唯一稳定极小；a<0：m=0 不稳定，±√(−a/2b) 为两个稳定极小。",
       },
       {
         title: "lattice mapping",
@@ -2693,8 +3612,15 @@ export const modules: StudyModule[] = [
       },
     ],
     gate: {
-      prompt: "独立完成 mean-field decoupling → m=tanh(...) → Tc 附近展开，并用 Landau 图解释相同结果。",
-      criteria: ["−m² correction 不漏", "coordination z/课件约定清楚", "只在小 m 展开", "stationary 与 stable 区分", "能说明 mean-field 局限"],
+      prompt:
+        "独立完成 mean-field decoupling → m=tanh(...) → Tc 附近展开，并用 Landau 图解释相同结果。",
+      criteria: [
+        "−m² correction 不漏",
+        "coordination z/课件约定清楚",
+        "只在小 m 展开",
+        "stationary 与 stable 区分",
+        "能说明 mean-field 局限",
+      ],
     },
   },
   {
@@ -2708,7 +3634,14 @@ export const modules: StudyModule[] = [
     hoursFull: 10,
     goal: "把 Week 1–7 压成四类可重复答题模板，用 2025 marking scheme 做限时训练并避开答案勘误。",
     why: "旧期中不是只拿来“看懂”。它直接展示老师如何分配步骤分；你要练到能按评分点输出。",
-    prerequisites: ["phase-ensemble", "microcanonical", "canonical", "grand-canonical", "interactions-vdw", "phase-transition"],
+    prerequisites: [
+      "phase-ensemble",
+      "microcanonical",
+      "canonical",
+      "grand-canonical",
+      "interactions-vdw",
+      "phase-transition",
+    ],
     outcomes: [
       "能画四大系综控制量/势/涨落总表",
       "能按 Q1–Q4 的评分结构限时作答",
@@ -2716,13 +3649,18 @@ export const modules: StudyModule[] = [
       "能区分老师原答案与物理纠正版",
       "建立个人错题分类而不是只记某题答案",
     ],
-    sourceRefs: ["课件 7 slides 1–8", "期中答案 PDF pp. 3–12", "作业 1–2 与答案"],
+    sourceRefs: [
+      "课件 7 slides 1–8",
+      "期中答案 PDF pp. 3–12",
+      "作业 1–2 与答案",
+    ],
     concepts: [
       {
         title: "一张系综总表先拿定义分",
         label: "Q1",
         core: true,
-        intuition: "先声明控制条件和分布，再计算；老师评分明确重视 normalization 与 thermodynamic connection。",
+        intuition:
+          "先声明控制条件和分布，再计算；老师评分明确重视 normalization 与 thermodynamic connection。",
         explanation: [
           "microcanonical：E,V,N；uniform on shell；S=kBlnΩ。",
           "canonical：T,V,N；Z；F=−kBTlnZ；E fluctuates。",
@@ -2732,9 +3670,19 @@ export const modules: StudyModule[] = [
         formula: "constraint → ensemble → partition → potential → derivative",
         example: {
           question: "期中 Q1(b) 先写什么才能避免直接丢 4 分？",
-          solution: ["经典 Z 的 1/(N!h³ᴺ)", "完整 d³Np d³Nq 积分", "grand sum 从 N=0 到 ∞", "再写 F/ΦG connection"],
+          solution: [
+            "经典 Z 的 1/(N!h³ᴺ)",
+            "完整 d³Np d³Nq 积分",
+            "grand sum 从 N=0 到 ∞",
+            "再写 F/ΦG connection",
+          ],
         },
-        pitfalls: ["漏 N! 扣分", "漏 h³ᴺ 扣分", "grand 误标 canonical", "G 符号不定义"],
+        pitfalls: [
+          "漏 N! 扣分",
+          "漏 h³ᴺ 扣分",
+          "grand 误标 canonical",
+          "G 符号不定义",
+        ],
         check: {
           question: "Q1(c) 由什么两式推出 dF？",
           answer: "F=E−TS 与 dE=T dS−P dV（固定 N）；得到 dF=−S dT−P dV。",
@@ -2756,7 +3704,11 @@ export const modules: StudyModule[] = [
           question: "看到 N 个三维 harmonic oscillators，最先写哪两个数字？",
           solution: ["每振子 3 个 q+3 个 p", "所以 d=6N；缩放后 R²=2E/ω"],
         },
-        pitfalls: ["3N/6N 混", "sphere surface/volume 混", "答案 p.6 多出的 1/2 常数不一致"],
+        pitfalls: [
+          "3N/6N 混",
+          "sphere surface/volume 混",
+          "答案 p.6 多出的 1/2 常数不一致",
+        ],
         check: {
           question: "Q2 的最终 E=3NkBT 如何用 equipartition 快速验？",
           answer: "每振子 6 个二次项，每项 kBT/2，所以 3kBT；N 个为 3NkBT。",
@@ -2766,7 +3718,8 @@ export const modules: StudyModule[] = [
         title: "几何级数 + chemical equilibrium",
         label: "Q3",
         core: true,
-        intuition: "单 bosonic mode 允许 n=0,1,…，先求几何级数，再把它和外部理想气体的 μ 匹配。",
+        intuition:
+          "单 bosonic mode 允许 n=0,1,…，先求几何级数，再把它和外部理想气体的 μ 匹配。",
         explanation: [
           "能量 En=ℏω(n+1/2)，粒子数 n；Ξmode=e^{-βℏω/2}/[1−e^{-β(ℏω−μ)}]，要求 μ<ℏω。",
           "n̄=1/[e^{β(ℏω−μ)}−1]；Var n=n̄(1+n̄)。",
@@ -2778,7 +3731,11 @@ export const modules: StudyModule[] = [
           question: "为什么 μ 必须小于 mode energy ℏω？",
           solution: ["几何级数比值 q=e^{-β(ℏω−μ)}", "收敛需 q<1", "所以 μ<ℏω"],
         },
-        pitfalls: ["μ 当频率又当能量", "thermal wavelength 写反", "boson variance 写成 Poisson n̄"],
+        pitfalls: [
+          "μ 当频率又当能量",
+          "thermal wavelength 写反",
+          "boson variance 写成 Poisson n̄",
+        ],
         check: {
           question: "Boson 的 Var n 比 Poisson 大还是小？",
           answer: "大；Var=n̄(1+n̄)>n̄，体现 bunching。",
@@ -2788,42 +3745,67 @@ export const modules: StudyModule[] = [
         title: "mean-field van der Waals 与 critical fluctuation",
         label: "Q4",
         core: true,
-        intuition: "这题本意是“均匀背景 → Z → F → P → 响应/涨落”；原答案代数不能盲抄。",
+        intuition:
+          "这题本意是“均匀背景 → Z → F → P → 响应/涨落”；原答案代数不能盲抄。",
         explanation: [
-          "interaction 近似 N²ū/(2V)，hard core 把 V 改成 V−Nb。",
+          "hard core 用 b=Ωexcl/2 把 V 改成 V−Nb，不放进 attraction integral；只对 Uattr 定义 ū=ūsite<0，并与课件正参数用 ūsite=−ūteacher 桥接。",
+          "interaction 先是 N(N−1)ū/(2V)，只在 N≫1 时近似 N²ū/(2V)。",
           "正确 Z 的 interaction exponential 只出现一次，不再整体取 N 次方。",
           "F interaction=N²ū/(2V)，P correction=N²ū/(2V²)。",
           "κT 发散 → VarN/⟨N⟩=n kBTκT 发散。",
         ],
         formula: "P=NkBT/(V−Nb)+N²ū/(2V²)",
-        formulaNote: "ū<0 时第二项为负；也可定义 a=−ū/2>0 写 P=NkBT/(V−Nb)−aN²/V²。",
+        formulaNote:
+          "ū<0 时第二项为负；也可定义 a=−ū/2>0 写 P=NkBT/(V−Nb)−aN²/V²。",
         example: {
-          question: "如何用量纲一眼看出 marking scheme 的 βN²ū/(2V) 不能直接加进 F？",
-          solution: ["ū 积分后使 N²ū/V 已是能量", "再乘 β 变无量纲", "F 必须是能量，因此多 β 不对"],
+          question:
+            "如何用量纲一眼看出 marking scheme 的 βN²ū/(2V) 不能直接加进 F？",
+          solution: [
+            "ū 积分后使 N²ū/V 已是能量",
+            "再乘 β 变无量纲",
+            "F 必须是能量，因此多 β 不对",
+          ],
         },
         pitfalls: ["把原答案错误当标准", "a 含 N/V", "κT 固定量与负号不写"],
         check: {
           question: "临界点 number fluctuation 为什么大？",
-          answer: "equation of state 变平、κT 发散；fluctuation–response relation 把大压缩率对应到大密度/粒子数涨落。",
+          answer:
+            "equation of state 变平、κT 发散；fluctuation–response relation 把大压缩率对应到大密度/粒子数涨落。",
         },
       },
       {
         title: "考场输出协议",
         label: "拿步骤分",
         core: true,
-        intuition: "每题先交付定义与路线，再做代数；即使积分卡住，也保住结构分。",
+        intuition:
+          "每题先交付定义与路线，再做代数；即使积分卡住，也保住结构分。",
         explanation: [
           "第 1 行：写控制量、Hamiltonian、完整 partition/Ω definition。",
           "第 2–4 行：写变量变换或 factorization，并标 Jacobian/degeneracy。",
           "中段：写 lnZ 与 thermodynamic derivative，偏导固定量明确。",
           "末尾：做 T→0/high T、量纲、classical limit 或 fluctuation positivity 检查。",
         ],
-        steps: ["定义", "约束/测度", "计算核心", "连接 thermodynamics", "极限/量纲自检"],
+        steps: [
+          "定义",
+          "约束/测度",
+          "计算核心",
+          "连接 thermodynamics",
+          "极限/量纲自检",
+        ],
         example: {
           question: "积分一时算不出，是否应该空着等最后结果？",
-          solution: ["不要", "先写正确积分、变换、维数和预期 derivative", "这些在 marking scheme 中都有独立分值"],
+          solution: [
+            "不要",
+            "先写正确积分、变换、维数和预期 derivative",
+            "这些在 marking scheme 中都有独立分值",
+          ],
         },
-        pitfalls: ["只写最终结果", "一处代数错后整题放弃", "答案没单位/极限", "看到原答案错误也不做自检"],
+        pitfalls: [
+          "只写最终结果",
+          "一处代数错后整题放弃",
+          "答案没单位/极限",
+          "看到原答案错误也不做自检",
+        ],
         check: {
           question: "最便宜但最有效的三个自检是什么？",
           answer: "量纲、已知极限（T→0/∞）、方差/热容等应非负或稳定性符号。",
@@ -2860,19 +3842,27 @@ export const modules: StudyModule[] = [
       {
         title: "Q2 限时",
         instruction: "25 分钟只做 6N 球→Ω→S→E/C，不看 marginal 答案。",
-        answer: "按题目定义先得几何体积 Ωphase=(2πE/ω)^{3N}/(3N)!；写 entropy 前改用无量纲 Γ=Ωphase/h^{3N}。这些固定位置振子可区分，无 N!；E=3NkBT，C=3NkB。",
+        answer:
+          "按题目定义先得几何体积 Ωphase=(2πE/ω)^{3N}/(3N)!；写 entropy 前改用无量纲 Γ=Ωphase/h^{3N}。这些固定位置振子可区分，无 N!；E=3NkBT，C=3NkB。",
         source: "midterm-2025-solution.pdf pp.5–7",
       },
       {
         title: "Q4 纠错",
         instruction: "逐行标出原 marking scheme 中量纲不对的项，再独立重推 P。",
-        answer: "F interaction 应为 N²ū/(2V)；P correction 为 N²ū/(2V²)；a 应为 intensive coefficient。",
+        answer:
+          "F interaction 应为 N²ū/(2V)；P correction 为 N²ū/(2V²)；a 应为 intensive coefficient。",
         source: "midterm-2025-solution.pdf pp.10–12",
       },
     ],
     gate: {
-      prompt: "在 90 分钟内闭卷做一遍 2025 midterm；完成后只按评分点和勘误表批改。",
-      criteria: ["总分至少 70/100 且 Q1 定义分基本全拿", "任何漏 N!h³ᴺ 已修复", "Q2/Q4 维数与量纲通过", "错题已归类到可迁移标签"],
+      prompt:
+        "在 90 分钟内闭卷做一遍 2025 midterm；完成后只按评分点和勘误表批改。",
+      criteria: [
+        "总分至少 70/100 且 Q1 定义分基本全拿",
+        "任何漏 N!h³ᴺ 已修复",
+        "Q2/Q4 维数与量纲通过",
+        "错题已归类到可迁移标签",
+      ],
     },
   },
   {
@@ -2900,13 +3890,19 @@ export const modules: StudyModule[] = [
       "能写 quantum Liouville equation 与三种 equilibrium density operator",
       "能理解作业 3 Q1 的谱分解主线而不先陷入 Hermite 代数",
     ],
-    sourceRefs: ["课件 7 slides 9–19", "课件 8 slides 15–18", "作业 3 Q1", "MIT OCW L20–22"],
+    sourceRefs: [
+      "课件 7 slides 9–19",
+      "课件 8 slides 15–18",
+      "作业 3 Q1",
+      "MIT OCW L20–22",
+    ],
     concepts: [
       {
         title: "先补一张 2×2 线性代数地图",
         label: "零基础入口",
         core: true,
-        intuition: "量子记号看起来新，但本课大部分操作只是：把状态写成一列数，让矩阵作用在它上面，再把对角线相加。先用 2×2 例子练会动作，再换成 ket 名字。",
+        intuition:
+          "量子记号看起来新，但本课大部分操作只是：把状态写成一列数，让矩阵作用在它上面，再把对角线相加。先用 2×2 例子练会动作，再换成 ket 名字。",
         explanation: [
           "复数 z=a+ib 的共轭是 z*=a−ib，绝对值平方 |z|²=z*z≥0。对列向量先转成行向量再逐项共轭，得到 Hermitian conjugate，记作 †。",
           "矩阵乘向量时，每一行分别与列向量做乘加。若 A|a⟩=a|a⟩，作用后方向不变，|a⟩ 是 eigenvector、a 是 eigenvalue。",
@@ -2915,7 +3911,8 @@ export const modules: StudyModule[] = [
           "inner product ⟨φ|ψ⟩ 是复数版点积；orthonormal 表示 ⟨i|j⟩=δij。Σi|i⟩⟨i|=I 就是把任意向量按完整正交基拆开再拼回去。",
         ],
         formula: "A†=(A*)ᵀ;  A|a⟩=a|a⟩;  Tr(A)=Σi A_{ii}=Σi⟨i|A|i⟩",
-        formulaNote: "这里的 i 在 Aii 中是索引，在 a+ib 中才是虚数单位；看到同一字母时先看语境。",
+        formulaNote:
+          "这里的 i 在 Aii 中是索引，在 a+ib 中才是虚数单位；看到同一字母时先看语境。",
         steps: [
           "把 ket 暂时写成列向量",
           "按行乘列计算矩阵作用",
@@ -2937,15 +3934,18 @@ export const modules: StudyModule[] = [
           "把 eigenvalue equation 误读成普通数乘，不检查向量方向是否保持",
         ],
         check: {
-          question: "ρ=diag(3/4,1/4) 为什么已经满足归一化？它的两个 eigenvalues 是什么？",
-          answer: "Trρ=3/4+1/4=1；对角矩阵的 eigenvalues 就是对角元 3/4 与 1/4，且都非负。",
+          question:
+            "ρ=diag(3/4,1/4) 为什么已经满足归一化？它的两个 eigenvalues 是什么？",
+          answer:
+            "Trρ=3/4+1/4=1；对角矩阵的 eigenvalues 就是对角元 3/4 与 1/4，且都非负。",
         },
       },
       {
         title: "Hilbert space：量子态是向量，不是粒子轨迹",
         label: "最小语言",
         core: true,
-        intuition: "选一组正交基后，量子态就像一列复数坐标；改变基不改变物理态。",
+        intuition:
+          "选一组正交基后，量子态就像一列复数坐标；改变基不改变物理态。",
         explanation: [
           "|ψ⟩ 是 state vector，⟨ψ| 是其 Hermitian conjugate；归一化 ⟨ψ|ψ⟩=1。",
           "energy eigenstates 满足 Ĥ|n⟩=En|n⟩，且可选 orthonormal：⟨m|n⟩=δmn。",
@@ -2955,9 +3955,17 @@ export const modules: StudyModule[] = [
         formula: "Ĥ|n⟩=En|n⟩;  Σn|n⟩⟨n|=I",
         example: {
           question: "为什么作业 3 Q1 一开始在 ⟨x|e^{-βH}|x′⟩ 中插入 Σn|n⟩⟨n|？",
-          solution: ["energy basis 让 e^{-βH}|n⟩=e^{-βEn}|n⟩", "复杂算符变成普通指数权重", "再用 ⟨x|n⟩=φn(x) 得谱和"],
+          solution: [
+            "energy basis 让 e^{-βH}|n⟩=e^{-βEn}|n⟩",
+            "复杂算符变成普通指数权重",
+            "再用 ⟨x|n⟩=φn(x) 得谱和",
+          ],
         },
-        pitfalls: ["把 ket 当普通概率", "completeness 漏 bra/ket 顺序", "波函数与概率密度 |ψ|² 混"],
+        pitfalls: [
+          "把 ket 当普通概率",
+          "completeness 漏 bra/ket 顺序",
+          "波函数与概率密度 |ψ|² 混",
+        ],
         check: {
           question: "在 energy basis 中 e^{-βĤ}|n⟩ 等于什么？",
           answer: "e^{-βEn}|n⟩，因为 |n⟩ 是 H 的本征态。",
@@ -2967,7 +3975,8 @@ export const modules: StudyModule[] = [
         title: "observable、Born rule 与 unitary evolution",
         label: "测量与演化",
         core: true,
-        intuition: "Hermitian 算符给可能测量值；态在测量前提供这些结果的概率，而 unitary 演化保存总概率。",
+        intuition:
+          "Hermitian 算符给可能测量值；态在测量前提供这些结果的概率，而 unitary 演化保存总概率。",
         explanation: [
           "observable Â Hermitian，eigenvalues 实数。纯态 expectation ⟨A⟩=⟨ψ|Â|ψ⟩。",
           "在 Â 的本征基中，测得 an 的概率是 |⟨an|ψ⟩|²。",
@@ -2976,10 +3985,19 @@ export const modules: StudyModule[] = [
         ],
         formula: "iℏ∂t|ψ⟩=H|ψ⟩;  |ψ(t)⟩=e^{-iHt/ℏ}|ψ(0)⟩",
         example: {
-          question: "energy eigenstate 随时间怎样变？其 energy measurement probability 是否变？",
-          solution: ["只获得 phase e^{-iEnt/ℏ}", "绝对值平方不变", "所以仍以概率 1 测得 En"],
+          question:
+            "energy eigenstate 随时间怎样变？其 energy measurement probability 是否变？",
+          solution: [
+            "只获得 phase e^{-iEnt/ℏ}",
+            "绝对值平方不变",
+            "所以仍以概率 1 测得 En",
+          ],
         },
-        pitfalls: ["Schrödinger 左侧写 −iℏ", "amplitude 与 probability 混", "unitary 当成 Hermitian"],
+        pitfalls: [
+          "Schrödinger 左侧写 −iℏ",
+          "amplitude 与 probability 混",
+          "unitary 当成 Hermitian",
+        ],
         check: {
           question: "为什么 global phase 不影响测量概率？",
           answer: "所有 amplitude 同乘 e^{iφ}，取绝对值平方后相位消失。",
@@ -2989,7 +4007,8 @@ export const modules: StudyModule[] = [
         title: "density matrix 同时装下量子与经典不确定性",
         label: "核心对象",
         core: true,
-        intuition: "如果系统有概率 pα 处于不同纯态，就把每个投影 |ψα⟩⟨ψα| 按概率相加。",
+        intuition:
+          "如果系统有概率 pα 处于不同纯态，就把每个投影 |ψα⟩⟨ψα| 按概率相加。",
         explanation: [
           "ρ=Σαpα|ψα⟩⟨ψα|。pure state 特例 ρ=|ψ⟩⟨ψ|。",
           "expectation ⟨A⟩=Tr(ρA)，在任何基都相同。",
@@ -2997,12 +4016,21 @@ export const modules: StudyModule[] = [
           "purity Trρ²：纯态等于 1；混态小于 1。课件写“ρ²=Σpα²”不严谨，应是正交混合下 Trρ²=Σpα²。",
         ],
         formula: "ρ=Σαpα|ψα⟩⟨ψα|;  ⟨A⟩=Tr(ρA);  purity=Trρ²",
-        steps: ["写 ensemble 与概率", "组成 projectors", "检查 trace/Hermitian/positivity", "用 trace 求 observable"],
+        steps: [
+          "写 ensemble 与概率",
+          "组成 projectors",
+          "检查 trace/Hermitian/positivity",
+          "用 trace 求 observable",
+        ],
         example: {
           question: "两能级完全混态 ρ=I/2 的 purity 是多少？",
           solution: ["ρ²=I/4", "Tr(I)=2", "Trρ²=2/4=1/2<1，所以是 mixed"],
         },
-        pitfalls: ["ρ 的矩阵元素直接都当概率", "ρ² 与 Trρ² 混", "非正交 mixture 直接写 purity=Σp²"],
+        pitfalls: [
+          "ρ 的矩阵元素直接都当概率",
+          "ρ² 与 Trρ² 混",
+          "非正交 mixture 直接写 purity=Σp²",
+        ],
         check: {
           question: "pure state density matrix 满足什么幂等关系？",
           answer: "ρ²=ρ，因此 Trρ²=Trρ=1。",
@@ -3012,7 +4040,8 @@ export const modules: StudyModule[] = [
         title: "quantum Liouville 与平衡",
         label: "经典对应",
         core: true,
-        intuition: "经典用 Poisson bracket 推概率密度，量子用 commutator 推 density operator。",
+        intuition:
+          "经典用 Poisson bracket 推概率密度，量子用 commutator 推 density operator。",
         explanation: [
           "Liouville–von Neumann equation：iℏ∂tρ=[H,ρ]。",
           "equilibrium 要 ∂tρ=0，因此 [H,ρ]=0。",
@@ -3022,19 +4051,30 @@ export const modules: StudyModule[] = [
         formula: "iℏ∂tρ=[H,ρ];  equilibrium: [H,ρ]=0",
         example: {
           question: "ρ=e^{-βH}/Z 是否 equilibrium？",
-          solution: ["ρ 是 H 的函数", "任何 H 的函数与 H 对易", "所以 commutator 为零"],
+          solution: [
+            "ρ 是 H 的函数",
+            "任何 H 的函数与 H 对易",
+            "所以 commutator 为零",
+          ],
         },
-        pitfalls: ["commutator 顺序/符号错", "平衡时任意 off-diagonal 都可以", "ρ 与 H 对易就自动确定温度"],
+        pitfalls: [
+          "commutator 顺序/符号错",
+          "平衡时任意 off-diagonal 都可以",
+          "ρ 与 H 对易就自动确定温度",
+        ],
         check: {
-          question: "经典 Poisson bracket 与量子 commutator 在这里扮演什么相似角色？",
-          answer: "都描述 observable/probability object 在 Hamiltonian 下的演化，并给出平衡 stationarity 条件。",
+          question:
+            "经典 Poisson bracket 与量子 commutator 在这里扮演什么相似角色？",
+          answer:
+            "都描述 observable/probability object 在 Hamiltonian 下的演化，并给出平衡 stationarity 条件。",
         },
       },
       {
         title: "三种量子系综只是把概率变成算符",
         label: "operator 版本",
         core: true,
-        intuition: "经典系综逻辑不变；量子中用 energy projectors 与 trace 归一化。",
+        intuition:
+          "经典系综逻辑不变；量子中用 energy projectors 与 trace 归一化。",
         explanation: [
           "microcanonical：ρmc=P_E/TrP_E，对指定能量壳子空间均匀混合。",
           "canonical：ρc=e^{-βH}/Z，Z=Tr e^{-βH}。",
@@ -3043,12 +4083,18 @@ export const modules: StudyModule[] = [
         ],
         formula: "ρc=e^{-βH}/Tr(e^{-βH});  ρgc=e^{-β(H−μN)}/Tr(e^{-β(H−μN)})",
         example: {
-          question: "canonical density matrix 在 energy basis 的第 n 个对角元是什么？",
+          question:
+            "canonical density matrix 在 energy basis 的第 n 个对角元是什么？",
           solution: ["⟨n|ρ|n⟩=e^{-βEn}/Z", "就是 Boltzmann probability pn"],
         },
-        pitfalls: ["Z=Trρ（ρ 已归一化时是 1）", "grand exponent 漏 μN", "P_E projector 与 pure state projector 混"],
+        pitfalls: [
+          "Z=Trρ（ρ 已归一化时是 1）",
+          "grand exponent 漏 μN",
+          "P_E projector 与 pure state projector 混",
+        ],
         check: {
-          question: "若 energy level 有 g 重简并，canonical 中该能级总概率是什么？",
+          question:
+            "若 energy level 有 g 重简并，canonical 中该能级总概率是什么？",
           answer: "g e^{-βε}/Z；每个简并微观态各有 e^{-βε}/Z。",
         },
       },
@@ -3056,7 +4102,8 @@ export const modules: StudyModule[] = [
     deepDives: [
       {
         title: "回访作业 2 Q2：现在再做量子谐振子",
-        summary: "这题虽然放在作业 2，但正式教学计划属于量子部分；完成本节 core 后，才是高效回访时点。",
+        summary:
+          "这题虽然放在作业 2，但正式教学计划属于量子部分；完成本节 core 后，才是高效回访时点。",
         paragraphs: [
           "一维量子谐振子的能级为 En=ℏω(n+1/2)。在 energy basis 取 trace，单振子 Z1 是等比级数；N 个独立可区分振子给 ZN=Z1^N。",
           "沿用 Week 5 的同一台导数机器：U=−∂βlnZN，随后 C=(∂U/∂T)。零点能保留在 U 中，但因不随 T 变化而不贡献 C。",
@@ -3067,19 +4114,22 @@ export const modules: StudyModule[] = [
           "Z1=e^{-βℏω/2}/(1−e^{-βℏω}),  ZN=Z1^N",
           "U/N=ℏω/2+ℏω/(e^{βℏω}−1)",
           "p(n)=(1−e^{-βℏω})e^{-nβℏω}",
+          String.raw`$$\frac{C}{N}=k_{\mathrm B}(\beta\hbar\omega)^2\frac{e^{\beta\hbar\omega}}{(e^{\beta\hbar\omega}-1)^2}$$`,
         ],
       },
       {
         title: "作业 3 Q1 主线：先懂结构，再攻积分",
-        summary: "这题数学体积最大，优先掌握 7 个逻辑节点。",
+        summary: "这题数学体积最大，优先掌握 8 个逻辑节点。",
         paragraphs: [
-          "① 插入 energy completeness；② 用 En 与 φn(x) 写 thermal kernel；③ Hermite 的 Rodrigues derivative 经 Fourier 变为 (ik)^n；④ 对 n 用指数级数求和；⑤ 做 2×2 Gaussian；⑥ 取 diagonal trace 得 Z；⑦ 再求 ⟨x²⟩ 与 U。",
+          "① 插入 energy completeness；② 用 En 与 φn(x) 写 thermal kernel；③ Hermite 的 Rodrigues derivative 经 Fourier 变为 (ik)^n；④ 对 n 用指数级数求和；⑤ 做 2×2 Gaussian；⑥ 把零点能、本征函数与积分 prefactor 重新装回 K；⑦ 取 diagonal trace 得 Z；⑧ 再求 ⟨x²⟩ 与 U。",
           "多维 Gaussian 正确公式的 source term 指数是 +½JᵀA⁻¹J。题目印成负号；因 J 含 i，最终空间 Gaussian 仍是负指数。",
           "自检：T→0 时 ⟨x²⟩→ℏ/(2mω)、U→ℏω/2；高温 U→kBT。",
         ],
         formulas: [
           "K(x,x′;β)=Σn e^{-βEn}φn(x)φn*(x′)",
+          String.raw`$$K(x,x';\beta)=\sqrt{\frac{m\omega}{2\pi\hbar\sinh(\beta\hbar\omega)}}\exp\!\left[-\frac{m\omega}{4\hbar}\left((x+x')^2\tanh\frac{\beta\hbar\omega}{2}+(x-x')^2\coth\frac{\beta\hbar\omega}{2}\right)\right]$$`,
           "Z=∫dx K(x,x;β)=1/[2sinh(βℏω/2)]",
+          String.raw`$$\rho(x,x')=\frac{K(x,x';\beta)}{Z},\qquad \langle H\rangle=\frac{\hbar\omega}{2}\coth\!\left(\frac{\beta\hbar\omega}{2}\right)$$`,
           "⟨x²⟩=ℏ/[2mω] coth(βℏω/2)",
         ],
       },
@@ -3111,7 +4161,8 @@ export const modules: StudyModule[] = [
       },
     ],
     gate: {
-      prompt: "闭卷写 density matrix 四性质、purity、trace expectation、quantum Liouville 与三种 ρ。",
+      prompt:
+        "闭卷写 density matrix 四性质、purity、trace expectation、quantum Liouville 与三种 ρ。",
       criteria: [
         "能手算一个 2×2 矩阵的 †、eigenvalues 与 trace",
         "Schrödinger/Liouville 符号正确",
@@ -3132,7 +4183,11 @@ export const modules: StudyModule[] = [
     hoursFull: 10,
     goal: "从交换对称性与占据数表象，推到 Boson/Fermion 的巨配分函数、平均占据与涨落。",
     why: "这是后面 Bose/Fermi 气体共同的发动机，也是作业 3 Q2 最直接的 25 分。",
-    prerequisites: ["quantum-bridge", "grand-canonical", "probability-counting 的 geometric/Bernoulli"],
+    prerequisites: [
+      "quantum-bridge",
+      "grand-canonical",
+      "probability-counting 的 geometric/Bernoulli",
+    ],
     outcomes: [
       "能解释 exchange symmetry 与 Pauli exclusion",
       "能读能级 εi、简并度 gi、占据数 niα",
@@ -3141,13 +4196,19 @@ export const modules: StudyModule[] = [
       "能求平均占据、单态概率与方差",
       "能正确识别 Maxwell–Boltzmann classical limit",
     ],
-    sourceRefs: ["课件 8 slides 1–14, 19", "作业 3 Q2", "David Tong Ch. 3.5–3.6", "MIT OCW L22–23"],
+    sourceRefs: [
+      "课件 8 slides 1–14, 19",
+      "作业 3 Q2",
+      "David Tong Ch. 3.5–3.6",
+      "MIT OCW L22–23",
+    ],
     concepts: [
       {
         title: "exchange symmetry 决定允许的多粒子态",
         label: "Boson vs Fermion",
         core: true,
-        intuition: "全同粒子的标签没有物理意义；交换两粒子后，波函数只能保持或变号。",
+        intuition:
+          "全同粒子的标签没有物理意义；交换两粒子后，波函数只能保持或变号。",
         explanation: [
           "exchange twice 必须回到原态；三维普通粒子 phase 只允许 +1 或 −1。",
           "Boson wavefunction symmetric；Fermion antisymmetric。",
@@ -3157,19 +4218,30 @@ export const modules: StudyModule[] = [
         formula: "P12Ψ=+Ψ (boson);  P12Ψ=−Ψ (fermion)",
         example: {
           question: "为什么两个 Boson 能共享同一态，而两个相同 Fermion 不能？",
-          solution: ["同态交换后空间部分不变", "Boson 的 + 对称允许", "Fermion 要变号却又是同一函数，只能为零"],
+          solution: [
+            "同态交换后空间部分不变",
+            "Boson 的 + 对称允许",
+            "Fermion 要变号却又是同一函数，只能为零",
+          ],
         },
-        pitfalls: ["exchange phase 当普通经典概率", "Pauli exclusion 说成所有 Fermion 不能靠近", "自旋/空间部分对称性未看总波函数"],
+        pitfalls: [
+          "exchange phase 当普通经典概率",
+          "Pauli exclusion 说成所有 Fermion 不能靠近",
+          "自旋/空间部分对称性未看总波函数",
+        ],
         check: {
-          question: "电子是 Boson 还是 Fermion？同一单粒子轨道为何仍可有两个电子？",
-          answer: "电子是 Fermion；若自旋相反，它们占据不同 spin-orbitals，完整单粒子态不同。",
+          question:
+            "电子是 Boson 还是 Fermion？同一单粒子轨道为何仍可有两个电子？",
+          answer:
+            "电子是 Fermion；若自旋相反，它们占据不同 spin-orbitals，完整单粒子态不同。",
         },
       },
       {
         title: "occupation-number representation",
         label: "新坐标",
         core: true,
-        intuition: "不再给粒子贴 1、2、3 标签，而记录每个单粒子态里有几个粒子。",
+        intuition:
+          "不再给粒子贴 1、2、3 标签，而记录每个单粒子态里有几个粒子。",
         explanation: [
           "能级 i 能量 εi、简并 gi；用 substate α=1…gi，occupation niα。",
           "Boson niα=0,1,2,…；Fermion niα=0 或 1。",
@@ -3178,20 +4250,31 @@ export const modules: StudyModule[] = [
         ],
         formula: "N=Σi,α niα;  E=Σi,α εi niα",
         example: {
-          question: "能级 ε 有三重简并 gi=3，Fermion 该能级最多容纳几个同种粒子？",
-          solution: ["每个 substate 最多 1 个", "共有 3 个 substates", "最多 3 个"],
+          question:
+            "能级 ε 有三重简并 gi=3，Fermion 该能级最多容纳几个同种粒子？",
+          solution: [
+            "每个 substate 最多 1 个",
+            "共有 3 个 substates",
+            "最多 3 个",
+          ],
         },
-        pitfalls: ["level occupation ni 与 substate niα 混", "带 gi 的总 occupation 与单态 occupation 混", "有相互作用时仍写 E 简单相加"],
+        pitfalls: [
+          "level occupation ni 与 substate niα 混",
+          "带 gi 的总 occupation 与单态 occupation 混",
+          "有相互作用时仍写 E 简单相加",
+        ],
         check: {
           question: "Boson 的一个 substate 最大 occupation 是多少？",
-          answer: "没有 Pauli 上限，可为任意非负整数（在给定总 N 下当然不超过 N）。",
+          answer:
+            "没有 Pauli 上限，可为任意非负整数（在给定总 N 下当然不超过 N）。",
         },
       },
       {
         title: "microcanonical counting 与最可能分布",
         label: "组合路线",
         core: true,
-        intuition: "给定每个能级的粒子数 ni，数这些粒子怎样放进 gi 个 substate，再在 N/E 约束下找 W 最大。",
+        intuition:
+          "给定每个能级的粒子数 ni，数这些粒子怎样放进 gi 个 substate，再在 N/E 约束下找 W 最大。",
         explanation: [
           "Boson level multiplicity WB,i=(ni+gi−1)!/[ni!(gi−1)!]。",
           "Fermion WF,i=gi!/[ni!(gi−ni)!]。",
@@ -3199,13 +4282,29 @@ export const modules: StudyModule[] = [
           "Stirling 给 n*i=gi/[e^{α+βεi}∓1]，识别 α=−βμ。",
         ],
         formula: "n̄i=gi/[e^{β(εi−μ)}∓1]",
-        formulaNote: "减号 Boson、加号 Fermion；这里带 gi 是整个简并能级总 occupation。",
-        steps: ["先写 Wi", "乘成 W", "写 N/E 约束", "Stirling+Lagrange", "识别 β,μ"],
+        formulaNote:
+          "减号 Boson、加号 Fermion；这里带 gi 是整个简并能级总 occupation。",
+        steps: [
+          "先写 Wi",
+          "乘成 W",
+          "写 N/E 约束",
+          "Stirling+Lagrange",
+          "识别 β,μ",
+        ],
         example: {
           question: "如何不用死记 ±？",
-          solution: ["Boson 可聚集，occupation 应比 classical 更大", "分母用 −1 更小", "Fermion 分母 +1，occupation 被压低且≤gi"],
+          solution: [
+            "Boson 可聚集，occupation 应比 classical 更大",
+            "分母用 −1 更小",
+            "Fermion 分母 +1，occupation 被压低且≤gi",
+          ],
         },
-        pitfalls: ["± 记反", "gi 漏掉", "most probable 与 exact average 无条件混", "Stirling 用在很小 ni"],
+        pitfalls: [
+          "± 记反",
+          "gi 漏掉",
+          "most probable 与 exact average 无条件混",
+          "Stirling 用在很小 ni",
+        ],
         check: {
           question: "Fermion 总 occupation n̄i 为什么不会超过 gi？",
           answer: "分母 e^{β(ε−μ)}+1≥1，因此 n̄i≤gi；T→0 深在 μ 下时趋 gi。",
@@ -3215,7 +4314,8 @@ export const modules: StudyModule[] = [
         title: "grand canonical factorization：更快的主路线",
         label: "作业 3 Q2",
         core: true,
-        intuition: "去掉固定总 N 的约束后，每个 substate 可以独立求和；整个 Ξ 是单态因子的乘积。",
+        intuition:
+          "去掉固定总 N 的约束后，每个 substate 可以独立求和；整个 Ξ 是单态因子的乘积。",
         explanation: [
           "令 q=e^{-β(ε−μ)}。Boson 单态 sum Σn=0∞qⁿ=1/(1−q)。",
           "Fermion 单态 sum 1+q，因为 n 仅 0/1。",
@@ -3223,22 +4323,39 @@ export const modules: StudyModule[] = [
           "对 εi 或 μ 求导得到 occupation；比组合路线更直接且给 exact ensemble average。",
         ],
         formula: "ΞB=Πi[1−ze^{-βεi}]^{-gi};  ΞF=Πi[1+ze^{-βεi}]^{gi}",
-        steps: ["写 exponent Σ(ε−μ)n", "把 sum 对每个 substate factorize", "做 geometric/two-term sum", "乘简并次数", "取 ln 与导数"],
+        steps: [
+          "写 exponent Σ(ε−μ)n",
+          "把 sum 对每个 substate factorize",
+          "做 geometric/two-term sum",
+          "乘简并次数",
+          "取 ln 与导数",
+        ],
         example: {
-          question: "一个 Fermion substate 的 mean occupation 如何由 Ξ=1+q 求？",
-          solution: ["n̄=(1/β)∂μln(1+q)", "∂μq=βq", "n̄=q/(1+q)=1/[e^{β(ε−μ)}+1]"],
+          question:
+            "一个 Fermion substate 的 mean occupation 如何由 Ξ=1+q 求？",
+          solution: [
+            "n̄=(1/β)∂μln(1+q)",
+            "∂μq=βq",
+            "n̄=q/(1+q)=1/[e^{β(ε−μ)}+1]",
+          ],
         },
-        pitfalls: ["Boson convergence μ≤ground energy 不检查", "gi 次方漏", "对 ε 求导符号漏负号"],
+        pitfalls: [
+          "Boson convergence μ≤ground energy 不检查",
+          "gi 次方漏",
+          "对 ε 求导符号漏负号",
+        ],
         check: {
           question: "固定 N canonical 为何难 factorize？",
-          answer: "occupation numbers 受 Σni=N 的全局约束耦合；grand canonical 用 μ 放松约束后各 mode 独立。",
+          answer:
+            "occupation numbers 受 Σni=N 的全局约束耦合；grand canonical 用 μ 放松约束后各 mode 独立。",
         },
       },
       {
         title: "单态概率、涨落与 classical limit",
         label: "分布细节",
         core: true,
-        intuition: "Boson 单态是 geometric、Fermion 是 Bernoulli、稀薄 classical 是 Poisson；它们的方差立刻暴露统计差别。",
+        intuition:
+          "Boson 单态是 geometric、Fermion 是 Bernoulli、稀薄 classical 是 Poisson；它们的方差立刻暴露统计差别。",
         explanation: [
           "Boson P(n)=(1−q)qⁿ，n=0,1,…；Var n=n̄(1+n̄)，有 bunching。",
           "Fermion P(n)=qⁿ/(1+q)，n=0,1；Var n=n̄(1−n̄)，Pauli 抑制涨落。",
@@ -3248,16 +4365,40 @@ export const modules: StudyModule[] = [
         formula: "n̄≈e^{-β(ε−μ)} when nλT³≪1",
         example: {
           question: "n̄=0.1 时 Boson/Fermion 方差分别多少（单 substate）？",
-          solution: ["Boson 0.1×1.1=0.11", "Fermion 0.1×0.9=0.09", "classical Poisson 约 0.1，夹在两者之间"],
+          solution: [
+            "Boson 0.1×1.1=0.11",
+            "Fermion 0.1×0.9=0.09",
+            "classical Poisson 约 0.1，夹在两者之间",
+          ],
         },
-        pitfalls: ["classical limit 写 β→∞（其实低温更量子）", "带 gi 的 level variance 与单 substate 混", "Boson μ 超过 ground energy导致发散"],
+        pitfalls: [
+          "classical limit 写 β→∞（其实低温更量子）",
+          "带 gi 的 level variance 与单 substate 混",
+          "Boson μ 超过 ground energy导致发散",
+        ],
         check: {
-          question: "Boson/Fermion distribution 在什么物理条件下都近似 Maxwell–Boltzmann？",
-          answer: "高温、低密度、phase-space density nλT³≪1，使平均 occupation 很小。",
+          question:
+            "Boson/Fermion distribution 在什么物理条件下都近似 Maxwell–Boltzmann？",
+          answer:
+            "高温、低密度、phase-space density nλT³≪1，使平均 occupation 很小。",
         },
       },
     ],
     deepDives: [
+      {
+        title: "作业 3 Q2：单态概率与涨落完整链",
+        summary:
+          "从单 mode grand factor 出发，不跳步地得到概率、平均占据和 Bose/Fermi 涨落。",
+        paragraphs: [
+          "先令 q=e^{-β(ε−μ)}。Boson 可占 n=0,1,2,…，归一化后是 geometric distribution；Fermion 只可占 0/1，是 Bernoulli distribution。",
+          "对每个能级 εi 求 −β^{-1}∂_{εi}lnΞ，可直接得到整个 gi 重简并能级的 exact ensemble average；二阶导数则给 occupation fluctuation。",
+          "这条路线正好对应作业 3 Q2 的指定步骤，也清楚地区分单个 substate 与带 gi 的整个 level。",
+        ],
+        formulas: [
+          String.raw`$$P_B(n)=(1-q)q^n,\quad \operatorname{Var}_B(n)=\bar n(1+\bar n);\qquad P_F(n)=\frac{q^n}{1+q},\quad \operatorname{Var}_F(n)=\bar n(1-\bar n)$$`,
+          String.raw`$$\bar n_i=-\frac{1}{\beta}\frac{\partial\ln\Xi}{\partial\varepsilon_i}=\frac{g_i}{e^{\beta(\varepsilon_i-\mu)}\mp1}$$`,
+        ],
+      },
       {
         title: "balls-in-boxes 三种统计一眼图",
         summary: "先问粒子是否可区分，再问盒子是否允许多占据。",
@@ -3280,7 +4421,8 @@ export const modules: StudyModule[] = [
       {
         title: "单 mode partition",
         instruction: "分别写一个 Boson 与 Fermion substate 的 Ξ、n̄、Var。",
-        answer: "B: Ξ=1/(1−q), n̄=q/(1−q), Var=n̄(1+n̄)。F: Ξ=1+q, n̄=q/(1+q), Var=n̄(1−n̄)。",
+        answer:
+          "B: Ξ=1/(1−q), n̄=q/(1−q), Var=n̄(1+n̄)。F: Ξ=1+q, n̄=q/(1+q), Var=n̄(1−n̄)。",
       },
       {
         title: "简并度",
@@ -3294,8 +4436,14 @@ export const modules: StudyModule[] = [
       },
     ],
     gate: {
-      prompt: "闭卷从单 substate sum 推 ΞB/ΞF、n̄、P(n)、Var，并解释 classical limit。",
-      criteria: ["± 号零错误", "gi 与 substate 区分", "μ convergence 说明", "不把 β→∞ 当 classical limit"],
+      prompt:
+        "闭卷从单 substate sum 推 ΞB/ΞF、n̄、P(n)、Var，并解释 classical limit。",
+      criteria: [
+        "± 号零错误",
+        "gi 与 substate 区分",
+        "μ convergence 说明",
+        "不把 β→∞ 当 classical limit",
+      ],
     },
   },
   {
@@ -3309,7 +4457,11 @@ export const modules: StudyModule[] = [
     hoursFull: 12,
     goal: "掌握 continuum/DOS → Bose functions → thermodynamics → BEC 的统一路线，并能处理 photon/phonon 的线性色散。",
     why: "这一周公式多，但它们都来自同一台机器：色散决定 DOS，DOS 与占据数积分决定热力学。",
-    prerequisites: ["quantum-statistics", "math-toolbox 的 Gamma/积分/无量纲化", "canonical 的 derivative machine"],
+    prerequisites: [
+      "quantum-statistics",
+      "math-toolbox 的 Gamma/积分/无量纲化",
+      "canonical 的 derivative machine",
+    ],
     outcomes: [
       "能做 Σk→积分和 3D DOS",
       "能写 thermal wavelength、gν(z)、P/N/U",
@@ -3318,13 +4470,19 @@ export const modules: StudyModule[] = [
       "能解释 photon μ=0、Planck/Stefan–Boltzmann",
       "能解释 Debye cutoff 与 T³ heat capacity",
     ],
-    sourceRefs: ["课件 9 slides 1–18", "作业 3 Q3", "David Tong Ch. 3.1–3.5", "MIT OCW L20, L25"],
+    sourceRefs: [
+      "课件 9 slides 1–18",
+      "作业 3 Q3",
+      "David Tong Ch. 3.1–3.5",
+      "MIT OCW L20, L25",
+    ],
     concepts: [
       {
         title: "continuum limit 与 DOS 是所有气体题的入口",
         label: "k-space counting",
         core: true,
-        intuition: "大盒子里 k 点非常密，把逐态求和换成球壳积分；色散 ε(k) 决定每个能量壳有多少状态。",
+        intuition:
+          "大盒子里 k 点非常密，把逐态求和换成球壳积分；色散 ε(k) 决定每个能量壳有多少状态。",
         explanation: [
           "周期边界三维：Σk→V/(2π)³∫d³k=V/(2π)³4π∫k²dk。",
           "非相对论 ε=ℏ²k²/(2m)，所以 D(ε)∝V ε^{1/2}。",
@@ -3332,12 +4490,23 @@ export const modules: StudyModule[] = [
           "任何 spin/polarization degeneracy gs 要乘上；BEC ground state k=0 必须单列，不能被 continuum integral 淹没。",
         ],
         formula: "Σk → V/(2π)³ ∫d³k;  D(ε)=gs V/(2π)³·4πk²·dk/dε",
-        steps: ["写 boundary state density", "转 spherical k integral", "代 dispersion 求 dk/dε", "乘 degeneracy", "检查 ground state"],
+        steps: [
+          "写 boundary state density",
+          "转 spherical k integral",
+          "代 dispersion 求 dk/dε",
+          "乘 degeneracy",
+          "检查 ground state",
+        ],
         example: {
           question: "为何 3D quadratic dispersion 的 DOS 随 √ε？",
           solution: ["k² shell factor", "ε∝k² ⇒ dk/dε∝1/k", "相乘 k²·1/k∝k∝√ε"],
         },
-        pitfalls: ["(2π)³ 漏", "用 p 与 k 时 ℏ 混", "spin/polarization 漏", "ground state 直接积分"],
+        pitfalls: [
+          "(2π)³ 漏",
+          "用 p 与 k 时 ℏ 混",
+          "spin/polarization 漏",
+          "ground state 直接积分",
+        ],
         check: {
           question: "2D quadratic dispersion 的 DOS 对 ε 怎样？",
           answer: "常数，因为 k shell 因子 k 与 dk/dε∝1/k 抵消。",
@@ -3347,7 +4516,8 @@ export const modules: StudyModule[] = [
         title: "三维非相对论 Bose 气体的 thermodynamic machine",
         label: "Bose functions",
         core: true,
-        intuition: "把 occupation 积分无量纲化后，所有温度/化学势依赖被压进 λT 与 gν(z)。",
+        intuition:
+          "把 occupation 积分无量纲化后，所有温度/化学势依赖被压进 λT 与 gν(z)。",
         explanation: [
           "λT=h/√(2πmkBT)，z=e^{βμ}，ground energy 取 0 时 0<z≤1。",
           "excited density ne=λT^{-3}g_{3/2}(z)，pressure P=kBT λT^{-3}g_{5/2}(z)。",
@@ -3357,19 +4527,30 @@ export const modules: StudyModule[] = [
         formula: "n=n0+λT^{-3}g3/2(z);  P=kBTλT^{-3}g5/2(z);  U=3PV/2",
         example: {
           question: "高温低密度时怎样恢复 ideal gas？",
-          solution: ["z≪1 时 gν(z)≈z", "n≈z/λ³、P≈kBT z/λ³", "消去 z 得 P≈nkBT"],
+          solution: [
+            "z≪1 时 gν(z)≈z",
+            "n≈z/λ³、P≈kBT z/λ³",
+            "消去 z 得 P≈nkBT",
+          ],
         },
-        pitfalls: ["g3/2 与 g5/2 对换", "λT 写反", "μ>0 导致 z>1", "Γ(ν) 误写 (ν−1)! 对半整数照用"],
+        pitfalls: [
+          "g3/2 与 g5/2 对换",
+          "λT 写反",
+          "μ>0 导致 z>1",
+          "Γ(ν) 误写 (ν−1)! 对半整数照用",
+        ],
         check: {
           question: "为什么 Boson 的 μ（ground energy 设 0）不能大于 0？",
-          answer: "否则 ground-state factor 1−ze^{-βε0}=1−z 会非正/发散，occupation 不物理；需 z≤1。",
+          answer:
+            "否则 ground-state factor 1−ze^{-βε0}=1−z 会非正/发散，occupation 不物理；需 z≤1。",
         },
       },
       {
         title: "BEC：不是粒子突然没有能量，而是激发态装满",
         label: "相变核心",
         core: true,
-        intuition: "温度降低时 λT 变大；当激发态能容纳的最大密度有限，多余粒子只能宏观占据 ground state。",
+        intuition:
+          "温度降低时 λT 变大；当激发态能容纳的最大密度有限，多余粒子只能宏观占据 ground state。",
         explanation: [
           "z 增大到最大 1 时，激发密度上限 ne,max=ζ(3/2)/λT³。",
           "固定总密度 n；定义 Tc 使 n=ζ(3/2)/λTc³。",
@@ -3377,22 +4558,35 @@ export const modules: StudyModule[] = [
           "理想均匀 Bose gas below Tc 的 P 只依赖 T、不依赖总密度，compressibility 异常大；真实相互作用会修正。",
         ],
         formula: "Tc=[2πℏ²/(mkB)] [n/ζ(3/2)]^{2/3};  N0/N=1−(T/Tc)^{3/2}",
-        steps: ["单列 N0", "令 z→1 找 excited maximum", "固定 N 解 Tc", "below Tc 固定 z=1", "用 N−Ne 得 condensate"],
+        steps: [
+          "单列 N0",
+          "令 z→1 找 excited maximum",
+          "固定 N 解 Tc",
+          "below Tc 固定 z=1",
+          "用 N−Ne 得 condensate",
+        ],
         example: {
           question: "T=Tc/4 时理想三维 Bose 气体 condensate fraction 是多少？",
           solution: ["(T/Tc)^{3/2}=(1/4)^{3/2}=1/8", "N0/N=1−1/8=7/8"],
         },
-        pitfalls: ["把 N0 也放进 continuum integral", "认为 BEC 等于所有粒子能量为零", "任意维数/色散都套 ζ(3/2)", "BEC 与 superfluid 完全等同"],
+        pitfalls: [
+          "把 N0 也放进 continuum integral",
+          "认为 BEC 等于所有粒子能量为零",
+          "任意维数/色散都套 ζ(3/2)",
+          "BEC 与 superfluid 完全等同",
+        ],
         check: {
           question: "BEC 发生的三个条件如何概括？",
-          answer: "粒子数有效守恒；激发态在 μ→ε0 时容量有限；多余粒子可宏观占据 ground state。",
+          answer:
+            "粒子数有效守恒；激发态在 μ→ε0 时容量有限；多余粒子可宏观占据 ground state。",
         },
       },
       {
         title: "热容与 statistical attraction",
         label: "相变信号",
         core: true,
-        intuition: "below Tc，只有 excited particles 携带热能；它们数量随 T^{3/2} 增长，因此 U 与 CV 有特定幂律。",
+        intuition:
+          "below Tc，只有 excited particles 携带热能；它们数量随 T^{3/2} 增长，因此 U 与 CV 有特定幂律。",
         explanation: [
           "均匀 quadratic Bose gas below Tc：P∝T^{5/2}、U∝T^{5/2}、CV∝T^{3/2}。",
           "Tc 处 heat capacity 有 cusp（理想三维 Bose 气体的具体连续性/导数结构由函数决定）。",
@@ -3402,9 +4596,17 @@ export const modules: StudyModule[] = [
         formula: "T<Tc: CV ∝ T^{3/2} (3D quadratic ideal Bose gas)",
         example: {
           question: "T→0 时理想 Bose gas CV 为什么趋 0？",
-          solution: ["绝大多数粒子在 ground state", "可热激发粒子密度随 T^{3/2} 消失", "U 对 T 的变化趋零"],
+          solution: [
+            "绝大多数粒子在 ground state",
+            "可热激发粒子密度随 T^{3/2} 消失",
+            "U 对 T 的变化趋零",
+          ],
         },
-        pitfalls: ["statistical attraction 当真实相互作用", "⁴He 的 2.17 K 直接用 ideal formula", "不同色散的 CV 幂律混"],
+        pitfalls: [
+          "statistical attraction 当真实相互作用",
+          "⁴He 的 2.17 K 直接用 ideal formula",
+          "不同色散的 CV 幂律混",
+        ],
         check: {
           question: "3D linear-dispersion boson below Tc 的 CV 幂律会怎样？",
           answer: "DOS∝ε²，U∝T⁴，所以 CV∝T³；这正是作业 3 Q3。",
@@ -3423,10 +4625,19 @@ export const modules: StudyModule[] = [
         ],
         formula: "u(ω)=ℏω³/[π²c³(e^{βℏω}−1)];  U/V=aT⁴;  P=U/(3V)",
         example: {
-          question: "为什么 photon grand partition 可用 μ=0 而不是固定 N 解 μ？",
-          solution: ["光子可被腔壁产生/吸收", "平衡态不约束总光子数", "对应 Lagrange multiplier μ=0"],
+          question:
+            "为什么 photon grand partition 可用 μ=0 而不是固定 N 解 μ？",
+          solution: [
+            "光子可被腔壁产生/吸收",
+            "平衡态不约束总光子数",
+            "对应 Lagrange multiplier μ=0",
+          ],
         },
-        pitfalls: ["把 N 叫 Lagrange multiplier", "漏 2 polarization", "Stefan–Boltzmann energy density 与 radiated flux 常数混"],
+        pitfalls: [
+          "把 N 叫 Lagrange multiplier",
+          "漏 2 polarization",
+          "Stefan–Boltzmann energy density 与 radiated flux 常数混",
+        ],
         check: {
           question: "提高黑体温度，total energy density 怎样变？",
           answer: "按 T⁴ 增长；谱峰也向高频移动（Wien displacement）。",
@@ -3436,7 +4647,8 @@ export const modules: StudyModule[] = [
         title: "phonon 与 Debye T³",
         label: "晶格振动",
         core: true,
-        intuition: "低温只激发长波 acoustic modes，它们像三种线性色散的 Boson；态密度给 T³ 热容。",
+        intuition:
+          "低温只激发长波 acoustic modes，它们像三种线性色散的 Boson；态密度给 T³ 热容。",
         explanation: [
           "phonon 不是守恒粒子，μ=0；低 k acoustic dispersion ω≈ck。",
           "三条 acoustic polarization/branch 给 DOS∝ω²。",
@@ -3446,12 +4658,21 @@ export const modules: StudyModule[] = [
         formula: "low T Debye: CV=(12π⁴/5)NkB(T/TD)³;  high T: CV→3NkB",
         example: {
           question: "为什么 real phonon dispersion 很复杂，低温仍常有 T³？",
-          solution: ["低温只占据低能长波 modes", "它们在 Γ 点附近普遍近线性", "高能 optical/非线性细节被冻结"],
+          solution: [
+            "低温只占据低能长波 modes",
+            "它们在 Γ 点附近普遍近线性",
+            "高能 optical/非线性细节被冻结",
+          ],
         },
-        pitfalls: ["ωD 当真实最高频率精确细节", "漏 3 acoustic branches", "任何温度都用 T³"],
+        pitfalls: [
+          "ωD 当真实最高频率精确细节",
+          "漏 3 acoustic branches",
+          "任何温度都用 T³",
+        ],
         check: {
           question: "金属低温总热容为何常写 γT+δT³？",
-          answer: "Fermi electron contribution ∝T，加上 Debye phonon contribution ∝T³。",
+          answer:
+            "Fermi electron contribution ∝T，加上 Debye phonon contribution ∝T³。",
         },
       },
     ],
@@ -3464,6 +4685,9 @@ export const modules: StudyModule[] = [
           "得到 P∝T⁴g4(z)、U=3PV、nexc∝T³g3(z)，Tc∝n^{1/3}。",
           "below Tc，CV∝T³；临界低温侧 CV/(NkB)=12ζ(4)/ζ(3)≈10.805。原答案误写 3；3 是 classical linear-dispersion gas 的每粒子热容。",
         ],
+        formulas: [
+          "$$\\frac{D(\\varepsilon)}{V}=\\frac{g_d\\varepsilon^2}{2\\pi^2(\\hbar c)^3};\\quad n_{\\mathrm{exc}}\\propto T^3g_3(z);\\quad P\\propto T^4g_4(z);\\quad U=3PV;\\quad T_c\\propto n^{1/3};\\quad \\frac{C_V(T_c^-)}{Nk_{\\mathrm B}}=\\frac{12\\zeta(4)}{\\zeta(3)}$$",
+        ],
       },
       {
         title: "harmonic trap BEC",
@@ -3472,6 +4696,9 @@ export const modules: StudyModule[] = [
           "三维 harmonic trap 的 DOS∝ε²，Nexc∝T³g3(z)，所以 condensate fraction 约 1−(T/Tc)³。",
           "这与均匀盒中 quadratic gas 的 3/2 次幂不同；几何/势阱改变 DOS。",
         ],
+        formulas: [
+          "$$N_{\\mathrm{exc}}=\\left(\\frac{k_{\\mathrm B}T}{\\hbar\\bar\\omega}\\right)^3g_3(z);\\quad T_c=\\frac{\\hbar\\bar\\omega}{k_{\\mathrm B}}\\left[\\frac{N}{\\zeta(3)}\\right]^{1/3};\\quad \\frac{N_0}{N}=1-\\left(\\frac{T}{T_c}\\right)^3$$",
+        ],
       },
       {
         title: "Bose function 防混表",
@@ -3479,6 +4706,9 @@ export const modules: StudyModule[] = [
         paragraphs: [
           "若 D(ε)∝ε^{s−1}，number integral 通常给 g_s(z)，energy/pressure 再多一个 ε 给 g_{s+1}(z)。",
           "始终从 integral 定义出发；不同书对 gν、Liν 可能采用不同 prefactor。",
+        ],
+        formulas: [
+          "$$D(\\varepsilon)=C\\varepsilon^{s-1}\\Longrightarrow N_{\\mathrm{exc}}=C\\Gamma(s)(k_{\\mathrm B}T)^sg_s(z);\\quad U=C\\Gamma(s+1)(k_{\\mathrm B}T)^{s+1}g_{s+1}(z)$$",
         ],
       },
     ],
@@ -3500,8 +4730,14 @@ export const modules: StudyModule[] = [
       },
     ],
     gate: {
-      prompt: "从 Σk→DOS 开始，闭卷推一次 n/P/U 的函数结构，再完整讲 BEC 三条件和 photon/phonon 差别。",
-      criteria: ["ground state 单列", "g3/2/g5/2 不混", "Tc 与 condensate exponent 正确", "作业 3 Q3 的 10.805 勘误知道"],
+      prompt:
+        "从 Σk→DOS 开始，闭卷推一次 n/P/U 的函数结构，再完整讲 BEC 三条件和 photon/phonon 差别。",
+      criteria: [
+        "ground state 单列",
+        "g3/2/g5/2 不混",
+        "Tc 与 condensate exponent 正确",
+        "作业 3 Q3 的 10.805 勘误知道",
+      ],
     },
   },
   {
@@ -3537,7 +4773,8 @@ export const modules: StudyModule[] = [
         title: "T=0 的填海规则",
         label: "先建立图像",
         core: true,
-        intuition: "Fermion 像不能共用座位的观众：从最低能座位开始依次坐满，最后一排就是 Fermi surface。",
+        intuition:
+          "Fermion 像不能共用座位的观众：从最低能座位开始依次坐满，最后一排就是 Fermi surface。",
         explanation: [
           "Pauli 原理限制每个单粒子量子态最多放一个同种 Fermion；若把自旋算进简并度 gs，则同一空间波矢可有 gs 个粒子。",
           "T=0 时能量最小的多粒子态不是所有粒子都在基态，而是把 ε≤εF 的态全部填满。",
@@ -3545,7 +4782,8 @@ export const modules: StudyModule[] = [
           "最高被占据的能量 εF 定义 Fermi energy；TF=εF/kB 只是把该能量换成温度尺度，并不表示气体真的处于 TF。",
         ],
         formula: "n̄(ε,T=0)=Θ(εF−ε)",
-        formulaNote: "阶跃的高度若 DOS 已包含自旋简并，就仍是每单粒子态 1；不要把 gs 重复乘两次。",
+        formulaNote:
+          "阶跃的高度若 DOS 已包含自旋简并，就仍是每单粒子态 1；不要把 gs 重复乘两次。",
         steps: [
           "先声明系统维数、边界条件和自旋简并 gs",
           "在 k 空间数 |k|≤kF 内的状态",
@@ -3568,14 +4806,16 @@ export const modules: StudyModule[] = [
         ],
         check: {
           question: "T=0 时为何仍有非零压强，明明没有热运动？",
-          answer: "Pauli 原理迫使粒子占据非零动量态；压缩体积会增大 k 态间隔和 kF，从而提高总能量，产生简并压强。",
+          answer:
+            "Pauli 原理迫使粒子占据非零动量态；压缩体积会增大 k 态间隔和 kF，从而提高总能量，产生简并压强。",
         },
       },
       {
         title: "三维 Fermi 尺度与基态热力学",
         label: "必会推导",
         core: true,
-        intuition: "所有宏观量都由“填到多高”决定；密度越大，必须填到更大的 kF 和 εF。",
+        intuition:
+          "所有宏观量都由“填到多高”决定；密度越大，必须填到更大的 kF 和 εF。",
         explanation: [
           "一般自旋简并 gs 下，n=gs kF³/(6π²)，所以 kF=(6π²n/gs)^{1/3}。",
           "三维非相对论 DOS 与 √ε 成正比。把能量从 0 积到 εF 得 N，再多乘一个 ε 积分得到 E0。",
@@ -3599,25 +4839,33 @@ export const modules: StudyModule[] = [
             "P0∝n^{5/3}，变 8^{5/3}=32 倍",
           ],
         },
-        pitfalls: ["用体积球面 4πk² 而忘记 dk", "把 h 与 ℏ 的相空间格点混用", "没有写 gs 的定义"],
+        pitfalls: [
+          "用体积球面 4πk² 而忘记 dk",
+          "把 h 与 ℏ 的相空间格点混用",
+          "没有写 gs 的定义",
+        ],
         check: {
           question: "为什么 E0/N 小于 εF？",
-          answer: "εF 是最高占据能量；其下从 0 到 εF 的大量状态也被占据，平均自然低于最高值，三维结果为 3εF/5。",
+          answer:
+            "εF 是最高占据能量；其下从 0 到 εF 的大量状态也被占据，平均自然低于最高值，三维结果为 3εF/5。",
         },
       },
       {
         title: "有限温度：只有 Fermi 面附近在变化",
         label: "低温核心",
         core: true,
-        intuition: "深埋在 Fermi 海里的粒子没有空位可跳；只有表面附近约 kBT 的薄壳能被热激发。",
+        intuition:
+          "深埋在 Fermi 海里的粒子没有空位可跳；只有表面附近约 kBT 的薄壳能被热激发。",
         explanation: [
           "当 T≪TF 时，Fermi–Dirac 阶跃只在 εF 附近被抹平。低能态几乎仍满，高能态几乎仍空。",
           "固定 N 很重要：升温时 μ 会略微下降，以补偿阶跃两侧 DOS 不对称造成的粒子数变化。",
           "Sommerfeld 展开把 ∫φ(ε)fFD(ε)dε 写成 0→μ 的零温积分加上与 (kBT)² 成正比的边界修正。",
           "三维非相对论气体 μ≈εF[1−(π²/12)(T/TF)²]；能量修正∝T²，所以 CV=(π²/2)NkB(T/TF)，线性于 T。",
         ],
-        formula: "∫₀∞φ(ε)fFD dε ≈ ∫₀^μ φ(ε)dε + (π²/6)(kBT)²φ′(μ);  CV=(π²/2)NkB(T/TF)",
-        formulaNote: "适用条件：φ 在 μ 附近平滑、kBT≪μ；固定 N 时必须先由 number equation 解 μ(T)。",
+        formula:
+          "∫₀∞φ(ε)fFD dε ≈ ∫₀^μ φ(ε)dε + (π²/6)(kBT)²φ′(μ);  CV=(π²/2)NkB(T/TF)",
+        formulaNote:
+          "适用条件：φ 在 μ 附近平滑、kBT≪μ；固定 N 时必须先由 number equation 解 μ(T)。",
         steps: [
           "明确积分算 N 还是 U，并写 φ(ε)",
           "对 N 使用展开，令结果保持 N(T)=N(0)",
@@ -3641,14 +4889,16 @@ export const modules: StudyModule[] = [
         ],
         check: {
           question: "Sommerfeld 展开前必须问哪三个问题？",
-          answer: "是否低温 kBT≪μ；积分权重 φ 是否在 μ 附近平滑；系统保持 μ 还是保持 N。",
+          answer:
+            "是否低温 kBT≪μ；积分权重 φ 是否在 μ 附近平滑；系统保持 μ 还是保持 N。",
         },
       },
       {
         title: "二维 Fermi 气体与作业 3 Q4",
         label: "考核对齐",
         core: true,
-        intuition: "二维最特别之处是二次色散的 DOS 与能量无关；很多积分因此比三维更直接。",
+        intuition:
+          "二维最特别之处是二次色散的 DOS 与能量无关；很多积分因此比三维更直接。",
         explanation: [
           "二维 k 空间数圆盘：N=gs AπkF²/(2π)²，所以 kF²=4πn/gs。",
           "ε=ℏ²k²/(2m) 导致单位面积 DOS D(ε)/A=gs m/(2πℏ²)，是常数。",
@@ -3656,7 +4906,8 @@ export const modules: StudyModule[] = [
           "作业要求的压力/能量可从巨势或积分得到；二维二次色散满足 PA=U。",
         ],
         formula: "D2D(ε)/A=gs m/(2πℏ²),  εF=2πℏ²n/(gs m),  PA=U",
-        formulaNote: "使用答案时先核对它采用的 gs；若公式差 2，通常是自旋简并约定不同。",
+        formulaNote:
+          "使用答案时先核对它采用的 gs；若公式差 2，通常是自旋简并约定不同。",
         steps: [
           "先画二维 k 圆盘并数态",
           "求 D2D 为常数",
@@ -3673,14 +4924,32 @@ export const modules: StudyModule[] = [
             "相除得 U/N=εF/2",
           ],
         },
-        pitfalls: ["照搬三维 √ε DOS", "不声明面积 A 与粒子面密度 n=N/A", "把二维低温 μ 修正误写成三维 T² 结果"],
+        pitfalls: [
+          "照搬三维 √ε DOS",
+          "不声明面积 A 与粒子面密度 n=N/A",
+          "把二维低温 μ 修正误写成三维 T² 结果",
+        ],
         check: {
           question: "二维结果与三维结果的最快区分方法是什么？",
-          answer: "先看 DOS 的能量幂：二次色散下 Dd(ε)∝ε^{d/2−1}；二维指数为 0，三维为 1/2。",
+          answer:
+            "先看 DOS 的能量幂：二次色散下 Dd(ε)∝ε^{d/2−1}；二维指数为 0，三维为 1/2。",
         },
       },
     ],
     deepDives: [
+      {
+        title: "作业 3 Q4：二维有限温度完整链",
+        summary:
+          "把 constant DOS 一路算到 exact chemical potential、低温热容、particle-hole symmetry 与 PA=U。",
+        paragraphs: [
+          "二维二次色散的 DOS 是常数 D0。先精确积分 number equation 并用 N=D0εF，得到 μ(T)，再对 energy integral 作低温展开。",
+          "Fermi function 关于 μ 的 occupation/vacancy 对称是精确恒等式；grand potential 的分部积分则给二维 scale relation PA=U。",
+          "这里 μ、particle-hole relation 与 PA=U 是精确结果，只有 CV 的最后一项使用 T≪TF 的 Sommerfeld 近似。",
+        ],
+        formulas: [
+          String.raw`$$\mu=k_{\mathrm B}T\ln\!\left(e^{\varepsilon_F/(k_{\mathrm B}T)}-1\right);\quad \frac{C_V}{Nk_{\mathrm B}}\approx\frac{\pi^2}{3}\frac{T}{T_F};\quad f(\mu+\delta)=1-f(\mu-\delta);\quad PA=U$$`,
+        ],
+      },
       {
         title: "JIT：Sommerfeld 展开为什么只看 Fermi 面",
         summary: "需要推低温系数时再展开；核心通过只需会用前两项并检查条件。",
@@ -3696,16 +4965,14 @@ export const modules: StudyModule[] = [
       },
       {
         title: "金属电子低温热容：怎样从实验图上分开电子与声子",
-        summary: "课件 slide 31 把 Fermi 线性项与 Debye 三次项放到同一条可测公式里。",
+        summary:
+          "课件 slide 31 把 Fermi 线性项与 Debye 三次项放到同一条可测公式里。",
         paragraphs: [
           "理想三维电子气给 Ce=(π²/2)NkB(kBT/εF)=γT；晶格的 Debye 声子给 Cph=δT³。因此足够低温的金属常写 Ctotal=γT+δT³。",
           "两边除以 T 得 C/T=γ+δT²。以 C/T 对 T² 作图，纵截距是电子系数 γ，斜率是 phonon 系数 δ；这比直接在 C(T) 曲线上凭眼睛分离更稳。",
           "真实晶体的 band structure 和相互作用会把裸电子质量换成 effective mass m*，因此测得 γ 与自由电子估计的差可反映 quasiparticle renormalization。",
         ],
-        formulas: [
-          "Ce=(π²/2)NkB(kBT/εF)=γT",
-          "Ctotal=γT+δT³;  Ctotal/T=γ+δT²",
-        ],
+        formulas: ["Ce=(π²/2)NkB(kBT/εF)=γT", "Ctotal=γT+δT³;  Ctotal/T=γ+δT²"],
       },
       {
         title: "Pauli 顺磁：磁场移动两种自旋的 Fermi 面",
@@ -3739,17 +5006,21 @@ export const modules: StudyModule[] = [
       {
         title: "零温热力学",
         instruction: "用 DOS 幂积分推 E0/N 和 P0；每一步写量纲。",
-        answer: "D=C√ε；N=(2C/3)εF^{3/2}，E=(2C/5)εF^{5/2}，故 E/N=3εF/5；P=2E/(3V)。",
+        answer:
+          "D=C√ε；N=(2C/3)εF^{3/2}，E=(2C/5)εF^{5/2}，故 E/N=3εF/5；P=2E/(3V)。",
       },
       {
         title: "作业 3 Q4",
-        instruction: "先只打开题目，独立写二维 DOS、number equation 和 T→0 检查；卡住后才展开提示。",
-        answer: "D/A=gs m/(2πℏ²)；n=D0kBT ln(1+e^{βμ})；T→0 得 μ→εF=n/D0，U/N→εF/2。",
+        instruction:
+          "先只打开题目，独立写二维 DOS、number equation 和 T→0 检查；卡住后才展开提示。",
+        answer:
+          "D/A=gs m/(2πℏ²)；n=D0kBT ln(1+e^{βμ})；T→0 得 μ→εF=n/D0，U/N→εF/2。",
         source: "作业 3 Q4",
       },
     ],
     gate: {
-      prompt: "闭卷从 k 空间数态推 kF 与 εF，再分别解释 T=0 压强、低温 CV∝T，以及二维作业题为何 DOS 为常数。",
+      prompt:
+        "闭卷从 k 空间数态推 kF 与 εF，再分别解释 T=0 压强、低温 CV∝T，以及二维作业题为何 DOS 为常数。",
       criteria: [
         "不漏/不重复 gs",
         "E0/N 与 P0 系数正确",
@@ -3791,7 +5062,8 @@ export const modules: StudyModule[] = [
         title: "闭环一：随机游走 → 扩散",
         label: "微观到宏观",
         core: true,
-        intuition: "单个醉汉的路线不可预测，但很多次路线的中心和宽度非常可预测。",
+        intuition:
+          "单个醉汉的路线不可预测，但很多次路线的中心和宽度非常可预测。",
         explanation: [
           "一维每隔 τ 向左/右走一步长 a，若两方向等概率，单步平均为 0、方差为 a²。",
           "N 步独立增量相加后，平均仍为 0，方差相加为 Na²。令 t=Nτ，得到 ⟨x²⟩=(a²/τ)t=2Dt。",
@@ -3799,7 +5071,8 @@ export const modules: StudyModule[] = [
           "连续极限可从离散概率更新式 Taylor 展开得到 ∂tP=D∂x²P。",
         ],
         formula: "⟨x²(t)⟩=2Dt（1D）；P(x,t)=[4πDt]^(−1/2)exp[−x²/(4Dt)]",
-        formulaNote: "d 维各方向独立时 ⟨|r|²⟩=2dDt；Gaussian 分母 4Dt 与方差 2Dt 完全一致。",
+        formulaNote:
+          "d 维各方向独立时 ⟨|r|²⟩=2dDt；Gaussian 分母 4Dt 与方差 2Dt 完全一致。",
         steps: [
           "写 xN=Σj Δxj",
           "用独立性算均值与方差",
@@ -3815,7 +5088,11 @@ export const modules: StudyModule[] = [
             "这不是平均位移；对称游走的 ⟨x⟩仍为 0",
           ],
         },
-        pitfalls: ["把 ⟨x⟩=0 误解为粒子没有运动", "把 rms 位移写成与 t 成正比", "混淆一步数 N 与粒子数 N"],
+        pitfalls: [
+          "把 ⟨x⟩=0 误解为粒子没有运动",
+          "把 rms 位移写成与 t 成正比",
+          "混淆一步数 N 与粒子数 N",
+        ],
         check: {
           question: "若步长加倍、时间步不变，D 变多少倍？",
           answer: "D=a²/(2τ)，所以变 4 倍。",
@@ -3825,7 +5102,8 @@ export const modules: StudyModule[] = [
         title: "读 Fick 方程前：四个空间微分动作",
         label: "零基础必经桥",
         core: true,
-        intuition: "不要先背 ∇ 符号。把空间切成许多小格：gradient 问哪边更浓，divergence 问一个小格净流出多少，Laplacian 问中心比邻居高还是低，continuity 把净流出翻译成库存减少。",
+        intuition:
+          "不要先背 ∇ 符号。把空间切成许多小格：gradient 问哪边更浓，divergence 问一个小格净流出多少，Laplacian 问中心比邻居高还是低，continuity 把净流出翻译成库存减少。",
         explanation: [
           "一维先学即可：gradient 退化为 ∂xn，表示密度曲线的斜率；三维 ∇n 是一个向量，指向 n 增长最快的方向。",
           "divergence 在一维是 ∂xJ。若某点右侧流量大于左侧流量，∂xJ>0，说明这个小区间净流出，库存 n 应下降。",
@@ -3833,8 +5111,10 @@ export const modules: StudyModule[] = [
           "continuity equation ∂tn+∇·J=0 只表达守恒。负号说：净流出为正时，本地密度随时间减少。它本身还没有指定流 J 的成因。",
           "对全空间积分后，Gauss theorem 把体积内的 divergence 变成边界流；封闭边界 J·n̂=0 时总粒子数保持不变。",
         ],
-        formula: "1D: ∂xn → slope,  ∂xJ → net outflow,  ∂x²n → curvature;  ∂tn+∂xJ=0",
-        formulaNote: "第一次只在一维画图和判断正负；能做到后，再把 ∂x 换成 ∇、∇·、∇²。",
+        formula:
+          "1D: ∂xn → slope,  ∂xJ → net outflow,  ∂x²n → curvature;  ∂tn+∂xJ=0",
+        formulaNote:
+          "第一次只在一维画图和判断正负；能做到后，再把 ∂x 换成 ∇、∇·、∇²。",
         steps: [
           "画 n(x) 曲线并选一个位置",
           "由斜率判断 ∂xn 的正负",
@@ -3843,7 +5123,8 @@ export const modules: StudyModule[] = [
           "最后才推广到三维符号",
         ],
         example: {
-          question: "某小区间左边每秒流入 5 个粒子，右边每秒流出 8 个粒子；区间内粒子数怎样变？",
+          question:
+            "某小区间左边每秒流入 5 个粒子，右边每秒流出 8 个粒子；区间内粒子数怎样变？",
           solution: [
             "净流出率是 8−5=3 个/秒",
             "continuity 的负号把净流出变成库存下降",
@@ -3857,7 +5138,8 @@ export const modules: StudyModule[] = [
         ],
         check: {
           question: "扩散中的密度峰顶为何会降低？",
-          answer: "峰顶曲率 ∂x²n<0；扩散方程 ∂tn=D∂x²n 且 D>0，因此峰顶 ∂tn<0。",
+          answer:
+            "峰顶曲率 ∂x²n<0；扩散方程 ∂tn=D∂x²n 且 D>0，因此峰顶 ∂tn<0。",
         },
       },
       {
@@ -3887,17 +5169,23 @@ export const modules: StudyModule[] = [
             "Jx=−D∂xn 且 D>0 正好满足",
           ],
         },
-        pitfalls: ["把 continuity equation 当作扩散的经验定律", "D 随位置变化时错误地直接写 D∇²n", "忘记边界上的流决定总粒子数是否守恒"],
+        pitfalls: [
+          "把 continuity equation 当作扩散的经验定律",
+          "D 随位置变化时错误地直接写 D∇²n",
+          "忘记边界上的流决定总粒子数是否守恒",
+        ],
         check: {
           question: "封闭边界 J·n̂=0 时，总粒子数为何不变？",
-          answer: "对 continuity equation 全空间积分，用 Gauss 定理得到 dN/dt=−∮J·dA=0。",
+          answer:
+            "对 continuity equation 全空间积分，用 Gauss 定理得到 dN/dt=−∮J·dA=0。",
         },
       },
       {
         title: "闭环二：Langevin 方程与涨落—耗散",
         label: "轨迹层",
         core: true,
-        intuition: "液体一边用黏滞阻力刹车，一边用分子碰撞乱踢；平衡温度决定‘踢’必须有多强。",
+        intuition:
+          "液体一边用黏滞阻力刹车，一边用分子碰撞乱踢；平衡温度决定‘踢’必须有多强。",
         explanation: [
           "自由 Brownian particle 的轨迹方程 m dv/dt=−γv+ξ(t)。−γv 是可预测的耗散，ξ 是平均为零的快速随机力。",
           "速度记忆在 τv=m/γ 后指数衰减。短时 t≪τv 近似 ballistic，MSD∝t²；长时 t≫τv 进入 diffusion，MSD≈2Dt。",
@@ -3928,14 +5216,16 @@ export const modules: StudyModule[] = [
         ],
         check: {
           question: "trajectory-level 与 distribution-level 的区别是什么？",
-          answer: "Langevin 方程描述单次随机轨迹，每次 ξ(t) realization 不同；Fokker–Planck 方程描述许多 realization 的概率密度，给定初态后是确定性的 PDE。",
+          answer:
+            "Langevin 方程描述单次随机轨迹，每次 ξ(t) realization 不同；Fokker–Planck 方程描述许多 realization 的概率密度，给定初态后是确定性的 PDE。",
         },
       },
       {
         title: "闭环三：Master equation → Fokker–Planck",
         label: "分布层",
         core: true,
-        intuition: "先记清每种跳跃带来多少概率流，再把很小的跳跃按一阶漂移、二阶展宽整理。",
+        intuition:
+          "先记清每种跳跃带来多少概率流，再把很小的跳跃按一阶漂移、二阶展宽整理。",
         explanation: [
           "master equation 的 gain−loss 结构保证总概率守恒：从其他状态跳入 x 的概率流减去从 x 跳出的流。",
           "若跃迁步长 Δ 很小，对 P(x−Δ)W(x−Δ;Δ) 按 Δ 做 Taylor 展开，得到 Kramers–Moyal 系列。",
@@ -3943,7 +5233,8 @@ export const modules: StudyModule[] = [
           "于是 ∂tP=−∂x(AP)+½∂x²(BP)。若 B=2D 常数、A=0，就退化为普通 diffusion equation。",
         ],
         formula: "∂tP=−∂x[A(x)P]+½∂x²[B(x)P]",
-        formulaNote: "系数 1/2 是否显式取决于 B 的定义；网页采用 B=单位时间二阶增量。",
+        formulaNote:
+          "系数 1/2 是否显式取决于 B 的定义；网页采用 B=单位时间二阶增量。",
         steps: [
           "写 gain−loss master equation",
           "设跳跃小且 moments 存在",
@@ -3959,7 +5250,11 @@ export const modules: StudyModule[] = [
             "所以 ∂tP=−u∂xP+D∂x²P：中心以 u 移动，同时以 D 展宽",
           ],
         },
-        pitfalls: ["把 A、B 当作概率而不是增量 moments", "丢掉 gain 或 loss 导致概率不守恒", "未检查边界条件便宣称 stationary distribution"],
+        pitfalls: [
+          "把 A、B 当作概率而不是增量 moments",
+          "丢掉 gain 或 loss 导致概率不守恒",
+          "未检查边界条件便宣称 stationary distribution",
+        ],
         check: {
           question: "怎样从 Fokker–Planck 一眼恢复普通扩散？",
           answer: "令 drift A=0、二阶强度 B=2D 常数，就得 ∂tP=D∂x²P。",
@@ -3977,8 +5272,14 @@ export const modules: StudyModule[] = [
           "这再次得到 Einstein relation，显示热力学平衡约束随机动力学系数。",
         ],
         formula: "J=−(U′/γ)P−D∂xP=0  ⇒  Peq∝e^[−U/(γD)]  ⇒  D=kBT/γ",
-        formulaNote: "这是最短的 fluctuation–dissipation 推导之一；它依赖零平衡流和 overdamped 模型。",
-        steps: ["写 Fokker–Planck 成 continuity 形式 ∂tP=−∂xJ", "平衡令 J=0", "分离变量积分", "与 Boltzmann 权重比较指数"],
+        formulaNote:
+          "这是最短的 fluctuation–dissipation 推导之一；它依赖零平衡流和 overdamped 模型。",
+        steps: [
+          "写 Fokker–Planck 成 continuity 形式 ∂tP=−∂xJ",
+          "平衡令 J=0",
+          "分离变量积分",
+          "与 Boltzmann 权重比较指数",
+        ],
         example: {
           question: "谐振势 U=kx²/2 的平衡位置分布方差是多少？",
           solution: [
@@ -3987,26 +5288,36 @@ export const modules: StudyModule[] = [
             "也与 equipartition k⟨x²⟩/2=kBT/2 一致",
           ],
         },
-        pitfalls: ["把 stationary 等同 detailed balance；有稳恒环流时前者可成立而后者不成立", "忘记势能符号导致分布向高势能增长", "不检查归一化是否存在"],
+        pitfalls: [
+          "把 stationary 等同 detailed balance；有稳恒环流时前者可成立而后者不成立",
+          "忘记势能符号导致分布向高势能增长",
+          "不检查归一化是否存在",
+        ],
         check: {
           question: "为什么自由粒子在无限空间没有可归一化的平衡位置分布？",
-          answer: "U 为常数时 Peq 也是常数；无限空间上积分发散。速度可达到 Maxwell 平衡，但位置会持续扩散。",
+          answer:
+            "U 为常数时 Peq 也是常数；无限空间上积分发散。速度可达到 Maxwell 平衡，但位置会持续扩散。",
         },
       },
     ],
     deepDives: [
       {
         title: "从 underdamped 到 overdamped",
-        summary: "当 t≫m/γ 时速度已快速松弛，可消去惯性；需要比较两种 Fokker–Planck 时再看。",
+        summary:
+          "当 t≫m/γ 时速度已快速松弛，可消去惯性；需要比较两种 Fokker–Planck 时再看。",
         paragraphs: [
           "完整 Kramers 方程在 (x,v) 相空间演化。高摩擦/长时间极限下 m dv/dt 可忽略，得到 γ xdot=−U′+ξ。",
           "对应位置概率满足 Smoluchowski 方程 ∂tP=∂x[(U′/γ)P+D∂xP]。",
           "消去变量是近似，必须声明时间尺度；不能在短时 ballistic 区间使用。",
         ],
+        formulas: [
+          "$$m\\dot v=-\\gamma v-U'(x)+\\xi(t)\\longrightarrow \\gamma\\dot x=-U'(x)+\\xi(t)\\longrightarrow \\partial_tP=\\partial_x\\left[\\frac{U'(x)}{\\gamma}P+D\\partial_xP\\right]$$",
+        ],
       },
       {
         title: "Ornstein–Uhlenbeck 过程",
-        summary: "把 Langevin 速度看成线性 drift 的 Fokker–Planck，可统一计算相关函数。",
+        summary:
+          "把 Langevin 速度看成线性 drift 的 Fokker–Planck，可统一计算相关函数。",
         paragraphs: [
           "速度 obey dv=−(γ/m)vdt+(noise)。对应 Gaussian 分布的均值指数衰减，方差趋向 kBT/m。",
           "平衡速度自相关 ⟨v(t)v(0)⟩=(kBT/m)e^{−|t|/τv}；对时间积分可恢复长时间 D。",
@@ -4014,7 +5325,8 @@ export const modules: StudyModule[] = [
       },
       {
         title: "Slides 16–18：非考核拓展路线",
-        summary: "这三页只负责告诉你后续可以往哪里走，不属于 Week 13 的核心 gate，也不应挤占扩散、Langevin 与 Fokker–Planck 的练习时间。",
+        summary:
+          "这三页只负责告诉你后续可以往哪里走，不属于 Week 13 的核心 gate，也不应挤占扩散、Langevin 与 Fokker–Planck 的练习时间。",
         paragraphs: [
           "slide 16 把 classical cluster expansion、quantum second quantization/field theory、critical phenomena/RG 列为进一步方向；slide 17 列 Boltzmann equation、Lindbladian 与 Keldysh path integral；slide 18 列 statistics、stochastic calculus、Monte Carlo 与 molecular dynamics。",
           "高效顺序是先通过本节 slides 6–15 的核心闭环；只有后续课程、科研或个人兴趣明确需要时，再沿其中一条路线展开，当前不要求推导或背诵。",
@@ -4026,21 +5338,25 @@ export const modules: StudyModule[] = [
       {
         title: "random walk",
         instruction: "从 N 个独立 ±a 增量推均值、方差和 D；不要先写扩散公式。",
-        answer: "均值 0；交叉项因独立和零均值消失，⟨x²⟩=Na²；t=Nτ，故 D=a²/(2τ)。",
+        answer:
+          "均值 0；交叉项因独立和零均值消失，⟨x²⟩=Na²；t=Nτ，故 D=a²/(2τ)。",
       },
       {
         title: "守恒与 Fick",
-        instruction: "写一维 J=un−D∂xn，并由 continuity 推 drift–diffusion equation。",
+        instruction:
+          "写一维 J=un−D∂xn，并由 continuity 推 drift–diffusion equation。",
         answer: "∂tn=−∂xJ=−u∂xn+D∂x²n（u,D 常数）。",
       },
       {
         title: "分布翻译",
-        instruction: "给定 overdamped Langevin γxdot=−kx+ξ、噪声相关 2γkBTδ，写对应 Fokker–Planck 和平衡分布。",
+        instruction:
+          "给定 overdamped Langevin γxdot=−kx+ξ、噪声相关 2γkBTδ，写对应 Fokker–Planck 和平衡分布。",
         answer: "∂tP=∂x[(kx/γ)P]+(kBT/γ)∂x²P；Peq∝exp[−βkx²/2]。",
       },
     ],
     gate: {
-      prompt: "闭卷画出三层翻译：random walk→diffusion、Langevin trajectory→Fokker–Planck distribution、零概率流→Boltzmann equilibrium；每条箭头写假设。",
+      prompt:
+        "闭卷画出三层翻译：random walk→diffusion、Langevin trajectory→Fokker–Planck distribution、零概率流→Boltzmann equilibrium；每条箭头写假设。",
       criteria: [
         "能区分 mean displacement 与 MSD",
         "能用一维小区间的流入/流出解释 continuity equation 的负号，再推广到 ∇·J",
@@ -4084,7 +5400,8 @@ export const modules: StudyModule[] = [
         title: "六步解题导航",
         label: "整门课主轴",
         core: true,
-        intuition: "任何题先定位自己在六步链的哪一格，不要一看到关键词就抓公式。",
+        intuition:
+          "任何题先定位自己在六步链的哪一格，不要一看到关键词就抓公式。",
         explanation: [
           "第 1 步控制条件：E/V/N、T/V/N、T/V/μ 中哪些固定，哪些能交换？",
           "第 2 步状态与统计：经典相空间还是量子占据数？全同粒子、简并度和守恒量是什么？",
@@ -4093,8 +5410,10 @@ export const modules: StudyModule[] = [
           "第 5 步热力学连接：S、F、巨势、P、μ、CV、compressibility。",
           "第 6 步自检：量纲、符号、极限、适用条件与数量级。",
         ],
-        formula: "控制条件 → 状态/权重 → Ω/Z/Ξ → 平均与涨落 → 热力学势/响应 → 三重自检",
-        formulaNote: "这条链比孤立公式更值得背，因为每章只是替换其中一两个对象。",
+        formula:
+          "控制条件 → 状态/权重 → Ω/Z/Ξ → 平均与涨落 → 热力学势/响应 → 三重自检",
+        formulaNote:
+          "这条链比孤立公式更值得背，因为每章只是替换其中一两个对象。",
         steps: [
           "题目第一遍只圈控制量和输出量",
           "写一句系综选择理由",
@@ -4103,24 +5422,31 @@ export const modules: StudyModule[] = [
           "结果后写至少一个极限或单位检查",
         ],
         example: {
-          question: "题目说系统接触热库和粒子库，要求粒子数涨落。第一行应写什么？",
+          question:
+            "题目说系统接触热库和粒子库，要求粒子数涨落。第一行应写什么？",
           solution: [
             "控制量是 T,V,μ，E 与 N 可交换，所以选 grand canonical ensemble",
             "写 Ξ=Σstates exp[−β(E−μN)]",
             "再用 ⟨N⟩=(1/β)∂μlnΞ、Var(N)=(1/β²)∂μ²lnΞ",
           ],
         },
-        pitfalls: ["直接抄某个熟悉结果而不声明 ensemble", "连续极限不写 DOS/measure", "只给最终数值没有自检"],
+        pitfalls: [
+          "直接抄某个熟悉结果而不声明 ensemble",
+          "连续极限不写 DOS/measure",
+          "只给最终数值没有自检",
+        ],
         check: {
           question: "为什么同一物理系统在不同控制条件下要换热力学势？",
-          answer: "热力学势的自然变量与外界固定的控制量匹配；Legendre transform 把不受控的 extensive variable 换成对应 reservoir 的 intensive variable。",
+          answer:
+            "热力学势的自然变量与外界固定的控制量匹配；Legendre transform 把不受控的 extensive variable 换成对应 reservoir 的 intensive variable。",
         },
       },
       {
         title: "经典—量子对照表要会自己重建",
         label: "迁移能力",
         core: true,
-        intuition: "量子统计不是把经典公式全部推翻；概率框架相同，改变的是允许状态、计数和占据限制。",
+        intuition:
+          "量子统计不是把经典公式全部推翻；概率框架相同，改变的是允许状态、计数和占据限制。",
         explanation: [
           "经典：microstate 是相空间点，积分 measure 含 1/(N!h^{3N})。量子：microstate 是 Hilbert-space state，平均用 trace。",
           "canonical 都有 ρ∝e^{−βH} 和 Z=Tr e^{−βH}；经典 trace 变成相空间积分。",
@@ -4128,7 +5454,8 @@ export const modules: StudyModule[] = [
           "低占据 nλT³≪1 时 BE/FD 都回到 Maxwell–Boltzmann；这比只说“高温”更完整。",
         ],
         formula: "classical ∫dΓ/(N!h³ᴺ)  ↔  quantum Tr;  ρ=e^(−βH)/Z",
-        formulaNote: "同一符号 ρ 在经典是相空间密度，在量子是 density operator；对象不同，归一化思想相同。",
+        formulaNote:
+          "同一符号 ρ 在经典是相空间密度，在量子是 density operator；对象不同，归一化思想相同。",
         steps: [
           "列出 state space",
           "列出统计/占据限制",
@@ -4137,24 +5464,31 @@ export const modules: StudyModule[] = [
           "说明 classical limit",
         ],
         example: {
-          question: "为何量子 grand canonical 对 ideal gas 易 factorize，而固定 N canonical 较难？",
+          question:
+            "为何量子 grand canonical 对 ideal gas 易 factorize，而固定 N canonical 较难？",
           solution: [
             "巨正则允许总 N 波动，每个单粒子态的 ni 可独立求和",
             "总权重 exp[−βΣi(εi−μ)ni] 变成各 i 因子的乘积",
             "canonical 的约束 Σini=N 把不同能级 occupation 耦合起来",
           ],
         },
-        pitfalls: ["把 most probable occupation 与 ensemble average 混为一谈", "忽略 degeneracy 是状态数而非粒子数", "把 β→∞ 错称 classical limit"],
+        pitfalls: [
+          "把 most probable occupation 与 ensemble average 混为一谈",
+          "忽略 degeneracy 是状态数而非粒子数",
+          "把 β→∞ 错称 classical limit",
+        ],
         check: {
           question: "BE 与 FD 都变成 MB 的物理条件是什么？",
-          answer: "每个量子态的平均占据远小于 1，即稀薄、低简并 nλT³≪1；此时分母中的 ±1 相对 e^{β(ε−μ)} 可忽略。",
+          answer:
+            "每个量子态的平均占据远小于 1，即稀薄、低简并 nλT³≪1；此时分母中的 ±1 相对 e^{β(ε−μ)} 可忽略。",
         },
       },
       {
         title: "评分点式输出",
         label: "考试表达",
         core: true,
-        intuition: "会做题还要让阅卷人清楚看到你为什么这样做；结构化书写也能减少自己的漏项。",
+        intuition:
+          "会做题还要让阅卷人清楚看到你为什么这样做；结构化书写也能减少自己的漏项。",
         explanation: [
           "第一块写对象和假设：ensemble、控制量、Hamiltonian/energy spectrum、简并度。",
           "第二块写定义和正规化：Ω/Z/Ξ 或 evolution equation；连续积分写 measure。",
@@ -4162,8 +5496,10 @@ export const modules: StudyModule[] = [
           "第四块写结果解释：单位、极限、与已知 relation 的一致性。",
           "若老师资料中的记号或公式有误，先声明你采用的定义，再按自洽公式作答；不要只写“老师错了”。",
         ],
-        formula: "定义与假设 20% → 主体推导 55% → 结果与自检 25%（练习用，不宣称官方固定比例）",
-        formulaNote: "期中 2025 答案表明每题分步骤给分，但上述比例是网页训练模板，不是老师公布的 rubrics。",
+        formula:
+          "定义与假设 20% → 主体推导 55% → 结果与自检 25%（练习用，不宣称官方固定比例）",
+        formulaNote:
+          "期中 2025 答案表明每题分步骤给分，但上述比例是网页训练模板，不是老师公布的 rubrics。",
         steps: [
           "用 30 秒列评分骨架",
           "先做最有把握的定义与关键式",
@@ -4179,17 +5515,24 @@ export const modules: StudyModule[] = [
             "用 equipartition 或量纲核对，明确未化简常数",
           ],
         },
-        pitfalls: ["只写公式名不写定义", "跨三行代数不解释近似", "把训练评分模板冒充官方评分细则"],
+        pitfalls: [
+          "只写公式名不写定义",
+          "跨三行代数不解释近似",
+          "把训练评分模板冒充官方评分细则",
+        ],
         check: {
-          question: "为什么即使不会算完，也应写 ensemble 与 partition function？",
-          answer: "它们确定解题框架并通常独立得分；后续代数失误不应掩盖正确的物理建模。",
+          question:
+            "为什么即使不会算完，也应写 ensemble 与 partition function？",
+          answer:
+            "它们确定解题框架并通常独立得分；后续代数失误不应掩盖正确的物理建模。",
         },
       },
       {
         title: "复习不是重读：1/3/7/14/30 天检索",
         label: "长期保留",
         core: true,
-        intuition: "记忆像路径；隔一段时间主动走一次，比一直盯着地图更能让路留下来。",
+        intuition:
+          "记忆像路径；隔一段时间主动走一次，比一直盯着地图更能让路留下来。",
         explanation: [
           "本节结束立刻做 30 秒收尾：一个问题、一条关系、一个坑。",
           "1 天后做定义检索+最小计算；3 天后做变式题，决定‘暂时掌握’能否转为‘已确认’。",
@@ -4197,7 +5540,8 @@ export const modules: StudyModule[] = [
           "若只是排版小错，不必全部重置；若控制量、定义或物理方向错，回到 1 天间隔并补精确先修节点。",
         ],
         formula: "立即 → 1 日 → 3 日 → 7 日 → 14 日 → 30 日",
-        formulaNote: "网页会在本地保存完成状态；复习日期以主动检索为准，不以滚动到页面底部为准。",
+        formulaNote:
+          "网页会在本地保存完成状态；复习日期以主动检索为准，不以滚动到页面底部为准。",
         steps: [
           "先闭卷输出",
           "再核对答案并分类错因",
@@ -4213,10 +5557,15 @@ export const modules: StudyModule[] = [
             "补法是练题型识别和渐隐例题，只给第一步提示后重试",
           ],
         },
-        pitfalls: ["把重读高亮当作检索练习", "原题反复刷到背答案", "一次失败就把全部进度清零"],
+        pitfalls: [
+          "把重读高亮当作检索练习",
+          "原题反复刷到背答案",
+          "一次失败就把全部进度清零",
+        ],
         check: {
           question: "3 日复测通过的证据是什么？",
-          answer: "在无提示情况下完成未见过的同结构小题，并能用自己的话解释核心关系；‘看着熟’不算。",
+          answer:
+            "在无提示情况下完成未见过的同结构小题，并能用自己的话解释核心关系；‘看着熟’不算。",
         },
       },
     ],
@@ -4241,7 +5590,8 @@ export const modules: StudyModule[] = [
       },
       {
         title: "老师 2025 grading 信息的使用边界",
-        summary: "课件 1 显示 Assignment 30%、Mid-term 30%、Final 40%；重修学期必须再次核实。",
+        summary:
+          "课件 1 显示 Assignment 30%、Mid-term 30%、Final 40%；重修学期必须再次核实。",
         paragraphs: [
           "这组比例来自存档课件，不应自动视为下一学期仍有效。网站只用它提醒作业不能放弃、期中是重要诊断。",
           "开学第一周请以新课程主页、老师公告或 syllabus 为准，再更新个人时间分配。",
@@ -4251,22 +5601,29 @@ export const modules: StudyModule[] = [
     practice: [
       {
         title: "60 分钟量子混合卷",
-        instruction: "15 分钟密度矩阵；15 分钟 BE/FD 单态因子化；15 分钟 DOS/BEC；15 分钟 Fermi T=0。每题先列六步链。",
-        answer: "用对应模块 gate criteria 自评；若某题少于 80% 或红线定义错误，回该节点最小补洞后换变式重做。",
+        instruction:
+          "15 分钟密度矩阵；15 分钟 BE/FD 单态因子化；15 分钟 DOS/BEC；15 分钟 Fermi T=0。每题先列六步链。",
+        answer:
+          "用对应模块 gate criteria 自评；若某题少于 80% 或红线定义错误，回该节点最小补洞后换变式重做。",
       },
       {
         title: "口述总图",
-        instruction: "不用公式，向一名同学解释为什么三大系综、Bose/Fermi、Langevin/Fokker–Planck 都属于同一门课。",
-        answer: "共同主题是用概率描述巨大自由度：约束决定允许状态与权重，平均与涨落给宏观量；非平衡再研究该概率如何随时间演化。",
+        instruction:
+          "不用公式，向一名同学解释为什么三大系综、Bose/Fermi、Langevin/Fokker–Planck 都属于同一门课。",
+        answer:
+          "共同主题是用概率描述巨大自由度：约束决定允许状态与权重，平均与涨落给宏观量；非平衡再研究该概率如何随时间演化。",
       },
       {
         title: "资料勘误演练",
-        instruction: "随机选一条勘误，完成‘原式→问题→更正→快速验证→考场写法’五格。",
-        answer: "以 thermal wavelength 为例：原式倒置；标准 λT=h/√(2πmkBT)；单位是长度且 T↑时 λ↓；考场先声明定义再代入。",
+        instruction:
+          "随机选一条勘误，完成‘原式→问题→更正→快速验证→考场写法’五格。",
+        answer:
+          "以 thermal wavelength 为例：原式倒置；标准 λT=h/√(2πmkBT)；单位是长度且 T↑时 λ↓；考场先声明定义再代入。",
       },
     ],
     gate: {
-      prompt: "在不打开公式表的情况下完成一套跨章节小卷，并把每一处失分归为概念、数学、符号/单位、策略或遗忘；只针对错因补洞后做新变式。",
+      prompt:
+        "在不打开公式表的情况下完成一套跨章节小卷，并把每一处失分归为概念、数学、符号/单位、策略或遗忘；只针对错因补洞后做新变式。",
       criteria: [
         "所有 ensemble 选择与控制量红线项正确",
         "经典/量子 measure 与生成函数不混",
@@ -4288,11 +5645,7 @@ export const moduleDependencies: Record<string, string[]> = {
     "probability-counting",
     "statistical-entry",
   ],
-  microcanonical: [
-    "phase-ensemble",
-    "probability-counting",
-    "thermo-bridge",
-  ],
+  microcanonical: ["phase-ensemble", "probability-counting", "thermo-bridge"],
   "classical-gases": ["microcanonical", "math-toolbox"],
   canonical: ["microcanonical", "thermo-bridge", "classical-gases"],
   "grand-canonical": ["canonical", "thermo-bridge", "probability-counting"],
@@ -4365,16 +5718,27 @@ export const diagnostics = [
     id: "quantum",
     skill: "量子语言",
     question: "合法密度矩阵必须满足哪一组？",
-    choices: ["迹为 0、反 Hermitian", "迹为 1、Hermitian、正半定", "每个元素都相等", "只允许纯态"],
+    choices: [
+      "迹为 0、反 Hermitian",
+      "迹为 1、Hermitian、正半定",
+      "每个元素都相等",
+      "只允许纯态",
+    ],
     answer: 1,
     route: "quantum-bridge",
-    feedback: "密度矩阵需 Hermitian、positive semidefinite、Trρ=1；可以描述纯态或混态。",
+    feedback:
+      "密度矩阵需 Hermitian、positive semidefinite、Trρ=1；可以描述纯态或混态。",
   },
   {
     id: "stochastic",
     skill: "随机过程",
     question: "对称随机游走的平均位移为 0，能推出什么？",
-    choices: ["粒子没动", "每条轨迹回到原点", "分布中心在原点，但宽度可增长", "扩散系数为 0"],
+    choices: [
+      "粒子没动",
+      "每条轨迹回到原点",
+      "分布中心在原点，但宽度可增长",
+      "扩散系数为 0",
+    ],
     answer: 2,
     route: "nonequilibrium",
     feedback: "⟨x⟩=0 只说明对称；⟨x²⟩可随时间增长。",
@@ -4395,19 +5759,25 @@ export const materialErrata = [
     id: "errata-potential-names",
     severity: "概念/命名错误",
     source: "课件 5 与 2025 期中 Q1 的 thermodynamic-potential 标题",
-    original: "部分页面把 −kBT lnZ 或 −kBT lnΞ 都称为 Gibbs free energy，且期中一处把含 N 求和的式子标成 canonical。",
+    original:
+      "部分页面把 −kBT lnZ 或 −kBT lnΞ 都称为 Gibbs free energy，且期中一处把含 N 求和的式子标成 canonical。",
     problem: "三者自然变量不同；混名会导致选错系综、微分关系与导数。",
-    corrected: "canonical：F(T,V,N)=−kBTlnZ（Helmholtz）；NPT：G(T,P,N)=U−TS+PV（Gibbs）；grand canonical：ΦG(T,V,μ)=−kBTlnΞ=−PV（grand potential）。",
-    verify: "检查控制量：Z 固定 T,V,N；NPT 固定 T,P,N；Ξ 对 N 求和并固定 T,V,μ。",
+    corrected:
+      "canonical：F(T,V,N)=−kBTlnZ（Helmholtz）；NPT：G(T,P,N)=U−TS+PV（Gibbs）；grand canonical：ΦG(T,V,μ)=−kBTlnΞ=−PV（grand potential）。",
+    verify:
+      "检查控制量：Z 固定 T,V,N；NPT 固定 T,P,N；Ξ 对 N 求和并固定 T,V,μ。",
     exam: "开头写出势的名字、符号与自然变量；若沿用老师的 G，先明确‘本文 G 指 grand potential’。",
   },
   {
     id: "errata-ps1-entropy-constraint",
     severity: "明确错误/漏项",
     source: "作业 1 Q1 题面与 solution pp.1–3",
-    original: "题面把 entropy 写成 +∫ρlnρ；答案变分时只显式加入平均能量约束，并把常数直接写成 C=e⁻¹。",
-    problem: "+∫ρlnρ 在归一化概率上应最小化而非最大化；若漏掉 ∫ρdΓ=1，指数分布的 prefactor 也无法正确确定。",
-    corrected: "S[ρ]=−kB∫dΓρlnρ；对 S/kB−α(∫ρ−1)−β(∫ρH−E) 变分，得到 ρ=Z⁻¹e^{−βH}。",
+    original:
+      "题面把 entropy 写成 +∫ρlnρ；答案变分时只显式加入平均能量约束，并把常数直接写成 C=e⁻¹。",
+    problem:
+      "+∫ρlnρ 在归一化概率上应最小化而非最大化；若漏掉 ∫ρdΓ=1，指数分布的 prefactor 也无法正确确定。",
+    corrected:
+      "S[ρ]=−kB∫dΓρlnρ；对 S/kB−α(∫ρ−1)−β(∫ρH−E) 变分，得到 ρ=Z⁻¹e^{−βH}。",
     verify: "两等概率状态应有 S=kBln2>0；再检查 ∫ρdΓ=1 决定 Z。",
     exam: "即使题面漏负号，也在第一行声明采用 Gibbs entropy，并把 normalization 与 energy 两个约束都写全。",
   },
@@ -4416,8 +5786,10 @@ export const materialErrata = [
     severity: "明确错误",
     source: "作业 1 Q4 solution p.12，单振子能级分布",
     original: "最后一行写 p(n)≈[1+e^{−βℏω}]e^{−nβℏω}。",
-    problem: "这个 prefactor 不能归一化；对 n=0,1,2,… 求和会得到 (1+x)/(1−x) 而不是 1。",
-    corrected: "在答案所用的大 N、E≫nℏω 近似下，令 x=e^{−βℏω}，正确极限分布为 p(n)≈(1−x)xⁿ=[1−e^{−βℏω}]e^{−nβℏω}。",
+    problem:
+      "这个 prefactor 不能归一化；对 n=0,1,2,… 求和会得到 (1+x)/(1−x) 而不是 1。",
+    corrected:
+      "在答案所用的大 N、E≫nℏω 近似下，令 x=e^{−βℏω}，正确极限分布为 p(n)≈(1−x)xⁿ=[1−e^{−βℏω}]e^{−nβℏω}。",
     verify: "Σn≥0(1−x)xⁿ=1；T→0 时 x→0，p(0)→1。",
     exam: "得到单振子边缘分布后一定做 Σnp(n)=1 与 T→0 两次检查。",
   },
@@ -4425,10 +5797,13 @@ export const materialErrata = [
     id: "errata-ps1-mb-normalization",
     severity: "明确错误",
     source: "作业 1 Q2(a) solution p.4，重力场 Maxwell–Boltzmann 归一化",
-    original: "答案最后的 C 分母写成 π^{3/2}，漏掉速度 Gaussian 带来的 2^{3/2}。",
+    original:
+      "答案最后的 C 分母写成 π^{3/2}，漏掉速度 Gaussian 带来的 2^{3/2}。",
     problem: "三维速度积分是 (2πkBT/m)^{3/2}；旧 prefactor 积分后不等于 1。",
-    corrected: "当 x,y∈[0,L]、z∈[0,∞) 时，C=(m/2πkBT)^{3/2}·mg/(kBTL²)=g m^{5/2}/[(2π)^{3/2}(kBT)^{5/2}L²]。",
-    verify: "分三块检查：∫d³v、∫dxdy=L²、∫₀∞dz e^{−βmgz}=1/(βmg)，乘积必须为 1。",
+    corrected:
+      "当 x,y∈[0,L]、z∈[0,∞) 时，C=(m/2πkBT)^{3/2}·mg/(kBTL²)=g m^{5/2}/[(2π)^{3/2}(kBT)^{5/2}L²]。",
+    verify:
+      "分三块检查：∫d³v、∫dxdy=L²、∫₀∞dz e^{−βmgz}=1/(βmg)，乘积必须为 1。",
     exam: "若题目保留有限高度 L，竖直因子还要改为 βmg/[L²(1−e^{−βmgL})]；先写积分再化常数。",
   },
   {
@@ -4436,8 +5811,10 @@ export const materialErrata = [
     severity: "明确笔误",
     source: "作业 1 Q2(d) solution p.5，能量二阶矩",
     original: "文字写 where β=kBT。",
-    problem: "这会让 exp(−βmv²/2) 的指数带能量平方量纲，与本课程所有 Boltzmann 因子冲突。",
-    corrected: "β=1/(kBT)。该题最终 Var(ε)=(5/2)(kBT)² 本身可以由独立的 kinetic 与 mgz 方差验证。",
+    problem:
+      "这会让 exp(−βmv²/2) 的指数带能量平方量纲，与本课程所有 Boltzmann 因子冲突。",
+    corrected:
+      "β=1/(kBT)。该题最终 Var(ε)=(5/2)(kBT)² 本身可以由独立的 kinetic 与 mgz 方差验证。",
     verify: "β×energy 必须无量纲；β 的单位为 J⁻¹。",
     exam: "每次抄 β 后立刻做指数无量纲检查，不跟随答案页这处文字笔误。",
   },
@@ -4445,29 +5822,40 @@ export const materialErrata = [
     id: "errata-ps2-classical-oscillator",
     severity: "答案不完整/测度不清",
     source: "作业 2 Q1(d) solution p.2",
-    original: "答案只写了 joint density，没有完成题目要求的平均动能、平均势能；prefactor 也未声明概率密度所对应的 measure。",
-    problem: "相对于 d³p d³q 与相对于 d³p d³q/h³ 的密度差一个 h³；不声明 measure 会误判归一化。",
-    corrected: "每个三维振子 ⟨p²/2m⟩=3kBT/2、⟨mω²q²/2⟩=3kBT/2。若密度相对于 d³p d³q/h³，prefactor 为 (βℏω)³；相对于 d³p d³q，则为 (βω/2π)³。",
-    verify: "分别做 6 个 Gaussian 二次自由度的 equipartition，并直接积分检查概率为 1。",
+    original:
+      "答案只写了 joint density，没有完成题目要求的平均动能、平均势能；prefactor 也未声明概率密度所对应的 measure。",
+    problem:
+      "相对于 d³p d³q 与相对于 d³p d³q/h³ 的密度差一个 h³；不声明 measure 会误判归一化。",
+    corrected:
+      "每个三维振子 ⟨p²/2m⟩=3kBT/2、⟨mω²q²/2⟩=3kBT/2。若密度相对于 d³p d³q/h³，prefactor 为 (βℏω)³；相对于 d³p d³q，则为 (βω/2π)³。",
+    verify:
+      "分别做 6 个 Gaussian 二次自由度的 equipartition，并直接积分检查概率为 1。",
     exam: "先写‘概率密度相对于……’再给 prefactor；均值用 equipartition 可在两行内补齐。",
   },
   {
     id: "errata-ps2-binding-sign",
     severity: "前后矛盾",
     source: "作业 2 Q3 solution pp.4–6，吸附结合能",
-    original: "先定义 E(M)=−Mε，随后却使用 ZM=C(N,M)e^{−βMε}，后者对应 E(M)=+Mε。",
-    problem: "同一 ε 的号在能量与 Boltzmann weight 间改变，使 Ξ、平均占据和压力关系全部跟着翻号。",
-    corrected: "若 ε>0 表示结合能大小且 occupied energy=−ε，则 Ξ=[1+e^{β(μ+ε)}]ᴺ，M̄=N/[1+e^{−β(μ+ε)}]。若 occupied energy=+ε，则改为 Ξ=[1+e^{β(μ−ε)}]ᴺ。",
-    verify: "始终从单位置权重 exp[−β(Eocc−μ)] 重建；结合更强（ε↑、Eocc=−ε）应提高占据。",
+    original:
+      "先定义 E(M)=−Mε，随后却使用 ZM=C(N,M)e^{−βMε}，后者对应 E(M)=+Mε。",
+    problem:
+      "同一 ε 的号在能量与 Boltzmann weight 间改变，使 Ξ、平均占据和压力关系全部跟着翻号。",
+    corrected:
+      "若 ε>0 表示结合能大小且 occupied energy=−ε，则 Ξ=[1+e^{β(μ+ε)}]ᴺ，M̄=N/[1+e^{−β(μ+ε)}]。若 occupied energy=+ε，则改为 Ξ=[1+e^{β(μ−ε)}]ᴺ。",
+    verify:
+      "始终从单位置权重 exp[−β(Eocc−μ)] 重建；结合更强（ε↑、Eocc=−ε）应提高占据。",
     exam: "第一行声明 ε 是能级还是正的 binding magnitude，此后只从 E−μN 写权重，不背旧答案末式。",
   },
   {
     id: "errata-ps2-relativistic-scale",
     severity: "明确错误",
     source: "作业 2 Q3(c) solution pp.5–6，massless relativistic gas",
-    original: "答案先由 E=pc 得到 ZN∝[8πV/(hβc)³]ᴺ，随后突然换用含质量 m 的非相对论 thermal wavelength。",
-    problem: "质量为零模型不能使用 h/√(2πmkBT)；这也与前一行已经算出的单粒子积分矛盾。",
-    corrected: "定义 λr³=(hβc)³/(8π)，则 ZN=(V/λr³)ᴺ/N!、Ξ=exp(zV/λr³)、P=kBTz/λr³，故 z=e^{βμ}=βPλr³。",
+    original:
+      "答案先由 E=pc 得到 ZN∝[8πV/(hβc)³]ᴺ，随后突然换用含质量 m 的非相对论 thermal wavelength。",
+    problem:
+      "质量为零模型不能使用 h/√(2πmkBT)；这也与前一行已经算出的单粒子积分矛盾。",
+    corrected:
+      "定义 λr³=(hβc)³/(8π)，则 ZN=(V/λr³)ᴺ/N!、Ξ=exp(zV/λr³)、P=kBTz/λr³，故 z=e^{βμ}=βPλr³。",
     verify: "λr³ 必须有体积单位；由 ∫d³p e^{−βcp}=8π/(βc)³ 可一行重建。",
     exam: "不要套 nonrelativistic λT；从题给 dispersion 重新做 momentum integral 最稳。",
   },
@@ -4475,9 +5863,12 @@ export const materialErrata = [
     id: "errata-ps2-ising-critical",
     severity: "明确错误/漏答",
     source: "作业 2 Q4(d–e) solution pp.9–10",
-    original: "非零解写成 m²∝1−4βJ，且把 4βJ 写成 T/Tc；题目所问 ⟨ni⟩ 也没有真正答出。",
-    problem: "T<Tc 时 4βJ>1，旧式会给虚数；同时 β∝1/T，所以温度比方向必然相反。",
-    corrected: "令 K=4βJ。在 T≈Tc、m 很小的近临界展开中，m²≈3(K−1)/K³；Tc=4J/kB 且 K=Tc/T。并且 ⟨ni⟩=(1+m)/2；Landau m² 系数应保留 2βJ(1−4βJ)。",
+    original:
+      "非零解写成 m²∝1−4βJ，且把 4βJ 写成 T/Tc；题目所问 ⟨ni⟩ 也没有真正答出。",
+    problem:
+      "T<Tc 时 4βJ>1，旧式会给虚数；同时 β∝1/T，所以温度比方向必然相反。",
+    corrected:
+      "令 K=4βJ。在 T≈Tc、m 很小的近临界展开中，m²≈3(K−1)/K³；Tc=4J/kB 且 K=Tc/T。并且 ⟨ni⟩=(1+m)/2；Landau m² 系数应保留 2βJ(1−4βJ)。",
     verify: "有序非零解只应在 T<Tc 出现；把 tanh(Km)=Km−(Km)³/3 直接移项即可。",
     exam: "先令 K=4βJ，再做 Taylor；最后用 K=Tc/T 和 m→0 at Tc 检查。",
   },
@@ -4486,7 +5877,8 @@ export const materialErrata = [
     severity: "有限 N 代数错误",
     source: "2025 期中 Q2(c) solution PDF p.7（卷面 p.5）",
     original: "单振子 marginal 的 factorial ratio 被写成 (3N−1)(3N−2)(3N−3)。",
-    problem: "(3N)!/(3N−3)! 的三个因子应从 3N 开始；错移一位虽在 N→∞ 时不改 leading limit，却不是精确有限 N 结果。",
+    problem:
+      "(3N)!/(3N−3)! 的三个因子应从 3N 开始；错移一位虽在 N→∞ 时不改 leading limit，却不是精确有限 N 结果。",
     corrected: "(3N)!/(3N−3)!=(3N)(3N−1)(3N−2)。",
     verify: "用 n!/(n−3)!=n(n−1)(n−2)；取 n=3 可立即排除旧式。",
     exam: "阶乘先完整约分，再取 thermodynamic limit；不要直接猜三个相邻因子。",
@@ -4537,7 +5929,8 @@ export const materialErrata = [
     source: "2025 期中 Q4，mean-field van der Waals",
     original: "相互作用自由能和由其求压强的 V 次幂/系数在答案中不一致。",
     problem: "pair mean-field energy 必须随 N²/V 标度；P=−∂F/∂V 再多一个 1/V。",
-    corrected: "Z≈(V−Nb)^N/(N!λT^{3N}) exp[−βN²ū/(2V)]；Fint=N²ū/(2V)，Pint=N²ū/(2V²)。若 ū<0，定义 a=−ū/2，则 P=NkBT/(V−Nb)−aN²/V²。",
+    corrected:
+      "Z≈(V−Nb)^N/(N!λT^{3N}) exp[−βN²ū/(2V)]；Fint=N²ū/(2V)，Pint=N²ū/(2V²)。若 ū<0，定义 a=−ū/2，则 P=NkBT/(V−Nb)−aN²/V²。",
     verify: "Fint 量纲为能量；−∂V(N²ū/2V)=+N²ū/(2V²)，吸引 ū<0 给负压修正。",
     exam: "把 ū 与 a 的定义写在式旁；用量纲和吸引应降压的方向检查。",
   },
@@ -4546,7 +5939,8 @@ export const materialErrata = [
     severity: "明确错误",
     source: "课件 7 的 Schrödinger equation / density matrix 复习页",
     original: "时间演化式的一处符号与标准 iℏ∂t|ψ⟩=H|ψ⟩ 不一致。",
-    problem: "错误符号会给相位演化方向相反，并破坏后续 von Neumann equation 的约定一致性。",
+    problem:
+      "错误符号会给相位演化方向相反，并破坏后续 von Neumann equation 的约定一致性。",
     corrected: "iℏ∂t|ψ⟩=H|ψ⟩；∂tρ=−(i/ℏ)[H,ρ]。",
     verify: "能量本征态解 |ψ(t)⟩=e^{−iEt/ℏ}|ψ(0)⟩。",
     exam: "采用标准式并由本征态相位快速检查。",
@@ -4566,8 +5960,10 @@ export const materialErrata = [
     severity: "适用条件",
     source: "课件 7 equilibrium density matrix",
     original: "‘平衡时 off-diagonal 全为零’若不说明 basis 会过强。",
-    problem: "ρ=f(H) 在能量本征基中可对角；简并子空间内基可旋转，且其他 basis 一般出现 off-diagonal。",
-    corrected: "canonical ρ=e^{−βH}/Z 与 H 对易；在能量本征基可取对角形式，简并子空间内需谨慎表述。",
+    problem:
+      "ρ=f(H) 在能量本征基中可对角；简并子空间内基可旋转，且其他 basis 一般出现 off-diagonal。",
+    corrected:
+      "canonical ρ=e^{−βH}/Z 与 H 对易；在能量本征基可取对角形式，简并子空间内需谨慎表述。",
     verify: "[ρ,H]=0 是 basis-independent 的准确陈述。",
     exam: "写‘在能量本征基中（可）对角’，不要说所有 basis 都无 off-diagonal。",
   },
@@ -4576,9 +5972,12 @@ export const materialErrata = [
     severity: "概念澄清",
     source: "课件 9 photon / phonon",
     original: "若只把 μ=0 当成公式记忆，会误以为所有 Boson 都 μ=0。",
-    problem: "固定粒子数 Bose 气体一般 μ≤ε0 且不必为 0；光子/声子特殊在粒子数不守恒。",
-    corrected: "热平衡 photon/phonon 的 number 可由物质/晶格自由产生消灭，故相应 chemical potential μ=0。",
-    verify: "若用非零 μ 约束，就等于额外固定其平均数量，与通常黑体/phonon 平衡条件不同。",
+    problem:
+      "固定粒子数 Bose 气体一般 μ≤ε0 且不必为 0；光子/声子特殊在粒子数不守恒。",
+    corrected:
+      "热平衡 photon/phonon 的 number 可由物质/晶格自由产生消灭，故相应 chemical potential μ=0。",
+    verify:
+      "若用非零 μ 约束，就等于额外固定其平均数量，与通常黑体/phonon 平衡条件不同。",
     exam: "先写‘因为 quasiparticle number 不守恒’，再写 μ=0。",
   },
   {
@@ -4586,9 +5985,11 @@ export const materialErrata = [
     severity: "系数/保持量",
     source: "期中 Q4 / 粒子数涨落与 compressibility",
     original: "答案中的涨落—压缩率关系若省略固定量与 V、n 因子，容易量纲不合。",
-    problem: "μ 导数和 isothermal compressibility 的转换依赖 n=N/V 以及 T,V 固定。",
+    problem:
+      "μ 导数和 isothermal compressibility 的转换依赖 n=N/V 以及 T,V 固定。",
     corrected: "Var(N)=kBT(∂⟨N⟩/∂μ)T,V = kBT·V n² κT。",
-    verify: "κT 单位 1/pressure=volume/energy；kBT·Vn²κT 无量纲，符合粒子数方差。",
+    verify:
+      "κT 单位 1/pressure=volume/energy；kBT·Vn²κT 无量纲，符合粒子数方差。",
     exam: "写全导数下标与 n=N/V，再化为 κT。",
   },
   {
@@ -4596,9 +5997,12 @@ export const materialErrata = [
     severity: "题名错误",
     source: "作业 3 Q1 标题",
     original: "标题写 Density matrix for two-particle system。",
-    problem: "正文实际研究单个 quantum harmonic oscillator 的 thermal density matrix，并非 two-particle system。",
-    corrected: "应按“single harmonic oscillator thermal density matrix”理解与作答。",
-    verify: "正文 Hamiltonian 只有一个坐标 x、一个动量 p，能谱标记单个 oscillator quantum number n。",
+    problem:
+      "正文实际研究单个 quantum harmonic oscillator 的 thermal density matrix，并非 two-particle system。",
+    corrected:
+      "应按“single harmonic oscillator thermal density matrix”理解与作答。",
+    verify:
+      "正文 Hamiltonian 只有一个坐标 x、一个动量 p，能谱标记单个 oscillator quantum number n。",
     exam: "按正文 Hamiltonian 解题；不要因标题额外引入两粒子 tensor product。",
   },
   {
@@ -4606,9 +6010,12 @@ export const materialErrata = [
     severity: "中间式疑点",
     source: "作业 3 Q1 solution p.5",
     original: "一个 intermediate exponent 中的 (ξ+ξ′) 项看起来漏写平方。",
-    problem: "Gaussian kernel 的指数应是坐标的二次型；线性残留与最终 boxed kernel 结构不一致。",
-    corrected: "以完成平方后的二次型和最终 boxed thermal kernel 为准，(ξ+ξ′) 对应项应保留平方。",
-    verify: "density kernel 的 Hermiticity 要求 ρ(x,x′)=ρ*(x′,x)，且 diagonal ρ(x,x) 应是正常 Gaussian。",
+    problem:
+      "Gaussian kernel 的指数应是坐标的二次型；线性残留与最终 boxed kernel 结构不一致。",
+    corrected:
+      "以完成平方后的二次型和最终 boxed thermal kernel 为准，(ξ+ξ′) 对应项应保留平方。",
+    verify:
+      "density kernel 的 Hermiticity 要求 ρ(x,x′)=ρ*(x′,x)，且 diagonal ρ(x,x) 应是正常 Gaussian。",
     exam: "不要跨过完成平方；保留中间二次型，最后检查 x↔x′ 对称。",
   },
   {
@@ -4616,7 +6023,8 @@ export const materialErrata = [
     severity: "记号混用",
     source: "作业 3 Q2 solution p.9",
     original: "答案把 ⟨ni⟩ 与 ⟨niα⟩ 混写，同时有时保留简并度 gi。",
-    problem: "整个能级总 occupation 与该能级一个 substate 的 occupation 相差 gi，混写会重复计数。",
+    problem:
+      "整个能级总 occupation 与该能级一个 substate 的 occupation 相差 gi，混写会重复计数。",
     corrected: "单 substate：n̄iα=[e^{β(εi−μ)}∓1]⁻¹；整个简并能级：n̄i=gi n̄iα。",
     verify: "将 α=1…gi 求和，能量相同，每项平均占据相同。",
     exam: "第一行声明 ni 是 level total 还是 single-state occupation；只有前者乘 gi。",
@@ -4625,10 +6033,14 @@ export const materialErrata = [
     id: "errata-ps3-q3-scope",
     severity: "题目范围不一致",
     source: "作业 3 Q3",
-    original: "标题称 arbitrary dispersion in d dimensions，正文却固定 ε=cp、V=L³，答案也按三维线性色散。",
-    problem: "一般 d 维、ε=cpˢ 的 DOS 幂与 BEC 条件不同，不能把三维特例冒充一般结论。",
-    corrected: "本作业实际计算 d=3、s=1 的 linear-dispersion Bose gas；一般式需另由 D(ε)∝ε^{d/s−1} 推。",
-    verify: "d=3,s=1 给 D∝ε²、Nexc∝T³；若是 quadratic s=2，则 D∝ε^{1/2}、Nexc∝T^{3/2}。",
+    original:
+      "标题称 arbitrary dispersion in d dimensions，正文却固定 ε=cp、V=L³，答案也按三维线性色散。",
+    problem:
+      "一般 d 维、ε=cpˢ 的 DOS 幂与 BEC 条件不同，不能把三维特例冒充一般结论。",
+    corrected:
+      "本作业实际计算 d=3、s=1 的 linear-dispersion Bose gas；一般式需另由 D(ε)∝ε^{d/s−1} 推。",
+    verify:
+      "d=3,s=1 给 D∝ε²、Nexc∝T³；若是 quadratic s=2，则 D∝ε^{1/2}、Nexc∝T^{3/2}。",
     exam: "按题面给定 V=L³ 与 ε=cp 作答，同时注明这是三维线性色散特例。",
   },
   {
@@ -4636,7 +6048,8 @@ export const materialErrata = [
     severity: "几何记号",
     source: "作业 3 Q4",
     original: "二维系统仍沿用体积符号 V。",
-    problem: "二维 extensive measure 应是 area，若不说明会让 density 和 DOS 的单位混乱。",
+    problem:
+      "二维 extensive measure 应是 area，若不说明会让 density 和 DOS 的单位混乱。",
     corrected: "网页统一写面积 A、面密度 n=N/A、二维 DOS D2D/A。",
     verify: "D2D/A=gs m/(2πℏ²) 的单位是 1/(area·energy)。",
     exam: "若沿用题面 V，先写‘V 在本题表示二维面积’，或直接改记 A 并声明。",
@@ -4646,7 +6059,8 @@ export const materialErrata = [
     severity: "标题错误",
     source: "2025 期中答案 PDF p.4",
     original: "第 (ii) 项被标成 Canonical ensemble。",
-    problem: "该式对 N 求和并含 e^{βμN}，控制量是 T,V,μ，实际是 grand canonical ensemble。",
+    problem:
+      "该式对 N 求和并含 e^{βμN}，控制量是 T,V,μ，实际是 grand canonical ensemble。",
     corrected: "应标 Grand Canonical ensemble，Ξ=ΣN e^{βμN}ZN。",
     verify: "canonical 固定 N，不会再对 N 从 0 到 ∞ 求和。",
     exam: "按公式和控制量识别系综，不跟随错误小标题。",
@@ -4655,7 +6069,8 @@ export const materialErrata = [
     id: "errata-midterm-entropy-half",
     severity: "页间不一致",
     source: "2025 期中 Q2(a)–(b)",
-    original: "Q2(b) 的 entropy 计算凭空多出 1/2，带来 −kB ln2；Q2(a) 的 Ω 没有此因子。",
+    original:
+      "Q2(b) 的 entropy 计算凭空多出 1/2，带来 −kB ln2；Q2(a) 的 Ω 没有此因子。",
     problem: "若态数定义未改变，对同一个 Ω 取 ln 不应突然出现额外常数。",
     corrected: "从 Q2(a) 自己得到的 Ω 连续取 S=kBlnΩ；不要无来源插入 1/2。",
     verify: "将 Q2(a) 的 Ω 原样代入 ln，逐项展开即可检查。",
@@ -4665,9 +6080,12 @@ export const materialErrata = [
     id: "errata-phase-volume-h",
     severity: "定义边界",
     source: "2025 期中 Q2 / 微正则 phase-space volume",
-    original: "Ω 有时被口头称为 number of states，但写法只给有量纲的 phase-space volume。",
-    problem: "有量纲量不能直接放入 ln；经典态数需要除以适当 h 的幂（全同粒子还涉及 N!）。",
-    corrected: "若 Ω 表示 dimensionless state count，应含 h^{-3N}（以及题设需要的 Gibbs correction）；若只表示 phase volume，则明确它的定义并在熵中加入 reference cell。",
+    original:
+      "Ω 有时被口头称为 number of states，但写法只给有量纲的 phase-space volume。",
+    problem:
+      "有量纲量不能直接放入 ln；经典态数需要除以适当 h 的幂（全同粒子还涉及 N!）。",
+    corrected:
+      "若 Ω 表示 dimensionless state count，应含 h^{-3N}（以及题设需要的 Gibbs correction）；若只表示 phase volume，则明确它的定义并在熵中加入 reference cell。",
     verify: "d^{3N}p d^{3N}q 的单位是 action^{3N}，除 h^{3N} 才无量纲。",
     exam: "优先跟随题目已给定义评分，但加一句‘以 h^{3N} 作为相空间单元’显示物理自洽。",
   },
@@ -4675,9 +6093,12 @@ export const materialErrata = [
     id: "errata-midterm-pn",
     severity: "明确错误",
     source: "2025 期中 Q3(c)–(d)",
-    original: "marking scheme 的 P–⟨N⟩ 关系指数/量纲不一致，涨落式的正负号也不可靠。",
-    problem: "fugacity substitution 必须保持指数 β(energy) 无量纲；Boson occupation 的方差不可能为负。",
-    corrected: "从 Ξ 或 z=e^{βμ} 重新求 relation；单 Bose mode 的 Var(N)=N̄(1+N̄)。",
+    original:
+      "marking scheme 的 P–⟨N⟩ 关系指数/量纲不一致，涨落式的正负号也不可靠。",
+    problem:
+      "fugacity substitution 必须保持指数 β(energy) 无量纲；Boson occupation 的方差不可能为负。",
+    corrected:
+      "从 Ξ 或 z=e^{βμ} 重新求 relation；单 Bose mode 的 Var(N)=N̄(1+N̄)。",
     verify: "几何分布的方差为 q/(1−q)²=N̄(1+N̄)>0。",
     exam: "不要背答案末式；从 Ξ 的一、二阶 μ 导数重建，并检查方差正定。",
   },
@@ -4685,9 +6106,12 @@ export const materialErrata = [
     id: "errata-vdw-bracket",
     severity: "题解矛盾",
     source: "2025 期中 Q4(b) 题干与答案页",
-    original: "题干把 interaction exponential 放进整体方括号后再取 N 次方；答案页却把 exponential 放在外面。",
-    problem: "若指数已含 N²/V，再整体取 N 次方会多出一个 N，破坏 extensive scaling。",
-    corrected: "ideal/excluded-volume 单粒子因子取 N 次方；mean-field pair interaction 的 exp[−βN²ū/(2V)] 只出现一次并放在外面。",
+    original:
+      "题干把 interaction exponential 放进整体方括号后再取 N 次方；答案页却把 exponential 放在外面。",
+    problem:
+      "若指数已含 N²/V，再整体取 N 次方会多出一个 N，破坏 extensive scaling。",
+    corrected:
+      "ideal/excluded-volume 单粒子因子取 N 次方；mean-field pair interaction 的 exp[−βN²ū/(2V)] 只出现一次并放在外面。",
     verify: "固定密度 N/V 时总 interaction energy 应∝N，而不是∝N²。",
     exam: "按 extensive scaling 选择答案页的外置结构，并清楚写 mean-field pair energy。",
   },
@@ -4695,10 +6119,14 @@ export const materialErrata = [
     id: "errata-hard-core",
     severity: "约定不清",
     source: "2025 期中 Q4 hard-core radius / excluded volume",
-    original: "题中写 r<2a0 且称 a0 为 radius，但后续 excluded-volume coefficient 与标准 hard-sphere convention 不一致。",
-    problem: "粒子几何半径、pair exclusion distance、每粒子 van der Waals b 不是同一个量；直接背系数容易差 2 或 4。",
-    corrected: "网页只固定结构 V→V−Nb，并要求 b 由题目所采用的 pair excluded volume convention 明确定义。",
-    verify: "先从两球中心最小距离画几何，再分清 pair excluded volume 与分摊到每粒子的 b。",
+    original:
+      "题中写 r<2a0 且称 a0 为 radius，但后续 excluded-volume coefficient 与标准 hard-sphere convention 不一致。",
+    problem:
+      "粒子几何半径、pair exclusion distance、每粒子 van der Waals b 不是同一个量；直接背系数容易差 2 或 4。",
+    corrected:
+      "网页只固定结构 V→V−Nb，并要求 b 由题目所采用的 pair excluded volume convention 明确定义。",
+    verify:
+      "先从两球中心最小距离画几何，再分清 pair excluded volume 与分摊到每粒子的 b。",
     exam: "若题目指定 b 就沿用；若只给半径，先声明推导采用的几何 convention，不盲抄旧系数。",
   },
   {
@@ -4706,8 +6134,10 @@ export const materialErrata = [
     severity: "明确错误",
     source: "作业 2 Q1(a) 题面，经典 N 振子正则配分函数",
     original: "相空间积分写成 d^{3N}q d^{3N}p / h^3。",
-    problem: "积分包含 3N 对共轭坐标与动量；只除 h^3 会让 N>1 时 Z 仍带有 action^{3N-3} 的量纲。",
-    corrected: "每一对三维粒子的相空间单元贡献 h^3，因此应写 Z=(1/h^{3N})∫d^{3N}q d^{3N}p e^{−βH}。若题目实际把每个 oscillator 当一维，则相应写 (1/h^N)∫d^Nq d^Np；关键是 h 的幂必须与相空间维数配对。",
+    problem:
+      "积分包含 3N 对共轭坐标与动量；只除 h^3 会让 N>1 时 Z 仍带有 action^{3N-3} 的量纲。",
+    corrected:
+      "每一对三维粒子的相空间单元贡献 h^3，因此应写 Z=(1/h^{3N})∫d^{3N}q d^{3N}p e^{−βH}。若题目实际把每个 oscillator 当一维，则相应写 (1/h^N)∫d^Nq d^Np；关键是 h 的幂必须与相空间维数配对。",
     verify: "d^{3N}q d^{3N}p 的单位是 action^{3N}；除 h^{3N} 后 Z 才无量纲。",
     exam: "先根据 Hamiltonian 中 q_i,p_i 的维数声明采用一维还是三维 convention，再让 h 的幂与之严格匹配。",
   },
@@ -4716,8 +6146,10 @@ export const materialErrata = [
     severity: "明确错误",
     source: "2025 期中 Q3(b) 答案，巨正则平均粒子数",
     original: "答案一处写成 ⟨N⟩=−β^{-1}∂_μ lnQ。",
-    problem: "巨配分函数的权重是 e^{−β(E−μN)}=e^{−βE+βμN}；对 μ 求导会带出 +βN，不应有负号。",
-    corrected: "⟨N⟩=(1/β)(∂lnQ/∂μ)_{T,V}；相应 Var(N)=(1/β²)(∂²lnQ/∂μ²)_{T,V}。",
+    problem:
+      "巨配分函数的权重是 e^{−β(E−μN)}=e^{−βE+βμN}；对 μ 求导会带出 +βN，不应有负号。",
+    corrected:
+      "⟨N⟩=(1/β)(∂lnQ/∂μ)_{T,V}；相应 Var(N)=(1/β²)(∂²lnQ/∂μ²)_{T,V}。",
     verify: "直接对单项 e^{−βE+βμN} 求 μ 导数得到 +βN 乘原权重。",
     exam: "若改为对能级 ε 求导才出现负号；先看导数变量，再决定符号。",
   },
@@ -4725,10 +6157,14 @@ export const materialErrata = [
     id: "errata-ps1-relativistic-h",
     severity: "明确遗漏",
     source: "作业 1 Q3 solution，相对论一维理想气体微正则态数",
-    original: "答案先写含 δ(H−E) 的能量壳积分，后续却改算 H≤E 的累计体积，并把该有量纲体积直接作为 Ω 取对数，未除以 h^N。",
-    problem: "δ shell density 与 cumulative volume 相差一次 E 导数，不能无声明互换；同时 N 个一维粒子的 d^Nq d^Np 具有 action^N 的单位，有量纲的 phase volume 不能直接放入 S=kBlnΩ。",
-    corrected: "若采用累计态数，应写 Γ(E)=1/(N!h^N)∫_{H≤E}d^Nq d^Np；壳密度再由 ω(E)=∂Γ/∂E 得到。题面已给的 1/N! 与 h^N 分别处理全同粒子重复计数和相空间单元。",
-    verify: "d^Nq d^Np/h^N 无量纲，故 lnΓ 有定义；一维 N 粒子需要 h^N，而不是三维问题的 h^{3N}。",
+    original:
+      "答案先写含 δ(H−E) 的能量壳积分，后续却改算 H≤E 的累计体积，并把该有量纲体积直接作为 Ω 取对数，未除以 h^N。",
+    problem:
+      "δ shell density 与 cumulative volume 相差一次 E 导数，不能无声明互换；同时 N 个一维粒子的 d^Nq d^Np 具有 action^N 的单位，有量纲的 phase volume 不能直接放入 S=kBlnΩ。",
+    corrected:
+      "若采用累计态数，应写 Γ(E)=1/(N!h^N)∫_{H≤E}d^Nq d^Np；壳密度再由 ω(E)=∂Γ/∂E 得到。题面已给的 1/N! 与 h^N 分别处理全同粒子重复计数和相空间单元。",
+    verify:
+      "d^Nq d^Np/h^N 无量纲，故 lnΓ 有定义；一维 N 粒子需要 h^N，而不是三维问题的 h^{3N}。",
     exam: "第一行先声明使用 Γ(E) 还是 ω(E)，并显式写出 1/(N!h^N)；不要把 δ(H−E) 与 H≤E 的积分当成同一个量。",
   },
   {
@@ -4736,7 +6172,8 @@ export const materialErrata = [
     severity: "字体易读错",
     source: "课件 10 slide 10",
     original: "relaxation coefficient 的字体容易被看成 1/t。",
-    problem: "t 是演化时间变量，τ 是固定 relaxation time；把两者混用会让微分方程系数随时间变化。",
+    problem:
+      "t 是演化时间变量，τ 是固定 relaxation time；把两者混用会让微分方程系数随时间变化。",
     corrected: "线性 relaxation rate 写 1/τ，解为 exp(−t/τ)。",
     verify: "1/τ 量纲是 inverse time，指数 t/τ 无量纲。",
     exam: "手写时明确使用 τ，并在旁边定义 relaxation time。",
