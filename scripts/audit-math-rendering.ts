@@ -11,6 +11,7 @@ import MathText, {
   splitMathText,
   unwrapWholeLiteralMath,
 } from "../app/MathText";
+import FormulaWalkthrough from "../app/FormulaWalkthrough";
 
 type Failure = {
   path: string;
@@ -113,6 +114,24 @@ const teacherSupplementExpressions = mathExpressions - beforeTeacherSupplements;
 const beforeTeacherSource = mathExpressions;
 visit(teacherFormulaSource, "teacherFormulaSource");
 const teacherSourceExpressions = mathExpressions - beforeTeacherSource;
+
+const renderedWalkthroughs = [
+  ...Object.values(formulaDerivations),
+  ...teacherFormulaLessons.map((lesson) => lesson.derivation),
+];
+for (const [index, derivation] of renderedWalkthroughs.entries()) {
+  const markup = renderToStaticMarkup(
+    createElement(FormulaWalkthrough, { derivation }),
+  );
+  if (markup.includes("katex-error")) {
+    failures.push({
+      path: `renderedWalkthroughs[${index}].${derivation.id}`,
+      source: derivation.conclusion,
+      latex: "",
+      error: "FormulaWalkthrough rendered a KaTeX error node",
+    });
+  }
+}
 
 if (teacherFormulaLessons.length !== 53) {
   failures.push({

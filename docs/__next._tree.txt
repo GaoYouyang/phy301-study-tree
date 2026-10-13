@@ -1,4 +1,4 @@
-:HL["/phy301-study-tree/_next/static/chunks/1gvt9mmzy6_uy.css","style"]
+:HL["/phy301-study-tree/_next/static/chunks/0bdiaxuimfg2f.css","style"]
 :HC["/",""]
 1:[["children",{"s":"__PAGE__","h":160}]]
-0:{"b":"opAlpV4pBgUKXjlCOanof","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
+0:{"b":"-F96C4tC1KWg4_bFo3Dln","t":{"t":{"s":"","h":80,"c":"$Q1"}}}

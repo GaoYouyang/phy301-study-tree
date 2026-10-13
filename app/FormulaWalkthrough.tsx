@@ -94,7 +94,7 @@ export default function FormulaWalkthrough({
 
         <div className="formula-conclusion">
           <b>最后得到</b>
-          <MathText text={derivation.conclusion} display />
+          <p><MathText text={derivation.conclusion} /></p>
         </div>
 
         <div className="formula-proof-checks">
