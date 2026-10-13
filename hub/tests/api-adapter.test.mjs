@@ -39,6 +39,15 @@ function createStorage() {
 test("course registry exposes exactly the four stable local routes", () => {
   assert.deepEqual(COURSES.map(({ slug }) => slug), ["phy301", "phy408", "phy309", "mat107"]);
   assert.equal(COURSES.every((course) => course.route.startsWith("/") && !course.route.startsWith("//")), true);
+  assert.deepEqual(
+    Object.fromEntries(COURSES.map(({ slug, stateSource }) => [slug, stateSource])),
+    {
+      phy301: "granular",
+      phy408: "compatibility",
+      phy309: "compatibility",
+      mat107: "compatibility",
+    },
+  );
 });
 
 test("snapshot summary uses the known course denominator and preserves only dashboard fields", () => {
@@ -67,6 +76,117 @@ test("snapshot summary uses the known course denominator and preserves only dash
   assert.equal(summary.recent.nodeId, "bose-gas");
   assert.equal("csrfToken" in summary, false);
   assert.equal("token" in summary, false);
+});
+
+test("whole-course compatibility state feeds dashboard progress, notes, questions, and resume", () => {
+  const course = COURSES.find((item) => item.slug === "mat107");
+  const summary = summarizeSnapshot(
+    {
+      progress: [],
+      notes: [],
+      questions: [],
+      recent: null,
+      learningState: {
+        schemaVersion: 1,
+        courseCode: "MAT107",
+        completedNodes: ["sets-functions", "counting", "counting"],
+        notes: { "sets-functions": "先分清元素与集合。", empty: "" },
+        questions: [
+          {
+            id: "question-1",
+            nodeId: "counting",
+            text: "什么时候要除以排列数？",
+            resolved: false,
+            createdAt: "2026-10-13T03:00:00Z",
+          },
+        ],
+        lastLocation: "#/node/counting",
+        updatedAt: "2026-10-13T04:00:00Z",
+      },
+    },
+    course,
+  );
+
+  assert.equal(summary.completed, 2);
+  assert.equal(summary.percent, 4);
+  assert.equal(summary.noteCount, 1);
+  assert.equal(summary.openQuestionCount, 1);
+  assert.equal(summary.recent.nodeId, "counting");
+  assert.equal(summary.notes[0].content, "先分清元素与集合。");
+  assert.equal(summary.questions[0].question, "什么时候要除以排列数？");
+});
+
+test("compatibility-authoritative course ignores stale granular rows as one state", () => {
+  const course = COURSES.find((item) => item.slug === "phy408");
+  const summary = summarizeSnapshot(
+    {
+      progress: [
+        { nodeId: "granular-node", status: "core_passed", updatedAt: "2026-10-13T01:00:00Z" },
+      ],
+      notes: [{ nodeId: "granular-node", content: "过期粒度笔记", updatedAt: "2026-10-13T01:00:00Z" }],
+      questions: [
+        { id: 9, nodeId: "granular-node", question: "粒度问题", status: "open", updatedAt: "2026-10-13T02:00:00Z" },
+      ],
+      recent: { nodeId: "granular-node", subsection: null, updatedAt: "2026-10-13T02:00:00Z" },
+      learningState: {
+        completedNodes: ["compat-one", "compat-two"],
+        notes: { "compat-one": "兼容状态里的笔记" },
+        questions: [{ id: "compat-question", text: "不应覆盖粒度问题", resolved: false }],
+        lastLocation: "#/lesson/compat-two",
+        updatedAt: "2026-10-13T03:00:00Z",
+      },
+    },
+    course,
+  );
+
+  assert.equal(summary.completed, 2, "compatibility state is authoritative for PHY408");
+  assert.equal(summary.noteCount, 1);
+  assert.equal(summary.notes[0].content, "兼容状态里的笔记");
+  assert.equal(summary.questionCount, 1);
+  assert.equal(summary.questions[0].question, "不应覆盖粒度问题");
+  assert.equal(summary.recent.nodeId, "compat-two");
+});
+
+test("granular-authoritative PHY301 is not overwritten by compatibility state", () => {
+  const summary = summarizeSnapshot(
+    {
+      progress: [
+        { nodeId: "canonical", status: "core_passed", updatedAt: "2026-10-13T01:00:00Z" },
+      ],
+      notes: [{ nodeId: "canonical", content: "粒度笔记", updatedAt: "2026-10-13T01:00:00Z" }],
+      questions: [],
+      recent: { nodeId: "canonical", subsection: null, updatedAt: "2026-10-13T01:00:00Z" },
+      learningState: {
+        completedNodes: ["compat-one", "compat-two"],
+        notes: { "compat-one": "兼容笔记" },
+        lastNode: "compat-two",
+      },
+    },
+    phy301,
+  );
+
+  assert.equal(summary.completed, 1);
+  assert.equal(summary.notes[0].content, "粒度笔记");
+  assert.equal(summary.recent.nodeId, "canonical");
+});
+
+test("compatibility-authoritative course falls back as a whole when state is absent", () => {
+  const course = COURSES.find((item) => item.slug === "phy408");
+  const summary = summarizeSnapshot(
+    {
+      progress: [
+        { nodeId: "granular-node", status: "core_passed", updatedAt: "2026-10-13T01:00:00Z" },
+      ],
+      notes: [{ nodeId: "granular-node", content: "粒度回退", updatedAt: "2026-10-13T01:00:00Z" }],
+      questions: [],
+      recent: null,
+      learningState: null,
+    },
+    course,
+  );
+
+  assert.equal(summary.completed, 1);
+  assert.equal(summary.notes[0].content, "粒度回退");
 });
 
 test("401 is classified as signed out rather than an unavailable API", async () => {
@@ -127,10 +247,37 @@ test("API-unavailable mode can recover a sanitized course summary from local cac
   assert.equal(restored.completed, 0);
 });
 
+test("cached progress is recalculated when the course node count changes", () => {
+  const storage = createStorage();
+  const course = COURSES.find((item) => item.slug === "phy408");
+  saveSummaryCache(storage, {
+    version: 1,
+    slug: "phy408",
+    code: "PHY408",
+    titleZh: "旧标题",
+    route: "/old-route/",
+    expectedNodes: 2,
+    progressRecords: 2,
+    completed: 2,
+    inProgress: 0,
+    percent: 100,
+    percentBasis: "course",
+    notes: [],
+    questions: [],
+  });
+
+  const restored = loadSummaryCache(storage, course);
+  assert.equal(restored.version, 2);
+  assert.equal(restored.expectedNodes, 31);
+  assert.equal(restored.percent, 6);
+  assert.equal(restored.percentBasis, "course");
+  assert.equal(restored.route, "/phy408/");
+});
+
 test("malformed or empty snapshot data degrades to an empty, honest summary", () => {
   const summary = summarizeSnapshot(null, COURSES.find((course) => course.slug === "phy408"));
-  assert.equal(summary.percent, null);
-  assert.equal(summary.percentBasis, "unknown");
+  assert.equal(summary.percent, 0);
+  assert.equal(summary.percentBasis, "course");
   assert.deepEqual(summary.notes, []);
   assert.deepEqual(summary.questions, []);
 });

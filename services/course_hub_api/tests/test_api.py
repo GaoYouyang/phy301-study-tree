@@ -206,6 +206,169 @@ class ApiIntegrationTests(unittest.TestCase):
         self.assertEqual(snapshot["recent"]["nodeId"], "node-01")
         self.assertEqual(len(snapshot["notes"]), 1)
         self.assertEqual(len(snapshot["questions"]), 1)
+        self.assertIsNone(snapshot["learningState"])
+
+    def test_learning_state_aliases_etags_and_course_isolation(self) -> None:
+        status, _, _, _ = self.request(
+            "GET", "/api/v1/courses/PHY408/learning-state"
+        )
+        self.assertEqual(status, 401)
+        bearer = {"Authorization": f"Bearer {self.token}"}
+        status, headers, payload, raw = self.request(
+            "GET", "/api/v1/courses/PHY408/learning-state", headers=bearer
+        )
+        self.assertEqual(status, 204)
+        self.assertEqual(raw, b"")
+        self.assertIsNone(payload)
+        self.assertNotIn("etag", headers)
+        status, _, payload, _ = self.request(
+            "GET", "/api/v1/courses/PHY408/state", headers=bearer
+        )
+        self.assertEqual(status, 404)
+        self.assertEqual(payload["error"]["code"], "learning_state_not_found")
+
+        first = {
+            "version": 1,
+            "completed": ["terminal"],
+            "notes": {"terminal": "自己的笔记"},
+        }
+        status, headers, payload, _ = self.request(
+            "PUT", "/api/v1/courses/pHy408/state", first, bearer
+        )
+        self.assertEqual(status, 200)
+        self.assertEqual(payload, first)
+        first_etag = headers["etag"]
+        self.assertRegex(first_etag, r'^"[0-9a-f]{64}"$')
+
+        status, headers, payload, _ = self.request(
+            "GET", "/api/v1/courses/phy408/learning-state", headers=bearer
+        )
+        self.assertEqual(status, 200)
+        self.assertEqual(payload, first)
+        self.assertEqual(headers["etag"], first_etag)
+        status, headers, payload, _ = self.request(
+            "GET", "/api/v1/courses/PHY408/state", headers=bearer
+        )
+        self.assertEqual(status, 200)
+        self.assertEqual(payload, first)
+        self.assertEqual(headers["etag"], first_etag)
+        with sqlite3.connect(self.database) as db:
+            stored_slug = db.execute(
+                "SELECT course_slug FROM learning_states"
+            ).fetchone()[0]
+        self.assertEqual(stored_slug, "phy408")
+
+        status, _, payload, _ = self.request(
+            "GET", "/api/v1/courses/PHY301/learning-state", headers=bearer
+        )
+        self.assertEqual(status, 204)
+        self.assertIsNone(payload)
+
+        stale_headers = {**bearer, "If-Match": '"stale"'}
+        status, _, payload, _ = self.request(
+            "PUT", "/api/v1/courses/PHY408/learning-state",
+            {"version": 2}, stale_headers,
+        )
+        self.assertEqual(status, 412)
+        self.assertEqual(payload["error"]["code"], "precondition_failed")
+
+        malformed_headers = {**bearer, "If-Match": f'{first_etag}, *'}
+        status, _, payload, _ = self.request(
+            "PUT", "/api/v1/courses/PHY408/learning-state",
+            {"version": 3}, malformed_headers,
+        )
+        self.assertEqual(status, 412)
+        self.assertEqual(payload["error"]["code"], "precondition_failed")
+
+        second = {"version": 2, "completed": ["terminal", "python"]}
+        matching_headers = {**bearer, "If-Match": first_etag}
+        status, headers, payload, _ = self.request(
+            "PUT", "/api/v1/courses/PHY408/learning-state", second,
+            matching_headers,
+        )
+        self.assertEqual(status, 200)
+        self.assertEqual(payload, second)
+        self.assertNotEqual(headers["etag"], first_etag)
+
+        status, _, payload, _ = self.request(
+            "GET", "/api/v1/courses/PHY408/learning-state", headers=bearer
+        )
+        self.assertEqual(status, 200)
+        self.assertEqual(payload, second)
+
+        status, _, snapshot, _ = self.request(
+            "GET", "/api/v1/courses/phy408/snapshot", headers=bearer
+        )
+        self.assertEqual(status, 200)
+        self.assertEqual(snapshot["learningState"], second)
+        status, _, other_snapshot, _ = self.request(
+            "GET", "/api/v1/courses/phy301/snapshot", headers=bearer
+        )
+        self.assertEqual(status, 200)
+        self.assertIsNone(other_snapshot["learningState"])
+
+    def test_learning_state_auth_shape_size_and_unknown_course_validation(self) -> None:
+        self.login()
+        state_path = "/api/v1/courses/MAT107/learning-state"
+        status, _, _, _ = self.request(
+            "PUT", state_path, {"version": 1}, self.session_headers()
+        )
+        self.assertEqual(status, 403)
+        status, _, payload, _ = self.request(
+            "PUT", state_path, {"version": 1}, self.session_headers(csrf=True)
+        )
+        self.assertEqual(status, 200)
+        self.assertEqual(payload, {"version": 1})
+
+        status, _, payload, _ = self.request(
+            "PUT", "/api/v1/courses/PHY309/learning-state", ["not", "an", "object"],
+            self.session_headers(csrf=True),
+        )
+        self.assertEqual(status, 400)
+        self.assertEqual(payload["error"]["code"], "invalid_json_shape")
+
+        status, _, payload, _ = self.request(
+            "PUT", "/api/v1/courses/PHY309/learning-state",
+            {"invalidUnicode": "\ud800"}, self.session_headers(csrf=True),
+        )
+        self.assertEqual(status, 400)
+        self.assertEqual(payload["error"]["code"], "invalid_json")
+
+        bearer = {"Authorization": f"Bearer {self.token}"}
+        status, _, payload, _ = self.request(
+            "PUT", "/api/v1/courses/PHY309/learning-state",
+            {"blob": "x" * (api.MAX_BODY_BYTES + 1)}, bearer,
+        )
+        self.assertEqual(status, 413)
+        self.assertEqual(payload["error"]["code"], "body_too_large")
+
+        status, _, payload, _ = self.request(
+            "PUT", "/api/v1/courses/UNKNOWN/learning-state", {"version": 1}, bearer
+        )
+        self.assertEqual(status, 404)
+        self.assertEqual(payload["error"]["code"], "course_not_found")
+
+        status, _, payload, _ = self.request(
+            "PUT", "/api/v1/courses/PHY309/learning-state", {"version": 1},
+            {**bearer, "If-Match": "*"},
+        )
+        self.assertEqual(status, 412)
+        self.assertEqual(payload["error"]["code"], "precondition_failed")
+
+        create_only_headers = {**bearer, "If-None-Match": "*"}
+        status, headers, payload, _ = self.request(
+            "PUT", "/api/v1/courses/PHY309/learning-state",
+            {"schemaVersion": 1}, create_only_headers,
+        )
+        self.assertEqual(status, 200)
+        self.assertEqual(payload, {"schemaVersion": 1})
+        self.assertIn("etag", headers)
+        status, _, payload, _ = self.request(
+            "PUT", "/api/v1/courses/PHY309/learning-state",
+            {"schemaVersion": 2}, create_only_headers,
+        )
+        self.assertEqual(status, 412)
+        self.assertEqual(payload["error"]["code"], "precondition_failed")
 
     def test_validation_and_security_headers(self) -> None:
         self.login()
@@ -230,6 +393,17 @@ class ApiIntegrationTests(unittest.TestCase):
             {"content": "persistent"}, bearer
         )
         self.assertEqual(status, 200)
+        learning_state = {
+            "version": 1,
+            "completed": ["probability-basics"],
+            "lastNode": "probability-basics",
+        }
+        status, headers, payload, _ = self.request(
+            "PUT", "/api/v1/courses/MAT107/learning-state", learning_state, bearer
+        )
+        self.assertEqual(status, 200)
+        self.assertEqual(payload, learning_state)
+        stored_etag = headers["etag"]
         self.server.shutdown()
         self.server.server_close()
         self.thread.join(timeout=3)
@@ -247,9 +421,51 @@ class ApiIntegrationTests(unittest.TestCase):
         )
         self.assertEqual(status, 200)
         self.assertEqual(payload["note"]["content"], "persistent")
+        status, headers, payload, _ = self.request(
+            "GET", "/api/v1/courses/mat107/learning-state", headers=bearer
+        )
+        self.assertEqual(status, 200)
+        self.assertEqual(payload, learning_state)
+        self.assertEqual(headers["etag"], stored_etag)
+        status, _, snapshot, _ = self.request(
+            "GET", "/api/v1/courses/mat107/snapshot", headers=bearer
+        )
+        self.assertEqual(status, 200)
+        self.assertEqual(snapshot["learningState"], learning_state)
 
 
 class StaticSecurityTests(unittest.TestCase):
+    def test_schema_v2_upgrade_preserves_granular_data(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            database = root / "legacy.sqlite3"
+            courses_file = root / "courses.json"
+            shutil.copyfile(SERVICE_DIR / "courses.json", courses_file)
+            store = api.Store(database, courses_file)
+            with store.connect() as db:
+                db.execute(
+                    "INSERT INTO notes(course_slug, node_id, content, updated_at) VALUES (?, ?, ?, ?)",
+                    ("phy301", "legacy-note", "keep me", api.utc_now()),
+                )
+                db.execute("DROP TABLE learning_states")
+                db.execute("DELETE FROM schema_migrations WHERE version=2")
+
+            api.Store(database, courses_file)
+            with sqlite3.connect(database) as db:
+                note = db.execute(
+                    "SELECT content FROM notes WHERE course_slug=? AND node_id=?",
+                    ("phy301", "legacy-note"),
+                ).fetchone()
+                migration = db.execute(
+                    "SELECT version FROM schema_migrations WHERE version=2"
+                ).fetchone()
+                table = db.execute(
+                    "SELECT name FROM sqlite_master WHERE type='table' AND name='learning_states'"
+                ).fetchone()
+            self.assertEqual(note, ("keep me",))
+            self.assertEqual(migration, (2,))
+            self.assertEqual(table, ("learning_states",))
+
     def test_token_file_permissions_are_enforced(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             token_file = Path(directory) / "token"

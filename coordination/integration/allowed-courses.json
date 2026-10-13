@@ -1,0 +1,21 @@
+{
+  "schemaVersion": "allowed-courses/v1",
+  "courses": {
+    "PHY301": {
+      "slug": "phy301",
+      "route": "/phy301/"
+    },
+    "PHY408": {
+      "slug": "phy408",
+      "route": "/phy408/"
+    },
+    "PHY309": {
+      "slug": "phy309",
+      "route": "/phy309/"
+    },
+    "MAT107": {
+      "slug": "mat107",
+      "route": "/mat107/"
+    }
+  }
+}

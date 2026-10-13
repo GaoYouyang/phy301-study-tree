@@ -1,0 +1,38 @@
+{
+  "schemaVersion": "course-project-registry/v1",
+  "projects": [
+    {
+      "code": "PHY408",
+      "slug": "phy408",
+      "route": "/phy408/",
+      "packageRoot": "/Users/gaoyouyang/Documents/ChatGPT/Data Intensive Science/course-package",
+      "enabled": true,
+      "coordination": {
+        "threadId": "01a10ef0-bf9e-7a51-b9d2-994534e4c189",
+        "note": "Human coordination metadata only; never used for deployment."
+      }
+    },
+    {
+      "code": "PHY309",
+      "slug": "phy309",
+      "route": "/phy309/",
+      "packageRoot": "/Users/gaoyouyang/Desktop/PHY309/course-package",
+      "enabled": true,
+      "coordination": {
+        "threadId": "01a1197c-7b85-7022-8057-34137414c18f",
+        "note": "Human coordination metadata only; never used for deployment."
+      }
+    },
+    {
+      "code": "MAT107",
+      "slug": "mat107",
+      "route": "/mat107/",
+      "packageRoot": "/Users/gaoyouyang/Desktop/MAT107/course-package",
+      "enabled": true,
+      "coordination": {
+        "threadId": "01a119d9-134b-7c22-a8f6-a12868ad5e09",
+        "note": "Human coordination metadata only; never used for deployment."
+      }
+    }
+  ]
+}

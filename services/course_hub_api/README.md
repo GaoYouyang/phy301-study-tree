@@ -13,7 +13,20 @@ Registered course slugs:
 
 Data is isolated by course slug in composite keys and every course-scoped SQL
 query. The current schema stores node progress, node notes, questions/answers,
-and the last reading position.
+the last reading position, and one optional compatibility learning-state JSON
+object per course. The compatibility route accepts a registry code or slug
+case-insensitively, then stores only under the exact registry slug.
+
+Existing databases upgrade additively: startup creates the `learning_states`
+table and records schema migration 2 without modifying granular learning data.
+There is deliberately no automatic conversion between the two representations;
+an existing course returns `204` from its compatibility GET until its frontend
+saves once. See [API.md](API.md) for the ETag/`If-Match` contract.
+The legacy PHY408 `/state` alias shares this storage and returns `404` when
+empty, matching that already-built client's original contract.
+Each course's existing `/snapshot` response exposes the exact object as the
+optional `learningState` field (or `null`) so the central hub can build a
+schema-aware read-only summary without merging the two persistence models.
 
 ## Server installation
 

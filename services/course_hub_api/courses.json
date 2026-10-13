@@ -4,29 +4,29 @@
     {
       "slug": "phy301",
       "code": "PHY301",
-      "title_zh": "统计物理",
-      "title_en": "Statistical Physics",
+      "title_zh": "热力学与统计物理",
+      "title_en": "Thermodynamics and Statistical Physics",
       "enabled": true
     },
     {
       "slug": "phy408",
       "code": "PHY408",
-      "title_zh": "课程名称待课程资料确认",
-      "title_en": "PHY408",
+      "title_zh": "数据密集型科学",
+      "title_en": "Data Intensive Science",
       "enabled": true
     },
     {
       "slug": "phy309",
       "code": "PHY309",
-      "title_zh": "课程名称待课程资料确认",
-      "title_en": "PHY309",
+      "title_zh": "光子学与光电子学",
+      "title_en": "Photonics and Optoelectronics",
       "enabled": true
     },
     {
       "slug": "mat107",
       "code": "MAT107",
-      "title_zh": "课程名称待课程资料确认",
-      "title_en": "MAT107",
+      "title_zh": "概率论",
+      "title_en": "Probability Theory",
       "enabled": true
     }
   ]

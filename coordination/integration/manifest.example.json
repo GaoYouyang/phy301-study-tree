@@ -1,0 +1,60 @@
+{
+  "schemaVersion": "course-package/v1",
+  "course": {
+    "code": "PHY408",
+    "nameZh": "数据密集型科学",
+    "nameEn": "Data Intensive Science",
+    "slug": "phy408",
+    "route": "/phy408/"
+  },
+  "artifact": {
+    "kind": "static-site",
+    "entry": "site/index.html",
+    "basePath": "/phy408/",
+    "apiBase": "/api/v1",
+    "localFallback": true
+  },
+  "build": {
+    "command": "npm ci && npm run build",
+    "workingDirectory": ".",
+    "outputDir": "site",
+    "builtAt": "2026-10-13T10:00:00+08:00"
+  },
+  "inventory": {
+    "sourceFiles": 7,
+    "slideDecks": 4,
+    "originalSlides": 156,
+    "translationExplanationSlides": 230,
+    "assessmentFiles": 3,
+    "assessmentItems": 68,
+    "learningNodes": 31
+  },
+  "coverage": {
+    "sourceFilesMapped": 7,
+    "sourceFilesTotal": 7,
+    "originalSlidesMapped": 156,
+    "originalSlidesTotal": 156,
+    "assessmentItemsMapped": 68,
+    "assessmentItemsTotal": 68
+  },
+  "files": {
+    "site": "site/",
+    "coverage": "source-coverage.json",
+    "qa": "qa-report.json",
+    "checksums": "checksums.sha256",
+    "readme": "README.md"
+  },
+  "tests": [
+    {
+      "name": "production build and course tests",
+      "command": "npm test",
+      "status": "passed",
+      "evidence": "qa-report.json"
+    }
+  ],
+  "rights": {
+    "basis": "按用户所述教师课程资料授权用于本课程学习站，第三方材料沿用其各自来源限制。",
+    "redistribution": "course-site-only"
+  },
+  "limitations": []
+}

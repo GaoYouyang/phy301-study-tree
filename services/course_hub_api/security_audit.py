@@ -48,6 +48,26 @@ checks = {
     "service filesystem is protected": "ProtectSystem=strict" in UNIT and "ReadWritePaths=/var/lib/course-hub" in UNIT,
     "browser wildcard CORS absent": "Access-Control-Allow-Origin" not in APP and "Access-Control-Allow-Origin" not in PROXY,
     "request size is bounded": "MAX_BODY_BYTES = 64 * 1024" in APP and "client_max_body_size 64k" in PROXY,
+    "compatibility learning state is bounded and course-scoped": all(item in APP for item in (
+        "MAX_LEARNING_STATE_BYTES = 64 * 1024",
+        "CREATE TABLE IF NOT EXISTS learning_states",
+        "course_slug TEXT PRIMARY KEY REFERENCES courses(slug) ON DELETE CASCADE",
+        "self.app.store.resolve_course(course_reference)",
+        'remainder in (["learning-state"], ["state"])',
+        'missing_status=404 if remainder == ["state"] else 204',
+        "Learning state exceeds 64 KiB after normalization.",
+    )),
+    "compatibility writes use optimistic concurrency": all(item in APP for item in (
+        'self.headers.get("If-Match")',
+        'self.headers.get("If-None-Match")',
+        'db.execute("BEGIN IMMEDIATE")',
+        '"precondition_failed"',
+        '"ETag": etag',
+    )),
+    "snapshot exposes only its course compatibility state": all(item in APP for item in (
+        '"SELECT state_json FROM learning_states WHERE course_slug=?", (slug,)',
+        '"learningState": learning_state',
+    )),
     "cookie is HttpOnly and SameSite strict": "HttpOnly" in APP and "SameSite=Strict" in APP,
     "session cookie protects the whole origin": 'Path=/; HttpOnly' in APP,
     "site content uses session auth request": (

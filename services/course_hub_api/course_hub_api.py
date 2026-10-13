@@ -28,9 +28,11 @@ from urllib.parse import urlsplit
 API_PREFIX = "/api/v1"
 API_VERSION = "v1"
 MAX_BODY_BYTES = 64 * 1024
+MAX_LEARNING_STATE_BYTES = 64 * 1024
 COOKIE_NAME = "course_hub_session"
 NODE_ID_RE = re.compile(r"^[A-Za-z0-9._:-]{1,128}$")
 SLUG_RE = re.compile(r"^[a-z0-9][a-z0-9-]{1,31}$")
+LEARNING_STATE_ETAG_RE = re.compile(r'^"[0-9a-f]{64}"$')
 PROGRESS_STATES = {"not_started", "in_progress", "core_passed", "review_passed"}
 QUESTION_STATES = {"open", "answered", "archived"}
 SITE_PASSWORD_SCHEME = "pbkdf2_sha256"
@@ -136,6 +138,7 @@ class Store:
     def __init__(self, database: Path, courses_file: Path):
         self.database = database
         self.courses = self._load_courses(courses_file)
+        self.course_aliases = self._build_course_aliases(self.courses)
         self.database.parent.mkdir(parents=True, exist_ok=True)
         self._initialize()
 
@@ -157,6 +160,19 @@ class Store:
         if set(courses) != {"phy301", "phy408", "phy309", "mat107"}:
             raise ValueError("Course registry must contain PHY301, PHY408, PHY309, and MAT107.")
         return courses
+
+    @staticmethod
+    def _build_course_aliases(courses: dict[str, dict[str, Any]]) -> dict[str, str]:
+        """Map a registry slug or course code to its canonical registry slug."""
+        aliases: dict[str, str] = {}
+        for slug, course in courses.items():
+            for alias in (slug, str(course["code"])):
+                normalized = alias.casefold()
+                existing = aliases.get(normalized)
+                if existing is not None and existing != slug:
+                    raise ValueError(f"Ambiguous course alias: {alias!r}")
+                aliases[normalized] = slug
+        return aliases
 
     def connect(self) -> sqlite3.Connection:
         connection = sqlite3.connect(self.database, timeout=5.0)
@@ -216,6 +232,12 @@ class Store:
                     subsection TEXT,
                     updated_at TEXT NOT NULL
                 );
+                CREATE TABLE IF NOT EXISTS learning_states (
+                    course_slug TEXT PRIMARY KEY REFERENCES courses(slug) ON DELETE CASCADE,
+                    state_json TEXT NOT NULL,
+                    etag TEXT NOT NULL,
+                    updated_at TEXT NOT NULL
+                );
                 CREATE TABLE IF NOT EXISTS sessions (
                     token_hash TEXT PRIMARY KEY,
                     csrf_token TEXT NOT NULL,
@@ -247,12 +269,24 @@ class Store:
                 "INSERT OR IGNORE INTO schema_migrations(version, applied_at) VALUES (1, ?)",
                 (now,),
             )
+            db.execute(
+                "INSERT OR IGNORE INTO schema_migrations(version, applied_at) VALUES (2, ?)",
+                (now,),
+            )
 
     def ensure_course(self, slug: str) -> dict[str, Any]:
         course = self.courses.get(slug)
         if not course or not course["enabled"]:
             raise ApiError(404, "course_not_found", "Course does not exist or is disabled.")
         return course
+
+    def resolve_course(self, reference: str) -> str:
+        """Resolve a course code or slug case-insensitively to an enabled slug."""
+        slug = self.course_aliases.get(reference.casefold())
+        if slug is None:
+            raise ApiError(404, "course_not_found", "Course does not exist or is disabled.")
+        self.ensure_course(slug)
+        return slug
 
 
 class CourseHubServer(ThreadingHTTPServer):
@@ -345,9 +379,22 @@ class CourseHubHandler(BaseHTTPRequestHandler):
             if len(segments) < 2 or segments[0] != "courses":
                 raise ApiError(404, "not_found", "Endpoint not found.")
 
-            slug = segments[1]
-            self.app.store.ensure_course(slug)
+            course_reference = segments[1]
             remainder = segments[2:]
+            if remainder in (["learning-state"], ["state"]):
+                slug = self.app.store.resolve_course(course_reference)
+                self._learning_state(
+                    method,
+                    slug,
+                    missing_status=404 if remainder == ["state"] else 204,
+                )
+                return
+
+            # The original granular API keeps its exact-slug contract. The
+            # compatibility endpoint above alone accepts course codes and
+            # case-insensitive aliases from independently built course sites.
+            slug = course_reference
+            self.app.store.ensure_course(slug)
             if not remainder:
                 if method != "GET":
                     raise ApiError(405, "method_not_allowed", "Only GET is allowed.")
@@ -763,6 +810,117 @@ class CourseHubHandler(BaseHTTPRequestHandler):
         else:
             raise ApiError(405, "method_not_allowed", "Method not allowed.")
 
+    @staticmethod
+    def _serialize_learning_state(payload: dict[str, Any]) -> tuple[str, str]:
+        try:
+            state_json = json.dumps(
+                payload,
+                ensure_ascii=False,
+                separators=(",", ":"),
+                sort_keys=True,
+                allow_nan=False,
+            )
+            state_bytes = state_json.encode("utf-8")
+        except (TypeError, ValueError, UnicodeEncodeError) as exc:
+            raise ApiError(400, "invalid_json", "Learning state must be valid JSON.") from exc
+        if len(state_bytes) > MAX_LEARNING_STATE_BYTES:
+            raise ApiError(
+                413,
+                "learning_state_too_large",
+                "Learning state exceeds 64 KiB after normalization.",
+            )
+        digest = hashlib.sha256(state_bytes).hexdigest()
+        return state_json, f'"{digest}"'
+
+    @staticmethod
+    def _if_match_satisfied(if_match: str, current_etag: str | None) -> bool:
+        value = if_match.strip()
+        if value == "*":
+            return current_etag is not None
+        candidates = [candidate.strip() for candidate in value.split(",")]
+        if not candidates or any(
+            not LEARNING_STATE_ETAG_RE.fullmatch(candidate) for candidate in candidates
+        ):
+            return False
+        if current_etag is None:
+            return False
+        return current_etag in candidates
+
+    def _learning_state(self, method: str, slug: str, *, missing_status: int) -> None:
+        """Compatibility blob for independently produced course frontends."""
+        if method == "GET":
+            with self.app.store.connect() as db:
+                row = db.execute(
+                    "SELECT state_json, etag FROM learning_states WHERE course_slug=?",
+                    (slug,),
+                ).fetchone()
+            if not row:
+                if missing_status == 404:
+                    self._json(404, {"error": {
+                        "code": "learning_state_not_found",
+                        "message": "Learning state has not been created.",
+                    }})
+                else:
+                    self._json(204)
+                return
+            self._json(200, json.loads(row["state_json"]), {"ETag": row["etag"]})
+            return
+
+        if method != "PUT":
+            raise ApiError(405, "method_not_allowed", "Only GET and PUT are allowed.")
+
+        payload = self._read_json()
+        state_json, etag = self._serialize_learning_state(payload)
+        if_match = self.headers.get("If-Match")
+        if_none_match = self.headers.get("If-None-Match")
+        if if_match is not None and if_none_match is not None:
+            raise ApiError(
+                400,
+                "conflicting_preconditions",
+                "Send only one of If-Match or If-None-Match.",
+            )
+        if if_none_match is not None and if_none_match.strip() != "*":
+            raise ApiError(
+                400,
+                "invalid_if_none_match",
+                "Conditional creation supports only If-None-Match: *.",
+            )
+        updated_at = utc_now()
+        with self.app.store.connect() as db:
+            # Serialize the read/check/write sequence so two conditional writes
+            # cannot both validate against the same older representation.
+            db.execute("BEGIN IMMEDIATE")
+            current = db.execute(
+                "SELECT etag FROM learning_states WHERE course_slug=?",
+                (slug,),
+            ).fetchone()
+            current_etag = None if not current else str(current["etag"])
+            if if_match is not None and not self._if_match_satisfied(if_match, current_etag):
+                raise ApiError(
+                    412,
+                    "precondition_failed",
+                    "If-Match does not match the current learning state.",
+                )
+            if if_none_match is not None and current is not None:
+                raise ApiError(
+                    412,
+                    "precondition_failed",
+                    "A learning state already exists.",
+                )
+            db.execute(
+                """
+                INSERT INTO learning_states(course_slug, state_json, etag, updated_at)
+                VALUES (?, ?, ?, ?)
+                ON CONFLICT(course_slug) DO UPDATE SET
+                    state_json=excluded.state_json,
+                    etag=excluded.etag,
+                    updated_at=excluded.updated_at
+                """,
+                (slug, state_json, etag, updated_at),
+            )
+        normalized = json.loads(state_json)
+        self._json(200, normalized, {"ETag": etag})
+
     def _snapshot(self, slug: str) -> None:
         with self.app.store.connect() as db:
             progress = [self._progress_row(row) for row in db.execute(
@@ -777,8 +935,19 @@ class CourseHubHandler(BaseHTTPRequestHandler):
             recent_row = db.execute(
                 "SELECT node_id, subsection, updated_at FROM recent_positions WHERE course_slug=?", (slug,)
             ).fetchone()
+            learning_state_row = db.execute(
+                "SELECT state_json FROM learning_states WHERE course_slug=?", (slug,)
+            ).fetchone()
         recent = None if not recent_row else {"nodeId": recent_row["node_id"], "subsection": recent_row["subsection"], "updatedAt": recent_row["updated_at"]}
-        self._json(200, {"course": self.app.store.courses[slug], "progress": progress, "notes": notes, "questions": questions, "recent": recent})
+        learning_state = None if not learning_state_row else json.loads(learning_state_row["state_json"])
+        self._json(200, {
+            "course": self.app.store.courses[slug],
+            "progress": progress,
+            "notes": notes,
+            "questions": questions,
+            "recent": recent,
+            "learningState": learning_state,
+        })
 
 
 def read_root_token(path: Path) -> str:

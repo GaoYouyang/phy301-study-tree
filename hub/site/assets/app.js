@@ -1,5 +1,5 @@
-import { CourseHubApi, isUnauthorized, loadSummaryCache, saveSummaryCache, summarizeSnapshot } from "./api-adapter.js";
-import { COURSES, COURSE_BY_SLUG } from "./course-config.js";
+import { CourseHubApi, isUnauthorized, loadSummaryCache, saveSummaryCache, summarizeSnapshot } from "./api-adapter.js?v=0016d3cc04de";
+import { COURSES, COURSE_BY_SLUG, courseAvailabilityPresentation } from "./course-config.js?v=486f22d8755f";
 
 const api = new CourseHubApi();
 const summaries = new Map();
@@ -156,8 +156,13 @@ function renderCourse(course, summary) {
   const track = card.querySelector('[role="progressbar"]');
   const recent = card.querySelector('[data-role="recent"]');
   const courseLink = card.querySelector('[data-role="course-link"]');
+  const courseState = card.querySelector('[data-role="course-state"]');
 
   courseLink.href = course.route;
+  const availability = courseAvailabilityPresentation(course.availability);
+  courseState.textContent = availability.label;
+  courseState.classList.remove("course-state--ready", "course-state--building");
+  courseState.classList.add(availability.className);
 
   if (!summary) {
     const isReady = course.availability === "ready";
@@ -165,6 +170,10 @@ function renderCourse(course, summary) {
     value.textContent = isReady ? "0%" : "—";
     bar.style.width = "0%";
     track.setAttribute("aria-valuenow", "0");
+    track.setAttribute(
+      "aria-label",
+      isReady ? `${course.code} 课程完成度 0%` : `${course.code} 完成度尚不可用`,
+    );
     recent.textContent = isReady ? "尚无云端续学位置" : "课程项目正在整理资料";
     return;
   }

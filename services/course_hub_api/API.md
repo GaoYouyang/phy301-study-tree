@@ -2,9 +2,10 @@
 
 Base path: `/api/v1`
 
-All responses are JSON except successful `DELETE` responses (`204`). API
-responses use `Cache-Control: no-store`. There is intentionally no CORS:
-course frontends and the API must share the same origin.
+All non-empty responses are JSON. Successful `DELETE` requests and an absent
+canonical compatibility state return `204` with no body. API responses use
+`Cache-Control: no-store`. There is intentionally no CORS: course frontends
+and the API must share the same origin.
 
 ## Authentication and browser session
 
@@ -72,6 +73,67 @@ Valid slugs are `phy301`, `phy408`, `phy309`, and `mat107`. A slug from the
 route is included in every data query; records never fall back to another
 course.
 
+## Whole-course learning-state compatibility endpoint
+
+Independently built course packages may use one complete JSON object instead
+of the granular resources below:
+
+- `GET /api/v1/courses/{courseCodeOrSlug}/learning-state`
+- `PUT /api/v1/courses/{courseCodeOrSlug}/learning-state`
+
+The already-delivered PHY408 package uses the legacy aliases
+`GET/PUT /api/v1/courses/{courseCodeOrSlug}/state`. They address the same row,
+use the same authentication, bounds, ETag, and conditional-write rules, and
+remain supported so the large static package does not need to be rebuilt.
+The only legacy response difference is that an absent `GET .../state` returns
+`404 learning_state_not_found`, which that client treats as a fresh state;
+an absent `GET .../learning-state` returns `204` for PHY309 and MAT107.
+
+For these compatibility routes only, the registry code or slug is accepted
+case-insensitively (`PHY408`, `phy408`, and `pHy408` all resolve to the exact
+registry slug `phy408`). Unknown or disabled courses return `404`; arbitrary
+course identifiers are never created.
+
+`GET .../learning-state` returns `204 No Content` until that course has been
+written. Once present, it returns the stored JSON object directly with a strong
+`ETag` header. `PUT` accepts exactly one JSON object of at most 64 KiB, returns
+the normalized stored object and its `ETag` with `200 OK`. Arrays, scalar JSON,
+invalid JSON, and oversized objects are rejected.
+
+To prevent a stale browser from overwriting a newer save, pass the ETag read
+from the latest GET or PUT:
+
+```http
+PUT /api/v1/courses/PHY408/learning-state
+Content-Type: application/json
+X-CSRF-Token: <current session token>
+If-Match: "8c4f..."
+
+{"version":1,"completed":["terminal"],"notes":{}}
+```
+
+A mismatched `If-Match`, or any `If-Match` when no state exists yet, returns
+`412 Precondition Failed` without changing the saved object. Omitting
+`If-Match` intentionally performs an unconditional upsert. `If-Match: *` is
+accepted only when a state already exists. Cookie-authenticated PUT requests
+need the same CSRF header as every other write; maintenance Bearer requests do
+not.
+
+For an atomic first save after a `204`, a future client may send
+`If-None-Match: *`; the write succeeds only while no state exists. A second
+conditional create returns `412`. Other `If-None-Match` values and requests
+that combine it with `If-Match` are rejected. The currently delivered clients
+omit this header on their first save, so those initial writes intentionally use
+the documented unconditional-upsert behavior.
+
+This table is an additive compatibility store. Installing the schema preserves
+all existing progress, notes, questions, recent positions, and sessions. It
+does not synthesize a compatibility object from those granular records or copy
+the compatibility object back into them. Therefore the canonical compatibility
+GET for an upgraded existing course returns `204` until its frontend performs
+its first PUT. Both storage models then persist independently across service
+restarts and backups.
+
 ## Progress
 
 - `GET /api/v1/courses/{slug}/progress`
@@ -130,8 +192,12 @@ PUT body:
 - `GET /api/v1/courses/{slug}/snapshot`
 
 Returns the registry entry plus all progress, notes, questions, and the recent
-position for that one course. It is the recommended first request after login.
-Writes remain small idempotent PUTs so the frontend can retry them safely.
+position for that one course. The response also includes `learningState`: the
+stored compatibility object for that exact course, or `null` when absent. The
+hub may inspect this field as schema-specific read-only data; the API does not
+guess or translate individual course fields. It is the recommended first
+request after login. Writes remain small idempotent PUTs so the frontend can
+retry them safely.
 
 ## Frontend integration contract
 
@@ -178,6 +244,7 @@ Errors use `{"error":{"code":"...","message":"..."}}`. Important statuses:
 - `401` missing/invalid/expired authentication
 - `403` missing/invalid CSRF token
 - `404` unknown course, record, or endpoint
+- `412` stale or otherwise unsatisfied `If-Match`
 - `413` body over 64 KiB
 - `415` non-JSON write
 - `429` login rate limit
