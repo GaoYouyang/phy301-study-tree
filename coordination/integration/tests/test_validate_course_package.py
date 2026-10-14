@@ -29,6 +29,62 @@ class CoursePackageValidatorTests(unittest.TestCase):
         (self.package / "site" / "assets" / "app.js").write_text(
             "console.log('ready');\n", encoding="utf-8"
         )
+        (self.package / "site" / "materials").mkdir()
+        original_bytes = b"teacher lecture source"
+        (self.package / "site" / "materials" / "lecture.pdf").write_bytes(
+            original_bytes
+        )
+        (self.package / "site" / "materials" / "source-inventory.json").write_text(
+            json.dumps(
+                {
+                    "schemaVersion": "course-materials/v1",
+                    "course": {
+                        "code": "PHY408",
+                        "slug": "phy408",
+                        "route": "/phy408/",
+                        "nameZh": "数据密集型科学",
+                        "nameEn": "Data Intensive Science",
+                    },
+                    "generatedAt": "2026-10-14T10:00:00+08:00",
+                    "inventoryStatus": "verified-current-upload",
+                    "inventoryNote": "Fixture source inventory.",
+                    "summary": {
+                        "sourceFiles": 1,
+                        "publishedOriginals": 1,
+                        "totalPages": 10,
+                        "categoryCounts": {"lecture": 1},
+                    },
+                    "materials": [
+                        {
+                            "id": "phy408-lecture",
+                            "title": "Lecture",
+                            "originalFileName": "lecture.pdf",
+                            "category": "lecture",
+                            "format": "pdf",
+                            "sequence": "Week 1",
+                            "pages": 10,
+                            "bytes": len(original_bytes),
+                            "sha256": hashlib.sha256(original_bytes).hexdigest(),
+                            "sourceStatus": "published-original",
+                            "originalUrl": "/phy408/materials/lecture.pdf",
+                            "derivativeCount": 0,
+                            "derivativeLabels": [],
+                            "note": "Teacher source.",
+                        }
+                    ],
+                    "knownGaps": [],
+                    "freshness": {
+                        "sourceAuditDate": "2026-10-14",
+                        "suggestedReviewDays": 7,
+                        "updateTrigger": "Teacher publishes a new source.",
+                    },
+                },
+                ensure_ascii=False,
+                indent=2,
+            )
+            + "\n",
+            encoding="utf-8",
+        )
         (self.package / "source-coverage.json").write_text(
             json.dumps(
                 {
@@ -298,6 +354,13 @@ class CoursePackageValidatorTests(unittest.TestCase):
             "console.log('changed');\n", encoding="utf-8"
         )
         self.assert_rejected("SHA-256 mismatch for site/assets/app.js")
+
+    def test_material_inventory_download_hash_is_a_deploy_gate(self) -> None:
+        (self.package / "site" / "materials" / "lecture.pdf").write_bytes(
+            b"changed teacher source"
+        )
+        self._write_checksums()
+        self.assert_rejected("sha256 does not match the published file")
 
     def test_checksum_inventory_must_cover_contract_surface(self) -> None:
         self._write_checksums(omit="README.md")

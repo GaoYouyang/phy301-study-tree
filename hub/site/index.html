@@ -10,7 +10,7 @@
     />
     <title>我的学习总台</title>
     <link rel="stylesheet" href="./assets/styles.css" />
-    <script type="module" src="./assets/app.js?v=ba69fe04da7e"></script>
+    <script type="module" src="./assets/app.js?v=e33c0e7b1cf4"></script>
   </head>
   <body>
     <a class="skip-link" href="#main-content">跳到主要内容</a>
@@ -174,6 +174,83 @@
                 打开课程 <span aria-hidden="true">→</span>
               </a>
             </article>
+          </div>
+        </section>
+
+        <section
+          class="materials-section"
+          id="material-inventory"
+          aria-labelledby="materials-title"
+          aria-busy="true"
+          data-material-inventory-dashboard
+        >
+          <div class="section-heading materials-heading">
+            <div>
+              <p class="eyebrow">SOURCE MATERIAL RADAR</p>
+              <h2 id="materials-title">原始资料上传雷达</h2>
+            </div>
+            <p>直接核对四门课当前线上版本，不靠记忆判断“这份课件传过没有”。</p>
+          </div>
+
+          <p class="inventory-boundary-note">
+            这里显示本站当前已部署的原件，不会自动登录或扫描老师平台；复查提醒表示该去检查，
+            不表示已经发现老师更新。资料页数包含教材与开放参考，不等同于老师课件页数。
+          </p>
+
+          <div class="inventory-overview" aria-label="四门课原始资料概览">
+            <article class="inventory-overview-card">
+              <span>已登记原件</span>
+              <strong id="inventory-total-sources">—</strong>
+            </article>
+            <article class="inventory-overview-card">
+              <span>线上可下载</span>
+              <strong id="inventory-total-downloads">—</strong>
+            </article>
+            <article class="inventory-overview-card">
+              <span>资料总页数（含参考）</span>
+              <strong id="inventory-total-pages">—</strong>
+            </article>
+            <article class="inventory-overview-card inventory-overview-card--wide">
+              <span>最近包内清单核验</span>
+              <strong id="inventory-latest-audit">—</strong>
+            </article>
+            <article class="inventory-overview-card inventory-overview-card--alert">
+              <span>已过建议复查期</span>
+              <strong id="inventory-overdue-count">—</strong>
+            </article>
+          </div>
+
+          <p class="inventory-coverage-note" id="inventory-coverage-note">
+            正在读取四门课程当前线上清单；清单加载不会阻塞课程入口。
+          </p>
+
+          <ul class="inventory-alert-list" id="inventory-alert-list" aria-label="资料复查提醒">
+            <li class="inventory-alert inventory-alert--clear">
+              <strong>正在检查清单</strong>
+              <span>四门课程会并行读取，单门失败不会影响其余课程。</span>
+            </li>
+          </ul>
+
+          <div class="inventory-toolbar" role="search">
+            <label for="material-search">
+              <span>按原文件名搜索</span>
+              <input
+                id="material-search"
+                type="search"
+                inputmode="search"
+                autocomplete="off"
+                placeholder="例如 lecture-09、midterm、assignment"
+                aria-describedby="material-search-status"
+              />
+            </label>
+            <button class="text-button inventory-search-clear" id="material-search-clear" type="button" hidden>
+              清除搜索
+            </button>
+            <output id="material-search-status" for="material-search" aria-live="polite">正在读取线上清单。</output>
+          </div>
+
+          <div class="inventory-course-grid" data-inventory-course-grid>
+            <p class="inventory-loading">正在并行读取 PHY301、PHY408、PHY309 与 MAT107 的当前线上清单…</p>
           </div>
         </section>
       </section>

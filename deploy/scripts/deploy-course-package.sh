@@ -30,16 +30,24 @@ release_id=""
 origin="https://gaoyouyang.site"
 lock_dir=""
 auth_header_file=""
+external_inventory_file=""
 snapshot_dir=""
 snapshot_list_file=""
+inventory_url_list_file=""
 lock_acquired="0"
 
 cleanup() {
   if [[ -n "${auth_header_file}" ]]; then
     unlink "${auth_header_file}" 2>/dev/null || true
   fi
+  if [[ -n "${external_inventory_file}" ]]; then
+    unlink "${external_inventory_file}" 2>/dev/null || true
+  fi
   if [[ -n "${snapshot_list_file}" ]]; then
     unlink "${snapshot_list_file}" 2>/dev/null || true
+  fi
+  if [[ -n "${inventory_url_list_file}" ]]; then
+    unlink "${inventory_url_list_file}" 2>/dev/null || true
   fi
   if [[ -n "${snapshot_dir}" && -d "${snapshot_dir}" ]]; then
     # The validated snapshot is made read-only before any network operation.
@@ -80,7 +88,7 @@ if [[ "${origin}" != http://* && "${origin}" != https://* ]]; then
 fi
 origin="${origin%/}"
 
-for command_name in python3 env ssh rsync curl grep mktemp find chmod unlink; do
+for command_name in python3 env ssh rsync curl grep cmp mktemp find chmod unlink; do
   if ! command -v "${command_name}" >/dev/null 2>&1; then
     printf 'Required command not found: %s\n' "${command_name}" >&2
     exit 1
@@ -217,7 +225,56 @@ fi
 
 source_dir="${snapshot_dir}/${build_dir}"
 manifest_path="${snapshot_dir}/manifest.json"
+inventory_path="${source_dir}/materials/source-inventory.json"
 deploy_root="/srv/learning-hub/courses/${slug}"
+
+# Freeze the exact set of public teacher-original URLs that must work after
+# activation. The package validator has already checked the inventory schema,
+# course identity, URL containment, file bytes, and SHA-256 values; this small
+# parser repeats the URL boundary before those values are used by curl.
+inventory_url_list_file="$(mktemp "${TMPDIR:-/tmp}/course-package-original-urls.XXXXXX")"
+env -u COURSE_HUB_AUTH_TOKEN python3 - \
+  "${inventory_path}" "${route}" >"${inventory_url_list_file}" <<'PY'
+import json
+import sys
+import urllib.parse
+from pathlib import PurePosixPath
+
+inventory_path, course_route = sys.argv[1:]
+with open(inventory_path, "r", encoding="utf-8") as handle:
+    inventory = json.load(handle)
+
+for index, material in enumerate(inventory.get("materials", [])):
+    if material.get("sourceStatus") != "published-original":
+        continue
+    value = material.get("originalUrl")
+    if not isinstance(value, str) or not value.startswith(course_route):
+        raise SystemExit(f"unsafe published-original URL at materials[{index}]")
+    decoded = value
+    for _ in range(8):
+        next_decoded = urllib.parse.unquote(decoded, errors="strict")
+        if next_decoded == decoded:
+            break
+        decoded = next_decoded
+    else:
+        raise SystemExit(f"excessively encoded URL at materials[{index}]")
+    relative = decoded[len(course_route):]
+    parts = relative.split("/")
+    pure = PurePosixPath(relative)
+    if (
+        not relative
+        or any(ord(character) < 32 for character in decoded)
+        or "\\" in decoded
+        or "?" in decoded
+        or "#" in decoded
+        or decoded.startswith("//")
+        or any(part in {"", ".", ".."} for part in parts)
+        or pure.is_absolute()
+        or any(part in {".", ".."} for part in pure.parts)
+    ):
+        raise SystemExit(f"unsafe published-original URL at materials[{index}]")
+    sys.stdout.buffer.write(value.encode("utf-8") + b"\0")
+PY
 
 # Seal only after the validator has finished reading. The random 0700 parent
 # plus read-only descendants prevents accidental edits by the deploy process;
@@ -345,7 +402,7 @@ fi
 
 env -u COURSE_HUB_AUTH_TOKEN ssh "${target}" bash -s -- \
   "${deploy_root}" "${release_id}" "${slug}" "${route}" \
-  "${entrypoint}" "${package_sha256}" <<'REMOTE_ACTIVATE'
+  "${entrypoint}" "${package_sha256}" "${course_id}" <<'REMOTE_ACTIVATE'
 set -Eeuo pipefail
 deploy_root="$1"
 release_id="$2"
@@ -353,6 +410,7 @@ slug="$3"
 route="$4"
 entrypoint="$5"
 package_sha256="$6"
+course_id="$7"
 final_dir="${deploy_root}/releases/${release_id}"
 incoming_dir="${deploy_root}/releases/.incoming-${release_id}"
 current_link="${deploy_root}/current"
@@ -413,6 +471,20 @@ if ! grep -Eiq '<!doctype|<html' <<<"${page_html}"; then
   rm -f -- "${rollback_state}"
   exit 1
 fi
+
+inventory_json="$(curl -fsS --max-time 10 -H 'Host: localhost' \
+  "http://127.0.0.1:8080${route}materials/source-inventory.json" || true)"
+if ! grep -Eq '"schemaVersion"[[:space:]]*:[[:space:]]*"course-materials/v1"' \
+    <<<"${inventory_json}" \
+  || ! grep -Eq '"code"[[:space:]]*:[[:space:]]*"'"${course_id}"'"' \
+    <<<"${inventory_json}" \
+  || ! grep -Eq '"slug"[[:space:]]*:[[:space:]]*"'"${slug}"'"' \
+    <<<"${inventory_json}"; then
+  printf 'Server-local source inventory check failed; restoring previous release.\n' >&2
+  restore_previous "${previous_target}"
+  rm -f -- "${rollback_state}"
+  exit 1
+fi
 printf 'Activated %s release %s\n' "${slug}" "${release_id}"
 REMOTE_ACTIVATE
 
@@ -436,6 +508,29 @@ if ! grep -Eiq '<!doctype|<html' <<<"${page_html}"; then
   printf 'External course page check failed: %s%s\n' "${origin}" "${route}" >&2
   external_ok="0"
 fi
+
+external_inventory_file="$(mktemp "${TMPDIR:-/tmp}/course-package-external-inventory.XXXXXX")"
+chmod 0600 "${external_inventory_file}"
+if ! curl "${curl_flags[@]}" --output "${external_inventory_file}" \
+  "${origin}${route}materials/source-inventory.json" 2>/dev/null; then
+  printf 'External source inventory request failed: %s%smaterials/source-inventory.json\n' \
+    "${origin}" "${route}" >&2
+  external_ok="0"
+elif ! cmp -s "${inventory_path}" "${external_inventory_file}"; then
+  printf 'External source inventory does not match the validated package.\n' >&2
+  external_ok="0"
+fi
+
+# Deliberately perform a GET (not HEAD) for every published teacher original.
+# The bearer token remains only in the mode-0600 curl header file and is never
+# interpolated into a command argument, URL, diagnostic, or deployment receipt.
+while IFS= read -r -d '' original_url; do
+  if ! curl "${curl_flags[@]}" --output /dev/null \
+    "${origin}${original_url}" 2>/dev/null; then
+    printf 'External original-material GET failed: %s\n' "${original_url}" >&2
+    external_ok="0"
+  fi
+done <"${inventory_url_list_file}"
 
 if [[ "${external_ok}" != "1" ]]; then
   printf 'External smoke test failed; restoring the prior release.\n' >&2

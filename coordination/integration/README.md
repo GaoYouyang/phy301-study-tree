@@ -13,6 +13,7 @@ course-package/
 ├── manifest.json
 ├── site/
 │   ├── index.html
+│   ├── materials/source-inventory.json
 │   └── ...全部线上静态资源和下载文件
 ├── source-coverage.json
 ├── qa-report.json
@@ -62,6 +63,8 @@ course-package/
 ## 三类证据门
 
 `source-coverage.json` 必须逐项记录每个真实来源的相对路径、SHA-256、类型、页数或题数、映射节点和输出，不能只写汇总百分比。验证器接受顶层数组，或对象中的 `items`、`sources`、`files`、`records`、`mappings` 数组；记录数不得少于 `inventory.sourceFiles`。
+
+`site/materials/source-inventory.json` 必须符合中央 [`course-materials/v1`](../material-inventory/README.md) 协议。中央验证器会把每个 `published-original` URL 映射回该包的 `site/`，逐文件核对普通文件类型、字节数与 SHA-256；只写清单却没有真正把原件放入包内不能通过部署门。
 
 `qa-report.json` 必须是 JSON 对象，且至少有两个非空对象区段。两段都要明确给出通过状态（`pass`、`passed` 或 `pass_with_notes`/`passed_with_notes`，大小写不敏感）；`failed`、`partial`、`not-run` 等非通过状态不能部署：
 
@@ -154,7 +157,7 @@ unset COURSE_HUB_AUTH_TOKEN
 
 1. 以快照的完整包摘要作为默认 release ID，写入不可变 release 和摘要收据；同一大包中断后重跑会回到同一 `.incoming` 并续传；
 2. 原子切换该课程的 `current` symlink；
-3. 进行服务器本地检查和带维护令牌的外部 HTTPS 检查；
+3. 进行服务器本地首页与原始资料清单检查，再用维护令牌从外部 HTTPS 读取清单并逐个请求全部可下载原件；
 4. 任一检查失败时恢复上一 release；旧 release 不删除。
 
 维护令牌只存在于总控环境与权限 `0600` 的临时 curl header 中；脚本也从本地快照、验证器以及所有 ssh/rsync 子进程环境移除它。只读快照、文件清单和 header 都由退出 trap 精确清理；课程项目和交付包永远不接触令牌。

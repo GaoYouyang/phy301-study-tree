@@ -12,6 +12,7 @@ import argparse
 import copy
 import datetime as dt
 import hashlib
+import importlib.util
 import json
 import os
 import re
@@ -426,6 +427,52 @@ def _validate_coverage_report(path: Path, expected_count: int, errors: list[str]
         )
 
 
+def _validate_material_inventory_contract(
+    package_dir: Path,
+    course_id: str,
+    slug: str,
+    route: str,
+    errors: list[str],
+) -> None:
+    inventory_path = package_dir / "site" / "materials" / "source-inventory.json"
+    if not inventory_path.is_file() or inventory_path.is_symlink():
+        errors.append(
+            "site/materials/source-inventory.json is required for the course hub material radar"
+        )
+        return
+
+    validator_path = (
+        Path(__file__).resolve().parents[1]
+        / "material-inventory"
+        / "validate_material_inventory.py"
+    )
+    try:
+        spec = importlib.util.spec_from_file_location(
+            "_central_material_inventory_validator", validator_path
+        )
+        if spec is None or spec.loader is None:
+            raise RuntimeError("could not create module spec")
+        module = importlib.util.module_from_spec(spec)
+        sys.modules[spec.name] = module
+        spec.loader.exec_module(module)
+        result = module.validate_inventory(inventory_path)
+    except Exception as exc:  # The inventory module owns detailed validation errors.
+        detail_errors = getattr(exc, "errors", None)
+        if isinstance(detail_errors, list):
+            errors.extend(
+                f"site/materials/source-inventory.json: {detail}"
+                for detail in detail_errors
+            )
+        else:
+            errors.append(f"material inventory validator failed: {exc}")
+        return
+
+    if (result.course_code, result.slug, result.route) != (course_id, slug, route):
+        errors.append(
+            "site/materials/source-inventory.json course identity must exactly match manifest.course"
+        )
+
+
 def validate_package(package_dir: Path, registry_path: Path | None = None) -> ValidationResult:
     errors: list[str] = []
     package_dir = package_dir.expanduser().resolve()
@@ -629,6 +676,13 @@ def validate_package(package_dir: Path, registry_path: Path | None = None) -> Va
         _validate_qa_report(qa_path, errors)
     if coverage_path.is_file() and isinstance(inventory.get("sourceFiles"), int):
         _validate_coverage_report(coverage_path, inventory["sourceFiles"], errors)
+    _validate_material_inventory_contract(
+        package_dir,
+        course_id,
+        slug,
+        route,
+        errors,
+    )
 
     checksums_relative = FIXED_FILES["checksums"]
     checksums_path = package_dir / checksums_relative

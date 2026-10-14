@@ -20,9 +20,62 @@ def _write_executable(path: Path, source: str) -> None:
 
 
 def _write_valid_package(package: Path) -> None:
-    (package / "site").mkdir(parents=True)
+    (package / "site" / "materials").mkdir(parents=True)
     (package / "site" / "index.html").write_text(
         "<!doctype html><html>initial-live-content</html>\n", encoding="utf-8"
+    )
+    original_bytes = b"teacher lecture source"
+    (package / "site" / "materials" / "lecture.pdf").write_bytes(original_bytes)
+    (package / "site" / "materials" / "source-inventory.json").write_text(
+        json.dumps(
+            {
+                "schemaVersion": "course-materials/v1",
+                "course": {
+                    "code": "PHY408",
+                    "slug": "phy408",
+                    "route": "/phy408/",
+                    "nameZh": "数据密集型科学",
+                    "nameEn": "Data Intensive Science",
+                },
+                "generatedAt": "2026-10-14T10:00:00+08:00",
+                "inventoryStatus": "verified-current-upload",
+                "inventoryNote": "Snapshot fixture source inventory.",
+                "summary": {
+                    "sourceFiles": 1,
+                    "publishedOriginals": 1,
+                    "totalPages": 1,
+                    "categoryCounts": {"lecture": 1},
+                },
+                "materials": [
+                    {
+                        "id": "phy408-lecture",
+                        "title": "Lecture",
+                        "originalFileName": "lecture.pdf",
+                        "category": "lecture",
+                        "format": "pdf",
+                        "sequence": "Week 1",
+                        "pages": 1,
+                        "bytes": len(original_bytes),
+                        "sha256": hashlib.sha256(original_bytes).hexdigest(),
+                        "sourceStatus": "published-original",
+                        "originalUrl": "/phy408/materials/lecture.pdf",
+                        "derivativeCount": 0,
+                        "derivativeLabels": [],
+                        "note": "Teacher source.",
+                    }
+                ],
+                "knownGaps": [],
+                "freshness": {
+                    "sourceAuditDate": "2026-10-14",
+                    "suggestedReviewDays": 7,
+                    "updateTrigger": "Teacher publishes a new source.",
+                },
+            },
+            ensure_ascii=False,
+            indent=2,
+        )
+        + "\n",
+        encoding="utf-8",
     )
     (package / "source-coverage.json").write_text(
         json.dumps(
@@ -120,6 +173,8 @@ def _write_valid_package(package: Path) -> None:
         package / "qa-report.json",
         package / "README.md",
         package / "site" / "index.html",
+        package / "site" / "materials" / "lecture.pdf",
+        package / "site" / "materials" / "source-inventory.json",
     ]
     (package / "checksums.sha256").write_text(
         "".join(
@@ -162,6 +217,28 @@ class DeployScriptContractTests(unittest.TestCase):
         self.assertIn('source_dir="${snapshot_dir}/${build_dir}"', self.source)
         self.assertIn('manifest_path="${snapshot_dir}/manifest.json"', self.source)
         self.assertIn('release_id="pkg-${package_sha256}"', self.source)
+
+    def test_activation_checks_server_local_source_inventory(self) -> None:
+        self.assertIn(
+            'http://127.0.0.1:8080${route}materials/source-inventory.json',
+            self.source,
+        )
+        self.assertIn("Server-local source inventory check failed", self.source)
+        self.assertIn('restore_previous "${previous_target}"', self.source)
+        self.assertIn('"course-materials/v1"', self.source)
+
+    def test_external_smoke_test_checks_inventory_and_every_original(self) -> None:
+        self.assertIn(
+            '"${origin}${route}materials/source-inventory.json"', self.source
+        )
+        self.assertIn(
+            'cmp -s "${inventory_path}" "${external_inventory_file}"', self.source
+        )
+        self.assertIn('material.get("sourceStatus") != "published-original"', self.source)
+        self.assertIn('"${origin}${original_url}"', self.source)
+        self.assertIn('--output /dev/null', self.source)
+        self.assertIn('done <"${inventory_url_list_file}"', self.source)
+        self.assertIn('curl_flags+=(--header "@${auth_header_file}")', self.source)
 
     def test_live_mutation_after_first_validation_cannot_reuse_old_digest(self) -> None:
         real_rsync = shutil.which("rsync")
@@ -280,15 +357,45 @@ class DeployScriptContractTests(unittest.TestCase):
                 fake_bin / "curl",
                 f"""
                 #!{sys.executable}
+                import json
+                import os
+                from pathlib import Path
                 import sys
-                print("ok" if sys.argv[-1].endswith("/healthz") else "<!doctype html><html>course</html>")
+
+                url = sys.argv[-1]
+                with Path(os.environ["TEST_CURL_RECORDS"]).open("a", encoding="utf-8") as handle:
+                    handle.write(json.dumps({{
+                        "url": url,
+                        "args": sys.argv[1:-1],
+                        "tokenInEnvironment": "COURSE_HUB_AUTH_TOKEN" in os.environ,
+                    }}) + "\\n")
+
+                if url.endswith("/healthz"):
+                    body = b"ok\\n"
+                elif url.endswith("/materials/source-inventory.json"):
+                    body = (
+                        Path(os.environ["TEST_LIVE_PACKAGE"])
+                        / "site"
+                        / "materials"
+                        / "source-inventory.json"
+                    ).read_bytes()
+                elif url.endswith("/materials/lecture.pdf"):
+                    body = b"teacher lecture source"
+                else:
+                    body = b"<!doctype html><html>course</html>\\n"
+
+                if "--output" in sys.argv:
+                    output = Path(sys.argv[sys.argv.index("--output") + 1])
+                    output.write_bytes(body)
+                else:
+                    sys.stdout.buffer.write(body)
                 """,
             )
 
             env = os.environ.copy()
-            env.pop("COURSE_HUB_AUTH_TOKEN", None)
             env.update(
                 {
+                    "COURSE_HUB_AUTH_TOKEN": "test-token-must-not-leak",
                     "PATH": f"{fake_bin}:{os.environ.get('PATH', '')}",
                     "TMPDIR": str(temp_dir),
                     "TEST_REAL_PYTHON": sys.executable,
@@ -300,6 +407,7 @@ class DeployScriptContractTests(unittest.TestCase):
                     "TEST_RSYNC_RECORDS": str(root / "rsync-records"),
                     "TEST_SSH_COUNT": str(root / "ssh-count"),
                     "TEST_SSH_RECORDS": str(root / "ssh-records"),
+                    "TEST_CURL_RECORDS": str(root / "curl-records"),
                 }
             )
             completed = subprocess.run(
@@ -339,8 +447,35 @@ class DeployScriptContractTests(unittest.TestCase):
             self.assertIn("post-first-validation", site_upload["index"])
             self.assertNotIn("late-live-mutation", site_upload["index"])
             self.assertNotIn(str(package), site_upload["source"])
+
+            curl_calls = [
+                json.loads(line)
+                for line in (root / "curl-records").read_text(encoding="utf-8").splitlines()
+            ]
+            curl_urls = [record["url"] for record in curl_calls]
+            self.assertFalse(any(record["tokenInEnvironment"] for record in curl_calls))
+            self.assertNotIn("test-token-must-not-leak", json.dumps(curl_calls))
+            self.assertNotIn("test-token-must-not-leak", completed.stdout)
+            self.assertNotIn("test-token-must-not-leak", completed.stderr)
+            self.assertIn(
+                "http://localhost:9999/phy408/materials/source-inventory.json",
+                curl_urls,
+            )
+            self.assertIn(
+                "http://localhost:9999/phy408/materials/lecture.pdf", curl_urls
+            )
+            original_get = next(
+                record
+                for record in curl_calls
+                if record["url"].endswith("/materials/lecture.pdf")
+            )
+            self.assertIn("--output", original_get["args"])
+            self.assertIn("/dev/null", original_get["args"])
             self.assertFalse(list(temp_dir.glob("course-package-snapshot.*")))
             self.assertFalse(list(temp_dir.glob("course-package-snapshot-files.*")))
+            self.assertFalse(list(temp_dir.glob("course-package-original-urls.*")))
+            self.assertFalse(list(temp_dir.glob("course-package-external-inventory.*")))
+            self.assertFalse(list(temp_dir.glob("course-hub-curl-header.*")))
 
 
 if __name__ == "__main__":

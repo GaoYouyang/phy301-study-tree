@@ -17,10 +17,18 @@ fi
 
 curl_flags=(--fail --silent --show-error --location --max-time 20 --retry 2)
 auth_header_file=""
+inventory_file=""
+inventory_url_list_file=""
 
 cleanup() {
   if [[ -n "${auth_header_file}" ]]; then
     rm -f -- "${auth_header_file}"
+  fi
+  if [[ -n "${inventory_file}" ]]; then
+    rm -f -- "${inventory_file}"
+  fi
+  if [[ -n "${inventory_url_list_file}" ]]; then
+    rm -f -- "${inventory_url_list_file}"
   fi
 }
 trap cleanup EXIT
@@ -57,5 +65,60 @@ if [[ -z "${asset_path}" ]]; then
 fi
 curl "${curl_flags[@]}" --output /dev/null "${origin}${asset_path}"
 
+inventory_file="$(mktemp "${TMPDIR:-/tmp}/phy301-source-inventory.XXXXXX")"
+inventory_url_list_file="$(mktemp "${TMPDIR:-/tmp}/phy301-original-urls.XXXXXX")"
+chmod 0600 "${inventory_file}" "${inventory_url_list_file}"
+curl "${curl_flags[@]}" --output "${inventory_file}" \
+  "${origin}/phy301/materials/source-inventory.json"
+
+python3 - "${inventory_file}" >"${inventory_url_list_file}" <<'PY'
+import json
+import sys
+import urllib.parse
+
+with open(sys.argv[1], "r", encoding="utf-8") as handle:
+    inventory = json.load(handle)
+if inventory.get("schemaVersion") != "course-materials/v1":
+    raise SystemExit("stable PHY301 inventory has the wrong schemaVersion")
+course = inventory.get("course")
+if not isinstance(course, dict) or course.get("code") != "PHY301" or course.get("route") != "/phy301/":
+    raise SystemExit("stable PHY301 inventory has the wrong course identity")
+
+for index, material in enumerate(inventory.get("materials", [])):
+    if material.get("sourceStatus") != "published-original":
+        continue
+    value = material.get("originalUrl")
+    if not isinstance(value, str) or not value.startswith("/phy301/"):
+        raise SystemExit(f"unsafe originalUrl at materials[{index}]")
+    decoded = value
+    for _ in range(8):
+        next_decoded = urllib.parse.unquote(decoded, errors="strict")
+        if next_decoded == decoded:
+            break
+        decoded = next_decoded
+    else:
+        raise SystemExit(f"excessively encoded originalUrl at materials[{index}]")
+    relative = decoded[len("/phy301/"):]
+    if (
+        not relative
+        or decoded.startswith("//")
+        or any(character in decoded for character in ("\\", "?", "#"))
+        or any(ord(character) < 32 for character in decoded)
+        or any(part in {"", ".", ".."} for part in relative.split("/"))
+    ):
+        raise SystemExit(f"unsafe originalUrl at materials[{index}]")
+    sys.stdout.buffer.write(value.encode("utf-8") + b"\0")
+PY
+
+original_count=0
+while IFS= read -r -d '' original_url; do
+  curl "${curl_flags[@]}" --output /dev/null "${origin}${original_url}"
+  original_count=$((original_count + 1))
+done <"${inventory_url_list_file}"
+if [[ "${original_count}" -lt 1 ]]; then
+  printf 'Stable PHY301 material inventory contains no downloadable originals.\n' >&2
+  exit 1
+fi
+
 printf 'Healthy: %s\n' "${course_url}"
-printf 'Verified: /healthz, course title, and generated asset.\n'
+printf 'Verified: /healthz, course title, generated asset, stable material inventory, and %s original downloads.\n' "${original_count}"

@@ -23,6 +23,7 @@ release_id=""
 health_url=""
 deploy_root="/srv/learning-hub/courses/phy301"
 site_prefix="phy301-study-tree"
+stable_prefix="phy301"
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -95,16 +96,18 @@ if [[ ! -f "${script_dir}/health-check.sh" ]]; then
 fi
 
 remote_state="$(env -u COURSE_HUB_AUTH_TOKEN ssh "${target}" bash -s -- \
-  "${deploy_root}" "${release_id}" "${site_prefix}" <<'REMOTE_PREPARE'
+  "${deploy_root}" "${release_id}" "${site_prefix}" "${stable_prefix}" <<'REMOTE_PREPARE'
 set -Eeuo pipefail
 deploy_root="$1"
 release_id="$2"
 site_prefix="$3"
+stable_prefix="$4"
 final_dir="${deploy_root}/releases/${release_id}"
 incoming_dir="${deploy_root}/releases/.incoming-${release_id}"
 
 if [[ -d "${final_dir}" ]]; then
   [[ -f "${final_dir}/${site_prefix}/index.html" ]]
+  [[ -f "${final_dir}/${stable_prefix}/materials/source-inventory.json" ]]
   printf 'existing\n'
 else
   mkdir -p "${incoming_dir}/${site_prefix}"
@@ -123,11 +126,12 @@ elif [[ "${remote_state}" != "existing" ]]; then
 fi
 
 env -u COURSE_HUB_AUTH_TOKEN ssh "${target}" bash -s -- \
-  "${deploy_root}" "${release_id}" "${site_prefix}" <<'REMOTE_ACTIVATE'
+  "${deploy_root}" "${release_id}" "${site_prefix}" "${stable_prefix}" <<'REMOTE_ACTIVATE'
 set -Eeuo pipefail
 deploy_root="$1"
 release_id="$2"
 site_prefix="$3"
+stable_prefix="$4"
 final_dir="${deploy_root}/releases/${release_id}"
 incoming_dir="${deploy_root}/releases/.incoming-${release_id}"
 current_link="${deploy_root}/current"
@@ -153,10 +157,16 @@ restore_previous() {
 
 if [[ ! -d "${final_dir}" ]]; then
   [[ -f "${incoming_dir}/${site_prefix}/index.html" ]]
+  [[ -f "${incoming_dir}/${site_prefix}/materials/source-inventory.json" ]]
+  if [[ ! -e "${incoming_dir}/${stable_prefix}" && ! -L "${incoming_dir}/${stable_prefix}" ]]; then
+    ln -s "${site_prefix}" "${incoming_dir}/${stable_prefix}"
+  fi
+  [[ "$(readlink "${incoming_dir}/${stable_prefix}" 2>/dev/null || true)" == "${site_prefix}" ]]
   find "${incoming_dir}" -type d -exec chmod 0755 {} +
   find "${incoming_dir}" -type f -exec chmod 0644 {} +
   mv "${incoming_dir}" "${final_dir}"
 fi
+[[ -f "${final_dir}/${stable_prefix}/materials/source-inventory.json" ]]
 
 previous_target="$(readlink "${current_link}" 2>/dev/null || true)"
 if [[ -n "${previous_target}" && ! "${previous_target}" =~ ^releases/[A-Za-z0-9._-]+$ ]]; then
@@ -177,6 +187,20 @@ if ! page_html="$(curl -fsS --max-time 10 \
 fi
 if ! grep -Fq 'PHY301' <<<"${page_html}"; then
   printf 'Server-local health check failed; restoring previous release.\n' >&2
+  restore_previous "${previous_target}"
+  rm -f -- "${rollback_state}"
+  exit 1
+fi
+
+inventory_json=""
+if ! inventory_json="$(curl -fsS --max-time 10 \
+  -H 'Host: localhost' \
+  "http://127.0.0.1:8080/${stable_prefix}/materials/source-inventory.json")"; then
+  inventory_json=""
+fi
+if ! grep -Fq '"schemaVersion": "course-materials/v1"' <<<"${inventory_json}" || \
+   ! grep -Fq '"code": "PHY301"' <<<"${inventory_json}"; then
+  printf 'Server-local stable material inventory check failed; restoring previous release.\n' >&2
   restore_previous "${previous_target}"
   rm -f -- "${rollback_state}"
   exit 1

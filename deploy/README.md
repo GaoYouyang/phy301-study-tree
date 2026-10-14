@@ -16,6 +16,7 @@ changing providers.
 /srv/learning-hub/courses/phy301/
   current -> releases/<release-id>
   releases/<release-id>/phy301-study-tree/...
+  releases/<release-id>/phy301 -> phy301-study-tree
 /srv/learning-hub/hub/
   current -> releases/<release-id>
 /srv/learning-hub/courses/{phy408,phy309,mat107}/
@@ -26,7 +27,10 @@ The extra `phy301-study-tree` directory is intentional. The checked-in
 `docs/` build currently contains that GitHub Pages base path. Until the hub is
 deployed, Nginx sends the root to `/phy301-study-tree/`, so the same build
 works without rewriting generated HTML. The stable `/phy301/` entry also
-falls back to that legacy path until a native `/phy301/` package exists.
+resolves through a release-local relative symlink to that legacy tree until a
+native `/phy301/` package exists. This keeps `/phy301/materials/source-inventory.json`
+and every original-material download on the same immutable release as the
+course page, without changing generated asset paths.
 
 ## 1. One-time server bootstrap
 
@@ -101,7 +105,10 @@ The script uploads `docs/` into an immutable release, atomically changes the
 public URL. An external HTTPS check fails before SSH unless the maintenance
 token is present. If either post-switch check fails, the script restores the
 previous symlink; after an external failure it also verifies the restored
-release through server-local Nginx. It never deletes old releases. Reusing an
+release through server-local Nginx. The public check also reads the stable
+`/phy301/materials/source-inventory.json` and performs a real authenticated GET
+for every listed downloadable original, so a missing deck cannot pass on the
+strength of the homepage alone. It never deletes old releases. Reusing an
 explicit release ID is a no-op against the already immutable release:
 
 ```bash

@@ -12,6 +12,7 @@ const requiredFiles = [
   "assets/app.js",
   "assets/api-adapter.js",
   "assets/course-config.js",
+  "assets/material-inventory.js",
 ];
 
 for (const relative of requiredFiles) {
@@ -19,7 +20,7 @@ for (const relative of requiredFiles) {
   assert(metadata.isFile(), `${relative} must be a file`);
 }
 
-const [html, css, app, adapter, config] = await Promise.all(
+const [html, css, app, adapter, config, inventory] = await Promise.all(
   requiredFiles.map((relative) => readFile(path.join(siteRoot, relative), "utf8")),
 );
 
@@ -34,22 +35,29 @@ assert.match(html, /aria-live="polite"/, "status changes need a live region");
 assert.match(html, /<label for="login-token">/, "token input needs a visible label");
 assert.equal((html.match(/data-course="/g) || []).length, 4, "exactly four course cards are required");
 assert.equal((html.match(/data-role="course-state"/g) || []).length, 4, "each course needs an availability badge");
+assert.match(html, /data-material-inventory-dashboard/, "source material radar is required");
+assert.match(html, /id="material-search"/, "source material file-name search is required");
+assert.equal((html.match(/<article class="inventory-overview-card/g) || []).length, 5, "five inventory overview metrics are required");
 assert.match(css, /@media \(max-width: 390px\)/, "390px layout guard is required");
 assert.match(css, /overflow-x: hidden/, "page must guard against horizontal overflow");
 assert.match(app, /\.textContent\s*=/, "dynamic text must use textContent");
-assert.doesNotMatch(app, /innerHTML\s*=/, "untrusted content must not use innerHTML");
+assert.doesNotMatch(`${app}\n${inventory}`, /innerHTML\s*=/, "untrusted content must not use innerHTML");
 assert.match(adapter, /const API_BASE = "\/api\/v1"/, "API base must be same-origin and relative");
 assert.match(adapter, /credentials: "same-origin"/, "all API requests need same-origin credentials");
 assert.match(adapter, /"X-CSRF-Token"/, "writes need the agreed CSRF header");
-assert.doesNotMatch(`${html}\n${css}\n${app}\n${adapter}\n${config}`, /https?:\/\/\d{1,3}(?:\.\d{1,3}){3}/, "public IPs must not be embedded");
-assert.doesNotMatch(`${html}\n${css}\n${app}\n${adapter}\n${config}`, /BEGIN (?:OPENSSH |RSA )?PRIVATE KEY/, "private keys must not be embedded");
+assert.match(inventory, /course-materials\/v1/, "inventory reader must enforce the shared schema version");
+assert.match(inventory, /Promise\.allSettled/, "four inventory endpoints must load independently");
+assert.doesNotMatch(`${html}\n${css}\n${app}\n${adapter}\n${config}\n${inventory}`, /https?:\/\/\d{1,3}(?:\.\d{1,3}){3}/, "public IPs must not be embedded");
+assert.doesNotMatch(`${html}\n${css}\n${app}\n${adapter}\n${config}\n${inventory}`, /BEGIN (?:OPENSSH |RSA )?PRIVATE KEY/, "private keys must not be embedded");
 
 const appVersion = html.match(/src="\.\/assets\/app\.js\?v=([0-9a-f]{12})"/)?.[1];
 const adapterVersion = app.match(/from "\.\/api-adapter\.js\?v=([0-9a-f]{12})"/)?.[1];
 const configVersion = app.match(/from "\.\/course-config\.js\?v=([0-9a-f]{12})"/)?.[1];
+const inventoryVersion = app.match(/from "\.\/material-inventory\.js\?v=([0-9a-f]{12})"/)?.[1];
 assert.equal(appVersion, contentVersion(app), "index.html must pin the current app.js bytes");
 assert.equal(adapterVersion, contentVersion(adapter), "app.js must pin the current api-adapter.js bytes");
 assert.equal(configVersion, contentVersion(config), "app.js must pin the current course-config.js bytes");
+assert.equal(inventoryVersion, contentVersion(inventory), "app.js must pin the current material-inventory.js bytes");
 
 for (const slug of ["phy301", "phy408", "phy309", "mat107"]) {
   assert.match(config, new RegExp(`slug: "${slug}"`), `${slug} must be registered`);
@@ -62,6 +70,11 @@ for (const course of COURSES) {
     ["granular", "compatibility"].includes(course.stateSource),
     `${course.slug} must declare a supported stateSource`,
   );
+  assert.equal(
+    course.materialInventoryUrl,
+    `/${course.slug}/materials/source-inventory.json`,
+    `${course.slug} must use its fixed same-origin material inventory URL`,
+  );
 }
 
-console.log("Hub structural checks passed: 4 courses, explicit state sources, relative API, security and accessibility guards.");
+console.log("Hub structural checks passed: 4 courses, material radar, explicit state sources, relative API, security and accessibility guards.");

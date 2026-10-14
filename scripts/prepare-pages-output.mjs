@@ -15,6 +15,7 @@ const lectureFiles = Array.from({ length: 10 }, (_, index) => {
 const requiredCourseFiles = [
   ...lectureFiles,
   "materials/course-materials-manifest.json",
+  "materials/source-inventory.json",
   "materials/course-materials-validation.md",
   "materials/midterm-2025-solution.pdf",
   "readings/david-tong-statistical-physics.pdf",

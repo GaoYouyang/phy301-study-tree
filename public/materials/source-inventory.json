@@ -1,0 +1,429 @@
+{
+  "schemaVersion": "course-materials/v1",
+  "course": {
+    "code": "PHY301",
+    "slug": "phy301",
+    "route": "/phy301/",
+    "nameZh": "热力学与统计物理",
+    "nameEn": "Thermodynamics and Statistical Physics"
+  },
+  "generatedAt": "2026-10-14T02:56:31.163Z",
+  "inventoryStatus": "verified-current-upload",
+  "inventoryNote": "已逐文件核验当前静态交付包：10 份英文原始课件与 7 份老师作业/答案/考试材料均和本地收到的老师原件 SHA-256 一致；另登记课程计划原图与 2 份本地开放参考讲义。中英逐页精讲版和网页讲解只计为衍生物，不重复计入原件。该状态只证明当前项目已收录文件，不代表老师平台今后不会新增或替换资料。",
+  "summary": {
+    "sourceFiles": 20,
+    "publishedOriginals": 20,
+    "totalPages": 1063,
+    "categoryCounts": {
+      "assignment": 3,
+      "exam": 1,
+      "lecture": 10,
+      "reference": 2,
+      "solution": 3,
+      "syllabus": 1
+    }
+  },
+  "materials": [
+    {
+      "id": "phy301-lecture-01",
+      "title": "Lecture 1 — 课程要求、热力学回顾、动理学与 Maxwell-Boltzmann 分布",
+      "originalFileName": "PHY301 - 1.pptx",
+      "category": "lecture",
+      "format": "pptx",
+      "sequence": "L1 · Week 1",
+      "pages": 25,
+      "bytes": 17604973,
+      "sha256": "48f76c5dd8157a3eb5a8bb573b86802cbfecddf93ed955f3d8e60f71fc9eec74",
+      "sourceStatus": "published-original",
+      "originalUrl": "/phy301/materials/lecture-01.pptx",
+      "derivativeCount": 2,
+      "derivativeLabels": [
+        "中英逐页精讲 PPTX（lecture-01_中英逐页精讲.pptx）",
+        "站内逐页公式索引、推导与中文讲解"
+      ],
+      "note": "课程要求、热力学回顾、动理学与 Maxwell-Boltzmann 分布；公开副本已与老师原始 PPTX 做 SHA-256 一致性核验。"
+    },
+    {
+      "id": "phy301-lecture-02",
+      "title": "Lecture 2 — 相空间、系综、Liouville 定理、时间反演与遍历性",
+      "originalFileName": "PHY301 - 2.pptx",
+      "category": "lecture",
+      "format": "pptx",
+      "sequence": "L2 · Week 2",
+      "pages": 16,
+      "bytes": 5796093,
+      "sha256": "767ab2d5dfc23ed9c2e71554acd1b079f1b8668dd024f6fe73bc90eaea517ee9",
+      "sourceStatus": "published-original",
+      "originalUrl": "/phy301/materials/lecture-02.pptx",
+      "derivativeCount": 2,
+      "derivativeLabels": [
+        "中英逐页精讲 PPTX（lecture-02_中英逐页精讲.pptx）",
+        "站内逐页公式索引、推导与中文讲解"
+      ],
+      "note": "相空间、系综、Liouville 定理、时间反演与遍历性；公开副本已与老师原始 PPTX 做 SHA-256 一致性核验。"
+    },
+    {
+      "id": "phy301-lecture-03",
+      "title": "Lecture 3 — 微正则、正则与巨正则系综，热力学定律及理想气体",
+      "originalFileName": "PHY301 - 3.pptx",
+      "category": "lecture",
+      "format": "pptx",
+      "sequence": "L3 · Week 3–4",
+      "pages": 27,
+      "bytes": 12448548,
+      "sha256": "aed04b1c37cb6e93ea2be5ed1a2776f821c6909a1e2f305023f24467e5bd8cbe",
+      "sourceStatus": "published-original",
+      "originalUrl": "/phy301/materials/lecture-03.pptx",
+      "derivativeCount": 2,
+      "derivativeLabels": [
+        "中英逐页精讲 PPTX（lecture-03_中英逐页精讲.pptx）",
+        "站内逐页公式索引、推导与中文讲解"
+      ],
+      "note": "微正则、正则与巨正则系综，热力学定律及理想气体；公开副本已与老师原始 PPTX 做 SHA-256 一致性核验。"
+    },
+    {
+      "id": "phy301-lecture-04",
+      "title": "Lecture 4 — 正则与巨正则系综、两能级系统、理想气体与能量均分",
+      "originalFileName": "PHY301 - 4.pptx",
+      "category": "lecture",
+      "format": "pptx",
+      "sequence": "L4 · Week 5",
+      "pages": 13,
+      "bytes": 15536651,
+      "sha256": "a979667e28995ce5c5b75cfc7cd068ec5d676f90465584fdb93947611c3b209b",
+      "sourceStatus": "published-original",
+      "originalUrl": "/phy301/materials/lecture-04.pptx",
+      "derivativeCount": 2,
+      "derivativeLabels": [
+        "中英逐页精讲 PPTX（lecture-04_中英逐页精讲.pptx）",
+        "站内逐页公式索引、推导与中文讲解"
+      ],
+      "note": "正则与巨正则系综、两能级系统、理想气体与能量均分；公开副本已与老师原始 PPTX 做 SHA-256 一致性核验。"
+    },
+    {
+      "id": "phy301-lecture-05",
+      "title": "Lecture 5 — 正则系综续篇与巨正则系综",
+      "originalFileName": "PHY301 - 5.pptx",
+      "category": "lecture",
+      "format": "pptx",
+      "sequence": "L5 · Week 5–6",
+      "pages": 13,
+      "bytes": 18550700,
+      "sha256": "e9f8092ee44ac72d7fb6672cc5922a5650e96a7df3041f81e9454b05f7907c70",
+      "sourceStatus": "published-original",
+      "originalUrl": "/phy301/materials/lecture-05.pptx",
+      "derivativeCount": 2,
+      "derivativeLabels": [
+        "中英逐页精讲 PPTX（lecture-05_中英逐页精讲.pptx）",
+        "站内逐页公式索引、推导与中文讲解"
+      ],
+      "note": "正则系综续篇与巨正则系综；公开副本已与老师原始 PPTX 做 SHA-256 一致性核验。"
+    },
+    {
+      "id": "phy301-lecture-06",
+      "title": "Lecture 6 — 相互作用、van der Waals、Ising、Landau 与相变",
+      "originalFileName": "PHY301 - 6.pptx",
+      "category": "lecture",
+      "format": "pptx",
+      "sequence": "L6 · Week 7",
+      "pages": 29,
+      "bytes": 11085219,
+      "sha256": "490e9cbc19822557688bb321b253000f719efb43e62cde6320e81cbc3e75f451",
+      "sourceStatus": "published-original",
+      "originalUrl": "/phy301/materials/lecture-06.pptx",
+      "derivativeCount": 2,
+      "derivativeLabels": [
+        "中英逐页精讲 PPTX（lecture-06_中英逐页精讲.pptx）",
+        "站内逐页公式索引、推导与中文讲解"
+      ],
+      "note": "相互作用、van der Waals、Ising、Landau 与相变；公开副本已与老师原始 PPTX 做 SHA-256 一致性核验。"
+    },
+    {
+      "id": "phy301-lecture-07",
+      "title": "Lecture 7 — 经典统计总结、量子形式、密度矩阵与量子系综",
+      "originalFileName": "PHY301 - 7.pptx",
+      "category": "lecture",
+      "format": "pptx",
+      "sequence": "L7 · Week 8–9",
+      "pages": 19,
+      "bytes": 10814359,
+      "sha256": "d8704cb3a52e09a9788bedd9250e26fbab4393f8dd7402724c66fbed578ef2f1",
+      "sourceStatus": "published-original",
+      "originalUrl": "/phy301/materials/lecture-07.pptx",
+      "derivativeCount": 2,
+      "derivativeLabels": [
+        "中英逐页精讲 PPTX（lecture-07_中英逐页精讲.pptx）",
+        "站内逐页公式索引、推导与中文讲解"
+      ],
+      "note": "经典统计总结、量子形式、密度矩阵与量子系综；公开副本已与老师原始 PPTX 做 SHA-256 一致性核验。"
+    },
+    {
+      "id": "phy301-lecture-08",
+      "title": "Lecture 8 — 全同粒子、Bose-Einstein、Fermi-Dirac 与 Maxwell-Boltzmann 统计",
+      "originalFileName": "PHY301 - 8.pptx",
+      "category": "lecture",
+      "format": "pptx",
+      "sequence": "L8 · Week 10",
+      "pages": 19,
+      "bytes": 2729771,
+      "sha256": "1143a2d7b6470d3a2d7729fee7bcaa6fc575388b5cff4040cb09e787adb12a88",
+      "sourceStatus": "published-original",
+      "originalUrl": "/phy301/materials/lecture-08.pptx",
+      "derivativeCount": 2,
+      "derivativeLabels": [
+        "中英逐页精讲 PPTX（lecture-08_中英逐页精讲.pptx）",
+        "站内逐页公式索引、推导与中文讲解"
+      ],
+      "note": "全同粒子、Bose-Einstein、Fermi-Dirac 与 Maxwell-Boltzmann 统计；公开副本已与老师原始 PPTX 做 SHA-256 一致性核验。"
+    },
+    {
+      "id": "phy301-lecture-09",
+      "title": "Lecture 9 — 理想 Bose/Fermi 气体、黑体辐射、声子与 Pauli 顺磁",
+      "originalFileName": "PHY301 - 9.pptx",
+      "category": "lecture",
+      "format": "pptx",
+      "sequence": "L9 · Week 11–12",
+      "pages": 35,
+      "bytes": 5208155,
+      "sha256": "e0c34e32da69fd932d4104dd8edd99c105bd77dbae50ead2f0f4c1de05043cf6",
+      "sourceStatus": "published-original",
+      "originalUrl": "/phy301/materials/lecture-09.pptx",
+      "derivativeCount": 2,
+      "derivativeLabels": [
+        "中英逐页精讲 PPTX（lecture-09_中英逐页精讲.pptx）",
+        "站内逐页公式索引、推导与中文讲解"
+      ],
+      "note": "理想 Bose/Fermi 气体、黑体辐射、声子与 Pauli 顺磁；公开副本已与老师原始 PPTX 做 SHA-256 一致性核验。"
+    },
+    {
+      "id": "phy301-lecture-10",
+      "title": "Lecture 10 — 涨落、Brownian 运动、扩散、Langevin 与 Fokker-Planck 方程",
+      "originalFileName": "PHY301 - 10.pptx",
+      "category": "lecture",
+      "format": "pptx",
+      "sequence": "L10 · Week 13",
+      "pages": 18,
+      "bytes": 5433331,
+      "sha256": "8bb2aefd12a43bcc4ed31119995c9f615abe88fb254579a82d4c34efc45c64cb",
+      "sourceStatus": "published-original",
+      "originalUrl": "/phy301/materials/lecture-10.pptx",
+      "derivativeCount": 2,
+      "derivativeLabels": [
+        "中英逐页精讲 PPTX（lecture-10_中英逐页精讲.pptx）",
+        "站内逐页公式索引、推导与中文讲解"
+      ],
+      "note": "涨落、Brownian 运动、扩散、Langevin 与 Fokker-Planck 方程；公开副本已与老师原始 PPTX 做 SHA-256 一致性核验。"
+    },
+    {
+      "id": "phy301-assignment-01",
+      "title": "PHY301 Problem Set 1（2025-09）",
+      "originalFileName": "PHY301_Statistical_Physics_Problem_set_1__2025_09.pdf",
+      "category": "assignment",
+      "format": "pdf",
+      "sequence": "Problem Set 1 · Week 1-4",
+      "pages": 2,
+      "bytes": 202462,
+      "sha256": "8407745733b539f262fab7e7039d83cb1fef6a4e4bbad7400edd38e583817cca",
+      "sourceStatus": "published-original",
+      "originalUrl": "/phy301/materials/problem-set-01.pdf",
+      "derivativeCount": 1,
+      "derivativeLabels": [
+        "站内逐题知识映射与解题路线"
+      ],
+      "note": "老师原始作业；覆盖 Liouville、Maxwell-Boltzmann、微正则气体与振子。"
+    },
+    {
+      "id": "phy301-solution-01",
+      "title": "PHY301 Problem Set 1 Solution（2025-09）",
+      "originalFileName": "PHY301_Statistical_Physics_Problem_set_1__2025_09_(Solution).pdf",
+      "category": "solution",
+      "format": "pdf",
+      "sequence": "Problem Set 1 solution · Week 1-4",
+      "pages": 12,
+      "bytes": 306839,
+      "sha256": "43745fb5a160b1f96aabc88046a320b2dbdf55a98ca5fbca3cd7dbe926efb2e2",
+      "sourceStatus": "published-original",
+      "originalUrl": "/phy301/materials/problem-set-01-solution.pdf",
+      "derivativeCount": 1,
+      "derivativeLabels": [
+        "站内答案勘误与推导讲解"
+      ],
+      "note": "老师原始答案；站内另行标出符号与归一化注意事项。"
+    },
+    {
+      "id": "phy301-assignment-02",
+      "title": "PHY301 Problem Set 2（2025-09）",
+      "originalFileName": "PHY301_Statistical_Physics_Problem_set_2__2025_09.pdf",
+      "category": "assignment",
+      "format": "pdf",
+      "sequence": "Problem Set 2 · Week 5-7; Q2 revisited in Week 10",
+      "pages": 3,
+      "bytes": 140740,
+      "sha256": "dd3b965f8c180ca5ed1d7f40dd29e47df0e248fc45f05813047c7af8068ab9b1",
+      "sourceStatus": "published-original",
+      "originalUrl": "/phy301/materials/problem-set-02.pdf",
+      "derivativeCount": 1,
+      "derivativeLabels": [
+        "站内逐题知识映射与解题路线"
+      ],
+      "note": "老师原始作业；覆盖正则振子、巨正则吸附与 lattice gas/Ising。"
+    },
+    {
+      "id": "phy301-solution-02",
+      "title": "PHY301 Problem Set 2 Solution（2025-09）",
+      "originalFileName": "PHY301_Statistical_Physics_Problem_set_2__2025_09_.pdf",
+      "category": "solution",
+      "format": "pdf",
+      "sequence": "Problem Set 2 solution · Week 5-7; Q2 revisited in Week 10",
+      "pages": 10,
+      "bytes": 213273,
+      "sha256": "f9e262b3dfb265bcdf128ba47ffe89b8e98029cfe4bcfb31a1839156c6e80acc",
+      "sourceStatus": "published-original",
+      "originalUrl": "/phy301/materials/problem-set-02-solution.pdf",
+      "derivativeCount": 1,
+      "derivativeLabels": [
+        "站内答案勘误与推导讲解"
+      ],
+      "note": "老师原文件名未写 Solution；经逐页内容核对，此文件确为 Problem Set 2 答案。"
+    },
+    {
+      "id": "phy301-assignment-03",
+      "title": "PHY301 Problem Set 3（2025-09）",
+      "originalFileName": "PHY301_Statistical_Physics_Problem_set_3__2025_09_.pdf",
+      "category": "assignment",
+      "format": "pdf",
+      "sequence": "Problem Set 3 · Week 9-12",
+      "pages": 4,
+      "bytes": 237576,
+      "sha256": "a993fa39a0ab61523d3908264b63078d02129d4218a7c3b3b3928ca4ac307621",
+      "sourceStatus": "published-original",
+      "originalUrl": "/phy301/materials/problem-set-03.pdf",
+      "derivativeCount": 1,
+      "derivativeLabels": [
+        "站内逐题知识映射与解题路线"
+      ],
+      "note": "老师原始作业；覆盖密度矩阵、量子统计、Bose 与 Fermi 气体。"
+    },
+    {
+      "id": "phy301-solution-03",
+      "title": "PHY301 Problem Set 3 Solution（2025-09）",
+      "originalFileName": "PHY301_Statistical_Physics_Problem_set_3__2025_09_ (solution).pdf",
+      "category": "solution",
+      "format": "pdf",
+      "sequence": "Problem Set 3 solution · Week 9-12",
+      "pages": 19,
+      "bytes": 303318,
+      "sha256": "6e5b7cbab2e6557a063c01df2bdab2ee6b11e4bd94c1edaa5452507c9c82a1d5",
+      "sourceStatus": "published-original",
+      "originalUrl": "/phy301/materials/problem-set-03-solution.pdf",
+      "derivativeCount": 1,
+      "derivativeLabels": [
+        "站内答案勘误与推导讲解"
+      ],
+      "note": "老师原始答案；含 Fourier 与多维 Gaussian 的长推导。"
+    },
+    {
+      "id": "phy301-exam-midterm-2025",
+      "title": "PHY301 Mid-term Exam 2025-09 Solution / Marking Scheme",
+      "originalFileName": "PHY301_Mid_term_Exam_2025_09 (solution).pdf",
+      "category": "exam",
+      "format": "pdf",
+      "sequence": "2025 mid-term · Week 1-8",
+      "pages": 12,
+      "bytes": 241513,
+      "sha256": "82447a86f195a32a8f12c67125f96d4bffdd3e1878e17ed9c3003b3b08a990e5",
+      "sourceStatus": "published-original",
+      "originalUrl": "/phy301/materials/midterm-2025-solution.pdf",
+      "derivativeCount": 1,
+      "derivativeLabels": [
+        "站内评分点拆解与原答案勘误"
+      ],
+      "note": "老师原始期中评分答案；4 题，每题 25 分。"
+    },
+    {
+      "id": "phy301-syllabus-course-plan-2025",
+      "title": "PHY301 2025 Course Plan",
+      "originalFileName": "teacher-course-plan-2025.png",
+      "category": "syllabus",
+      "format": "png",
+      "sequence": "Week 1-14 plan",
+      "pages": 1,
+      "bytes": 148218,
+      "sha256": "3b32aa914ea2822d036fc02f552da91de4f30e5aaa13479db9fbde9fb3bb48b3",
+      "sourceStatus": "published-original",
+      "originalUrl": "/phy301/course-plan/teacher-course-plan-2025.png",
+      "derivativeCount": 1,
+      "derivativeLabels": [
+        "站内 14 周学习顺序与课程计划解读"
+      ],
+      "note": "老师网页课程计划的原始截图；用于核对 Week 1-14 教学顺序。"
+    },
+    {
+      "id": "phy301-reference-tong-statistical-physics",
+      "title": "David Tong — Statistical Physics",
+      "originalFileName": "david-tong-statistical-physics.pdf",
+      "category": "reference",
+      "format": "pdf",
+      "sequence": null,
+      "pages": 191,
+      "bytes": 1951403,
+      "sha256": "9d41ab5d5751a44e3a5e117da30f25ad555e6e023bddec8366f9450570dcf5d4",
+      "sourceStatus": "published-original",
+      "originalUrl": "/phy301/readings/david-tong-statistical-physics.pdf",
+      "derivativeCount": 1,
+      "derivativeLabels": [
+        "站内按课程节点编排的跳读路线"
+      ],
+      "note": "本地开放参考讲义；不是老师课件，按课程主题选读而非从头硬读。"
+    },
+    {
+      "id": "phy301-reference-arovas-thermodynamics-statistical-mechanics",
+      "title": "Daniel Arovas — Thermodynamics and Statistical Mechanics",
+      "originalFileName": "arovas-thermodynamics-statistical-mechanics.pdf",
+      "category": "reference",
+      "format": "pdf",
+      "sequence": "Week 13 supplementary reading",
+      "pages": 595,
+      "bytes": 28491200,
+      "sha256": "2b5029d97d22d6d86325d1d7ee6892fbffedcda3a0f4a4aedc5edafaa3632f3f",
+      "sourceStatus": "published-original",
+      "originalUrl": "/phy301/readings/arovas-thermodynamics-statistical-mechanics.pdf",
+      "derivativeCount": 1,
+      "derivativeLabels": [
+        "站内非平衡统计按主题跳读路线"
+      ],
+      "note": "本地开放参考讲义；不是老师课件，主要用于 Brownian、Langevin 与 Fokker-Planck 补读。"
+    }
+  ],
+  "knownGaps": [
+    {
+      "id": "phy301-gap-week-14-deck",
+      "label": "Week 14 独立复习课件",
+      "status": "not-received",
+      "note": "课程计划写有量子统计复习周，但当前收到的资料中没有独立 Week 14 课件；若老师以后开放，应新增而不是覆盖现有 Lecture 10。"
+    },
+    {
+      "id": "phy301-gap-final-exam",
+      "label": "期末试卷或评分答案",
+      "status": "not-received",
+      "note": "Lecture 1 写有 Final Exam 40%，当前项目没有期末试卷或评分答案。"
+    },
+    {
+      "id": "phy301-gap-midterm-question-only",
+      "label": "2025 期中空白试卷",
+      "status": "unknown",
+      "note": "当前只有带答案/评分内容的期中文件；尚不确定老师是否另行提供过无答案版本。"
+    },
+    {
+      "id": "phy301-gap-standalone-syllabus",
+      "label": "独立课程大纲或课程手册",
+      "status": "unknown",
+      "note": "当前以老师网页课程计划截图和 Lecture 1 内的考核说明为依据；尚不确定是否存在独立 syllabus 文件。"
+    }
+  ],
+  "freshness": {
+    "sourceAuditDate": "2026-10-14",
+    "suggestedReviewDays": 7,
+    "updateTrigger": "老师平台开放新权限、出现同名文件的新修改时间/大小、课程计划或考核说明变化时，保存为新版本并重新运行本脚本；若 SHA-256 变化，视为新版本并重新翻译、讲解、测试和部署。"
+  }
+}

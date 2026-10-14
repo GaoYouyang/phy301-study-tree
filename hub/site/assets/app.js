@@ -1,5 +1,6 @@
 import { CourseHubApi, isUnauthorized, loadSummaryCache, saveSummaryCache, summarizeSnapshot } from "./api-adapter.js?v=0016d3cc04de";
-import { COURSES, COURSE_BY_SLUG, courseAvailabilityPresentation } from "./course-config.js?v=486f22d8755f";
+import { COURSES, COURSE_BY_SLUG, courseAvailabilityPresentation } from "./course-config.js?v=c9ff1107de26";
+import { createMaterialInventoryDashboard } from "./material-inventory.js?v=d55f9d497c48";
 
 const api = new CourseHubApi();
 const summaries = new Map();
@@ -27,6 +28,7 @@ const elements = {
   activitySource: document.querySelector("#activity-source"),
   lastUpdated: document.querySelector("#last-updated"),
   liveRegion: document.querySelector("#live-region"),
+  materialInventoryRoot: document.querySelector("[data-material-inventory-dashboard]"),
 };
 
 const NODE_LABELS = Object.freeze({
@@ -51,6 +53,12 @@ const NODE_LABELS = Object.freeze({
   "final-review": "期末总复习",
 });
 
+const materialInventoryDashboard = createMaterialInventoryDashboard({
+  courses: COURSES,
+  root: elements.materialInventoryRoot,
+  announce: say,
+});
+
 function loadCachedSummaries() {
   summaries.clear();
   for (const course of COURSES) {
@@ -59,10 +67,10 @@ function loadCachedSummaries() {
   }
 }
 
-async function refreshDashboard({ announce = false } = {}) {
+async function refreshDashboard({ announce = false, manageButton = true } = {}) {
   if (refreshInFlight) return;
   refreshInFlight = true;
-  setRefreshing(true);
+  if (manageButton) setRefreshing(true);
 
   const [healthResult, sessionResult] = await Promise.allSettled([api.health(), api.resumeSession()]);
   const serviceOnline = healthResult.status === "fulfilled" && healthResult.value?.status === "ok";
@@ -98,8 +106,26 @@ async function refreshDashboard({ announce = false } = {}) {
   }
 
   renderDashboard();
-  setRefreshing(false);
+  if (manageButton) setRefreshing(false);
   refreshInFlight = false;
+}
+
+async function refreshEverything({ announce = false } = {}) {
+  setRefreshing(true);
+  const [, inventoryResult] = await Promise.allSettled([
+    refreshDashboard({ manageButton: false }),
+    materialInventoryDashboard.refresh(),
+  ]);
+  setRefreshing(false);
+  if (announce) {
+    if (inventoryResult.status === "rejected") {
+      say("学习概览已刷新；原始资料清单读取失败，请稍后重试。");
+    } else if (inventoryResult.value.errors.size) {
+      say(`学习概览已刷新；原始资料清单成功读取 ${inventoryResult.value.inventories.size}/${COURSES.length} 门。`);
+    } else {
+      say("学习概览和四门课原始资料清单已刷新。");
+    }
+  }
 }
 
 function setRefreshing(isLoading) {
@@ -359,7 +385,7 @@ function say(message) {
   });
 }
 
-elements.refreshButton.addEventListener("click", () => refreshDashboard({ announce: true }));
+elements.refreshButton.addEventListener("click", () => refreshEverything({ announce: true }));
 elements.showLoginButton.addEventListener("click", () => toggleLogin(true));
 elements.cancelLoginButton.addEventListener("click", () => toggleLogin(false));
 
@@ -420,4 +446,4 @@ function loginErrorMessage(error) {
 
 loadCachedSummaries();
 renderDashboard();
-refreshDashboard();
+refreshEverything();
