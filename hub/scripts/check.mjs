@@ -51,10 +51,12 @@ assert.doesNotMatch(`${html}\n${css}\n${app}\n${adapter}\n${config}\n${inventory
 assert.doesNotMatch(`${html}\n${css}\n${app}\n${adapter}\n${config}\n${inventory}`, /BEGIN (?:OPENSSH |RSA )?PRIVATE KEY/, "private keys must not be embedded");
 
 const appVersion = html.match(/src="\.\/assets\/app\.js\?v=([0-9a-f]{12})"/)?.[1];
+const cssVersion = html.match(/href="\.\/assets\/styles\.css\?v=([0-9a-f]{12})"/)?.[1];
 const adapterVersion = app.match(/from "\.\/api-adapter\.js\?v=([0-9a-f]{12})"/)?.[1];
 const configVersion = app.match(/from "\.\/course-config\.js\?v=([0-9a-f]{12})"/)?.[1];
 const inventoryVersion = app.match(/from "\.\/material-inventory\.js\?v=([0-9a-f]{12})"/)?.[1];
 assert.equal(appVersion, contentVersion(app), "index.html must pin the current app.js bytes");
+assert.equal(cssVersion, contentVersion(css), "index.html must pin the current styles.css bytes");
 assert.equal(adapterVersion, contentVersion(adapter), "app.js must pin the current api-adapter.js bytes");
 assert.equal(configVersion, contentVersion(config), "app.js must pin the current course-config.js bytes");
 assert.equal(inventoryVersion, contentVersion(inventory), "app.js must pin the current material-inventory.js bytes");
